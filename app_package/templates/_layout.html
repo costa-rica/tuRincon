@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+  <!-- /static/images/blog32.png -->
+  <link rel="icon" type="image/x-icon" href="/static/images/tuRinconIcon.png">
+  <title>Blog Template</title>
+
+</head>
+
+<body id="body">
+
+  <section class="navbar_section">
+
+    <div class="navbar navbar_custom  bg-primary " id="nav_section">
+
+      <div class="left_and_middle">
+
+        <div class="nav_left">
+
+          <a href="{{ url_for('main.home') }}">
+
+            <div class="logo">
+              <!-- ../static/images/blog600.png -->
+              <img class="ws_logo_big" width="128" alt="API Tester PNG" src="../static/images/tuRinconIcon.png">
+              <img class="ws_logo_small" alt="API Tester PNG" src="../static/images/tuRinconIcon.png">
+
+            </div>
+
+          </a>
+
+        </div>
+
+
+        <div class="middle_nav_div">
+          <h1>Tu Rincón</h1>
+        </div>
+
+      </div>
+
+      <img class="mobile-menu" id="mobile-cta" src="../static/images/white-hamburger-menu-icon-24.png"
+        alt="Open Navigation">
+
+      <nav>
+        <img id="mobile-exit" class="mobile-menu-exit" src="../static/images/exit.svg" alt="Close Navigation">
+
+        <ul class="primary-nav ul_primary" id="nav_horizontal_list">
+          <br>
+          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
+          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
+          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Posts</a></li>
+        </ul>
+      </nav>
+
+  </section>
+  {% block main %}{% endblock %}
+  <script>
+    const mobileBtn = document.getElementById('mobile-cta')
+    nav = document.querySelector('nav')
+    mobileBtnExit = document.getElementById('mobile-exit');
+
+    mobileBtn.addEventListener('click', () => {
+      nav.classList.add('menu-btn');
+    })
+
+    mobileBtnExit.addEventListener('click', () => {
+      nav.classList.remove('menu-btn');
+    })
+  </script>
+
+  <!-- assign navbar height to --nav-height -->
+  <script>document.documentElement.style.setProperty('--nav-height', `${document.getElementById("nav_section").offsetHeight}px`);</script>
+
+</body>
+
+
+<footer class="footer" id="footer_custom">
+  <div class=footer_right>
+    <a class="footer_link_item" href="https://iamnick.info">Contact</a>
+    <!-- <a class="footer_link_item" href="{{ url_for('main.home') }}">Privacy</a> -->
+  </div>
+</footer>
+
+</html>
