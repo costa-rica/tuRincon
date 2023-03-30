@@ -8,20 +8,21 @@
     
     <div class="home_sub">
 
-      <div class="std_framing">
-        Tu Rincón is a social media app designed for small, intimate groups seeking a cozy and welcoming online space. Set up your group or join an existing one.
+      <div class="std_framing home_framing">
+        Tu Rincón is a space designed for small, intimate groups seeking a cozy and welcoming online space.
       </div>
   
-      <!-- <div class="login_group">
-        <div class="login">
-          email:
-          <input type="email" class="form-control"  placeholder="Enter email" name="email">
-        </div>
-        <div class="login">
-          password: 
-          <input type="password" class="form-control" placeholder="Password" name="password">
-        </div>
-      </div> -->
+      <div class="home_buttons">
+
+        <a class="div_button home_register" href="{{ url_for('users.register') }}">
+          Register
+        </a>
+        
+        <a class="div_button home_login" href="{{ url_for('users.login') }}">
+          Login
+        </a>
+  
+      </div>
 
     </div>
 

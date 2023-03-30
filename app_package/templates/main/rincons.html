@@ -1,0 +1,69 @@
+{% extends "_layout.html" %}
+{% block main %}
+<form method="POST" id="form_1"></form>
+
+<section class="main">
+  <div class="rincons_page">
+    <div class="title">
+      <h1>Rincons</h1>
+    </div>
+    
+    <div class="rincons_sub">
+
+      {% if users_rincons_list != "no_rincons" %}
+ 
+
+
+      <div class="search-container">
+        <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search your rincóns">
+      </div>
+      <table id="searchableTable01" class="responsive-table">
+        <thead>
+          <tr>
+            
+            <th></th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in users_rincons_list %}
+          
+          <tr>
+            <td><a  href="{{ url_for('main.rincon', rincon_name=row) }}">{{ row }}</a></td>
+            
+          </tr>
+        <!-- </a> -->
+          {% endfor %}
+
+        </tbody>
+      </table>
+
+      <script src="../static/custom_js_and_css/searchTable01.js"></script>
+
+
+      <br>
+      <hr>
+      {% endif %}
+      <div class="rincon_buttons">
+
+        <a class="div_button search" href="{{ url_for('main.search_rincons') }}">
+          Search Rincóns
+        </a>
+        
+        <a class="div_button create" href="{{ url_for('main.create_rincon') }}">
+          Create New Rincón
+        </a>
+  
+      </div>
+
+
+
+    </div>
+
+
+
+  </div>
+</section>
+
+
+{% endblock %}

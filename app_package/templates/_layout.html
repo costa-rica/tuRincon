@@ -8,8 +8,16 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
   <!-- /static/images/blog32.png -->
+
+      <!-- Import the Bootstrap stylesheet -->
+      <script src="../static/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+      <script src="../static/custom_js_and_css/jquery-3.6.1.js"></script>
+
+
+
+
   <link rel="icon" type="image/x-icon" href="/static/images/tuRinconIcon.png">
-  <title>Blog Template</title>
+  <title>Tu Rincón</title>
 
 </head>
 
@@ -38,7 +46,16 @@
 
 
         <div class="middle_nav_div">
+          {% if rincon_name %}
+          <h1>{{ rincon_name }}</h1>
+          {% else %}
           <h1>Tu Rincón</h1>
+          {% endif %}
+
+          {% if current_user %}
+            {{ current_user.username }}
+          {% endif %}
+
         </div>
 
       </div>
@@ -53,11 +70,69 @@
           <br>
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
-          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Posts</a></li>
+          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
+          {% if rincon_name %}
+          <li class="nav-item li_primary">
+            <button type="button" class="dash_id_button form-control"
+            data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="Some data">Post
+          </button>
+          </li>
+          {% endif %}
         </ul>
       </nav>
 
+
+
+
+
+
+
   </section>
+
+  <form method="POST" id="form_modal"></form>
+      <!-- Modal  -->
+      <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" name="Post" value="true"class="btn btn-primary" form="form_modal">Post</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  <div class = "flash_custom_parent" >
+        
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+  
+        <div class="alert alert-{{ category }} alert_custom" id="div_flash"  >
+          <i class="close icon"></i>
+  
+          {{ message }}
+          <div class="close_right">
+            <input type="button" value=&#10006 onclick="removeFlash()" class="btn btn-secondary btn_custom02">
+          </div>
+          
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+  
+  </div>
+
   {% block main %}{% endblock %}
   <script>
     const mobileBtn = document.getElementById('mobile-cta')
@@ -72,6 +147,15 @@
       nav.classList.remove('menu-btn');
     })
   </script>
+
+
+<!-- Remove flash on click -->
+<script>
+  function removeFlash() {
+      const element = document.getElementById('div_flash');
+      element.remove();
+  }
+</script>
 
   <!-- assign navbar height to --nav-height -->
   <script>document.documentElement.style.setProperty('--nav-height', `${document.getElementById("nav_section").offsetHeight}px`);</script>

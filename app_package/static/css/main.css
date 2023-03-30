@@ -10990,23 +10990,41 @@ section.main {
   width: 100%;
 }
 .home_page .home_sub {
-  padding: 2rem 5rem 2rem 5rem;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-.home_page .login_group {
-  max-width: 75rem;
+.home_page .home_framing {
+  padding: 2rem;
 }
-.home_page .table_custom {
-  background-color: var(--bs-gray-300);
-  padding: 1rem;
-  border-radius: 1rem;
+.home_page .home_buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  width: 100%;
 }
-.home_page .table_custom td {
-  margin: 0;
-  padding: 0;
-  vertical-align: middle;
+.home_page .div_button {
+  padding: 1rem 0 1rem 0;
+  width: 100%;
+  border-radius: 3rem;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+.home_page .home_register {
+  background-color: var(--bs-primary);
+  border: solid var(--bs-primary);
+  border-width: 0.5rem;
+  color: var(--bs-gray-200);
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+.home_page .home_login {
+  color: var(--bs-primary);
+  border: solid var(--bs-primary);
+  border-width: 0.5rem;
+  text-decoration: none;
 }
 
 /* Login Page */
@@ -11021,7 +11039,8 @@ section.main {
   background-color: white;
   color: var(--bs-gray-800);
 }
-.login_page .login_form .email_form input, .login_page .login_form .password_form input {
+.login_page .login_form .email_form input,
+.login_page .login_form .password_form input {
   width: 95%;
 }
 .login_page .login_form .element_right {
@@ -11042,7 +11061,14 @@ section.main {
 
 /* Register Page */
 .register_page {
-  width: 95%;
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.register_page .title {
+  width: 100%;
 }
 .register_page .register_form {
   border-radius: 1.5em;
@@ -11050,38 +11076,185 @@ section.main {
   margin: 0 0 0 0.2rem;
   font-size: 1.5em;
   background-color: white;
-  color: var(--bs-gray-800);
 }
-.register_page .register_form .email_form input {
-  width: 100%;
+.register_page .register_form .submit_form_group {
+  float: right;
+  padding: 1rem 1rem 0 0;
 }
 .register_page .register_form .element_right {
-  display: flex;
-  justify-content: end;
-  flex-wrap: wrap;
+  float: right;
 }
-.register_page .register_form .element_right .show_password {
+
+/* Rincons Page */
+.rincons_page {
+  width: 95%;
+  /* Table */
+}
+.rincons_page .rincons_sub {
+  border-radius: 1.5em;
+  padding: 3rem 0 10rem 0.2rem;
+  margin: 0 0 0 0.2rem;
+  font-size: 1.5em;
+  background-color: white;
+  color: var(--bs-gray-800);
+}
+.rincons_page .rincon_buttons {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
   width: 100%;
-  justify-content: end;
-  padding: 0 0.5rem 0 0;
 }
-.register_page .register_form .element_right .element_right_sub {
+.rincons_page .div_button {
+  padding: 1rem 0 1rem 0;
+  width: 100%;
+  border-radius: 3rem;
+  font-size: 2.5rem;
   display: flex;
-  justify-content: end;
-  flex-wrap: wrap;
-  padding: 0.3rem 0.5rem 0 0;
+  justify-content: center;
 }
-.register_page .register_form .element_right .element_right_sub input {
-  font-size: 1.25em;
-  margin-top: 0.5rem;
-  margin-left: 10%;
-}
-.register_page .register_form .element_right .element_right_sub .forgot_password {
-  margin-top: 0.5rem;
-}
-.register_page .register_form .element_right .element_right_sub .forgot_password a {
+.rincons_page .search {
+  background-color: var(--bs-primary);
+  border: solid var(--bs-primary);
+  border-width: 0.5rem;
   color: var(--bs-gray-200);
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+.rincons_page .create {
+  color: var(--bs-primary);
+  border: solid var(--bs-primary);
+  border-width: 0.5rem;
+  text-decoration: none;
+}
+.rincons_page .search-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+.rincons_page input[type=text] {
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  width: 80%;
+  font-size: 16px;
+  outline: none;
+}
+.rincons_page input[type=text]:focus {
+  border-bottom: 2px solid #555;
+}
+.rincons_page #searchableTable01 {
+  border-collapse: collapse;
+  width: 100%;
+}
+.rincons_page #searchableTable01 th,
+.rincons_page #searchableTable01 td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+.rincons_page #searchableTable01 th {
+  background-color: #f2f2f2;
+  color: #555;
+}
+.rincons_page #searchableTable01 tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.rincons_page #searchableTable01 tbody tr:hover {
+  background-color: #ddd;
+}
+.rincons_page #searchableTable01 a {
+  text-decoration: none;
+  color: inherit;
+}
+.rincons_page #searchableTable01 a:hover {
+  background-color: #ddd;
+}
+
+/* Create Rincons Page */
+.create_rincon_page {
+  width: 95%;
+}
+.create_rincon_page .rincons_sub {
+  border-radius: 1.5em;
+  padding: 3rem 0 10rem 0.2rem;
+  margin: 0 0 0 0.2rem;
+  font-size: 1.5em;
+  background-color: white;
+  color: var(--bs-gray-800);
+}
+.create_rincon_page .element_right {
+  padding-top: 1rem;
+  float: right;
+}
+.create_rincon_page .submit_form_group {
+  float: right;
+  padding: 1rem 1rem 0 0;
+}
+
+/* Search Rincons Page */
+.rincons_search_page {
+  width: 95%;
+}
+.rincons_search_page .rincons_sub {
+  border-radius: 1.5em;
+  padding: 3rem 0 10rem 0.2rem;
+  margin: 0 0 0 0.2rem;
+  font-size: 1.5em;
+  background-color: white;
+  color: var(--bs-gray-800);
+}
+.rincons_search_page .element_right {
+  padding: 1rem 1rem;
+  float: right;
+}
+.rincons_search_page table.responsive-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.rincons_search_page table.responsive-table th,
+.rincons_search_page table.responsive-table td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+.rincons_search_page table.responsive-table th {
+  background-color: #f2f2f2;
+  color: #555;
+}
+.rincons_search_page table.responsive-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.rincons_search_page table.responsive-table td.expand-row {
+  display: none;
+  padding: 0;
+}
+@media only screen and (max-width: 600px) {
+  .rincons_search_page table.responsive-table {
+    display: block;
+    overflow-x: auto;
+  }
+  .rincons_search_page table.responsive-table thead {
+    display: none;
+  }
+  .rincons_search_page table.responsive-table td.expand-row {
+    display: table-row;
+  }
+  .rincons_search_page table.responsive-table td.expand-row div {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  .rincons_search_page table.responsive-table td.expand-row .expand-content {
+    display: none;
+  }
+  .rincons_search_page table.responsive-table td.expand-row.expanded .expand-content {
+    display: block;
+  }
+  .rincons_search_page table.responsive-table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

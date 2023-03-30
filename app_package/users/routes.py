@@ -8,6 +8,11 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 import json
+from tr01_models import sess, engine, text, Base, \
+    Users, Rincons, RinconsPosts, RinconsPostsLikes, \
+    RinconsPostsComments, RinconsPostsCommentsLikes, UsersToRincons
+
+from app_package.users.utils import send_reset_email, send_confirm_email
 
 #Setting up Logger
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
@@ -17,7 +22,7 @@ formatter_terminal = logging.Formatter('%(asctime)s:%(filename)s:%(name)s:%(mess
 logger_users = logging.getLogger(__name__)
 logger_users.setLevel(logging.DEBUG)
 
-file_handler = RotatingFileHandler(os.path.join(os.environ.get('PROJ_ROOT_PATH'),'logs','users_routes.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
+file_handler = RotatingFileHandler(os.path.join(os.environ.get('WEB_ROOT'),'logs','users_routes.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
 file_handler.setFormatter(formatter)
 
 #where the stream_handler will print
@@ -56,34 +61,34 @@ users = Blueprint('users', __name__)
 @users.route('/login', methods = ['GET', 'POST'])
 def login():
     print('* in login *')
-    # if current_user.is_authenticated:
-    #     return redirect(url_for('main.home', dash_dependent_var='steps'))
+    if current_user.is_authenticated:
+        return redirect(url_for('main.rincons'))
     page_name = 'Login'
     if request.method == 'POST':
         formDict = request.form.to_dict()
-
+        print(f"formDict: {formDict}")
         email = formDict.get('email')
 
         user = sess.query(Users).filter_by(email=email).first()
 
         # verify password using hash
-        password = formDict.get('password_text')
+        password = formDict.get('password')
 
         if user:
             if password:
                 if bcrypt.checkpw(password.encode(), user.password):
                     login_user(user)
 
-                    return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
+                    return redirect(url_for('main.rincons'))
                 else:
                     flash('Password or email incorrectly entered', 'warning')
             else:
                 flash('Must enter password', 'warning')
-        elif formDict.get('btn_login_as_guest'):
-            user = sess.query(Users).filter_by(id=2).first()
-            login_user(user)
+        # elif formDict.get('btn_login_as_guest'):
+        #     user = sess.query(Users).filter_by(id=2).first()
+        #     login_user(user)
 
-            return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
+        #     return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
         else:
             flash('No user by that name', 'warning')
 
@@ -93,7 +98,7 @@ def login():
 @users.route('/register', methods = ['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
+        return redirect(url_for('main.rincons'))
     page_name = 'Register'
     if request.method == 'POST':
         formDict = request.form.to_dict()
@@ -104,7 +109,7 @@ def register():
             flash(f'The email you entered already exists you can sign in or try another email.', 'warning')
             return redirect(url_for('users.register'))
 
-        hash_pw = bcrypt.hashpw(formDict.get('password_text').encode(), salt)
+        hash_pw = bcrypt.hashpw(formDict.get('password').encode(), salt)
         new_user = Users(email = new_email, password = hash_pw)
         sess.add(new_user)
         sess.commit()
@@ -122,7 +127,7 @@ def register():
         print(new_user)
         login_user(new_user)
         flash(f'Succesfully registered: {new_email}', 'info')
-        return redirect(url_for('users.login'))
+        return redirect(url_for('main.rincons'))
 
     return render_template('register.html', page_name = page_name)
 

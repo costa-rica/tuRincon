@@ -7,7 +7,7 @@
   // --table-chart-width: 100%;
 }
 
-body{
+body {
   // background-color: #CFD4D9;
   background-color: var(--bs-gray-400);
   min-height: 100vh;
@@ -16,7 +16,7 @@ body{
   font-family: 'Roboto Slab', serif;
 }
 
-section.main{
+section.main {
   padding-top: var(--nav-height);
   padding-bottom: var(--nav-height);
   display: flex;
@@ -36,25 +36,65 @@ section.main{
 }
 
 /* Home Page */
-.home_page{
+.home_page {
   width: 90%;
   padding: 3rem 0 0 0;
-  display:flex;
+  display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  .title{
-    width:100%;
+
+  .title {
+    width: 100%;
   }
-  .home_sub{
-    padding:2rem 5rem 2rem 5rem;
-    display:flex;
+
+  .home_sub {
+    // padding: 2rem 5rem 2rem 5rem;
+    display: flex;
     justify-content: center;
     flex-wrap: wrap;
   }
-  .login_group{
-    max-width: 75rem;
+
+  // .login_group {
+  //   max-width: 75rem;
+  // }
+  .home_framing{
+    padding: 2rem;
+  }
+  .home_buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+  .div_button {
+    // margin: 0 0 0 0;
+    padding: 1rem 0 1rem 0;
+    width: 100%;
+    border-radius: 3rem;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .home_register {
+    background-color: var(--bs-primary);
+    border: solid var(--bs-primary);
+    border-width: .5rem;
+    color: var(--bs-gray-200);
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+
+  .home_login {
+    color: var(--bs-primary);
+    border: solid var(--bs-primary);
+    border-width: .5rem;
+    text-decoration: none;
 
   }
+
   // code { 
   //   // background: black;
   //   color: var(--bs-gray-200)
@@ -72,50 +112,60 @@ section.main{
   //   white-space: pre-line;
   //   padding: 1rem
   // }
-  .table_custom {
-    // background-color: gray;
-    background-color: var(--bs-gray-300);
-    padding:1rem;
-    border-radius: 1rem;
-    td {
-      // white-space:nowrap;
-      margin:0;
-      padding:0;
-      // width:min-content;
-      // text-align: center;
-      vertical-align: middle;
-    }
-  }
+  // .table_custom {
+  //   // background-color: gray;
+  //   background-color: var(--bs-gray-300);
+  //   padding:1rem;
+  //   border-radius: 1rem;
+  //   td {
+  //     // white-space:nowrap;
+  //     margin:0;
+  //     padding:0;
+  //     // width:min-content;
+  //     // text-align: center;
+  //     vertical-align: middle;
+  //   }
+  // }
 
 }
 
 /* Login Page */
-.login_page{
-  width:95%;
-  .login_form{
+.login_page {
+  width: 95%;
+
+  .login_form {
     border-radius: 1.5em;
     padding: 3rem 0 10rem .2rem;
     margin: 0 0 0 .2rem;
     font-size: 1.5em;
     background-color: white;
     color: var(--bs-gray-800);
-    .email_form, .password_form{
-      input{width:95%}
+
+    .email_form,
+    .password_form {
+      input {
+        width: 95%
+      }
+
       // .register_text{width:100%}
     }
+
     .element_right {
-      float:right;
+      float: right;
       padding-bottom: 2rem;
     }
-    .show_password{
-      padding:1rem 1rem;
+
+    .show_password {
+      padding: 1rem 1rem;
     }
-    .element_right_sub{
-      padding:1rem 1rem;
-      float:right;
+
+    .element_right_sub {
+      padding: 1rem 1rem;
+      float: right;
     }
-    .forgot_password{
-      font-size:1rem;
+
+    .forgot_password {
+      font-size: 1rem;
       // float:right;
       padding-bottom: 3rem;
     }
@@ -123,62 +173,343 @@ section.main{
 }
 
 /* Register Page */
-.register_page{
-  width: 95%;
+.register_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+  }
+
   .register_form {
-    // width: 95%;
+
     border-radius: 1.5em;
     padding: 3rem 0 10rem .2rem;
     margin: 0 0 0 .2rem;
     font-size: 1.5em;
-    // background-color: var(--bs-gray-100);
-    background-color: white;
-    // color: white;
-    color: var(--bs-gray-800);
-    // .email_combo {
-    //     padding: 0 0 1rem .2rem;
-    // }
 
-    // .register_text {
-    //     // min-width: 90%;
-    //     width: 95%;
+    background-color: white;
+
+    // .email_form_group, .password_form_group, .submit_form_group{
+    //   // width: 80%;
+    //   // background-color: green;
     // }
-    .email_form{
-      input{width:100%}
+    .submit_form_group{
+    float:right;
+    padding:1rem 1rem 0 0;
     }
 
     .element_right {
-        display: flex;
-        justify-content: end;
-        flex-wrap: wrap;
+      float:right;
 
-        .show_password {
-            display: flex;
-            width: 100%;
-            justify-content: end;
-            padding: 0 .5rem 0 0;
-        }
-
-        .element_right_sub {
-            display: flex;
-            justify-content: end;
-            flex-wrap: wrap;
-            padding: .3rem .5rem 0 0;
-            input {
-                font-size: 1.25em;
-                margin-top: .5rem;
-                margin-left: 10%;
-            }
-            .forgot_password {
-                margin-top: .5rem;
-
-                a {
-                    // color: white
-                    color: var(--bs-gray-200);
-                }
-            }
-        }
     }
+
+  }
 }
+
+/* Rincons Page */
+.rincons_page{
+  width: 95%;
+
+  .rincons_sub {
+    border-radius: 1.5em;
+    padding: 3rem 0 10rem .2rem;
+    margin: 0 0 0 .2rem;
+    font-size: 1.5em;
+    background-color: white;
+    color: var(--bs-gray-800);
+  }
+
+  // .home_framing{
+  //   padding: 2rem;
+  // }
+  .rincon_buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+  .div_button {
+    // margin: 0 0 0 0;
+    padding: 1rem 0 1rem 0;
+    width: 100%;
+    border-radius: 3rem;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .search {
+    background-color: var(--bs-primary);
+    border: solid var(--bs-primary);
+    border-width: .5rem;
+    color: var(--bs-gray-200);
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+
+  .create {
+    color: var(--bs-primary);
+    border: solid var(--bs-primary);
+    border-width: .5rem;
+    text-decoration: none;
+  }
+
+  /* Table */
+
+  //   table {
+  //   border-collapse: collapse;
+  //   width: 100%;
+  // }
+  
+  // th, td {
+  //   text-align: left;
+  //   padding: 8px;
+  // }
+  // td > a {
+  //   width: 100%;
+  //   background-color: green;
+  // }
+  
+  // th {
+  //   background-color: #555;
+  //   color: white;
+  // }
+  
+  // tr:nth-child(even) {
+  //   background-color: #f2f2f2;
+  // }
+  
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  input[type=text] {
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #ddd;
+    width: 80%;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  input[type=text]:focus {
+    border-bottom: 2px solid #555;
+  }
+  
+  // @media only screen and (max-width: 600px) {
+  //   input[type=text] {
+  //     width: 100%;
+  //   }
+  // }
+
+  
+  #searchableTable01 {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #searchableTable01 th,
+  #searchableTable01 td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  #searchableTable01 th {
+    background-color: #f2f2f2;
+    color: #555;
+  }
+  
+  #searchableTable01 tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #searchableTable01 tbody tr:hover {
+    background-color: #ddd;
+  }
+  
+  #searchableTable01 a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  #searchableTable01 a:hover {
+    background-color: #ddd;
+  }
+  
+
 }
+
+
+/* Create Rincons Page */
+.create_rincon_page{
+  width: 95%;
+
+  .rincons_sub {
+    border-radius: 1.5em;
+    padding: 3rem 0 10rem .2rem;
+    margin: 0 0 0 .2rem;
+    font-size: 1.5em;
+    background-color: white;
+    color: var(--bs-gray-800);
+  }
+
+  .element_right {
+    padding-top:1rem;
+    float:right;
+    // width:100%;
+  }
+
+  .submit_form_group{
+    float:right;
+    padding:1rem 1rem 0 0;
+    }
+
+  // .element_right {
+  //   float:right;
+  //   // width:100%;
+  // }
+
+}
+
+
+
+/* Search Rincons Page */
+.rincons_search_page{
+  width: 95%;
+
+  .rincons_sub {
+    border-radius: 1.5em;
+    padding: 3rem 0 10rem .2rem;
+    margin: 0 0 0 .2rem;
+    font-size: 1.5em;
+    background-color: white;
+    color: var(--bs-gray-800);
+  }
+
+  .element_right {
+    padding:1rem 1rem;
+    float:right;
+    // width:100%;
+
+  }
+
+  // #table_id_length{display:none}
+
+  // table {
+  //   border-collapse: collapse;
+  //   width: 100%;
+  // }
+  
+  // th, td {
+  //   text-align: left;
+  //   padding: 8px;
+  // }
+  
+  // th {
+  //   background-color: #555;
+  //   color: white;
+  // }
+  
+  // tr:nth-child(even) {
+  //   background-color: #f2f2f2;
+  // }
+  
+  // .search-container {
+  //   display: flex;
+  //   justify-content: center;
+  //   margin: 20px 0;
+  // }
+  
+  // input[type=text] {
+  //   padding: 10px;
+  //   border: none;
+  //   border-bottom: 2px solid #ddd;
+  //   width: 80%;
+  //   font-size: 16px;
+  //   outline: none;
+  // }
+  
+  // input[type=text]:focus {
+  //   border-bottom: 2px solid #555;
+  // }
+  
+  // @media only screen and (max-width: 600px) {
+  //   input[type=text] {
+  //     width: 100%;
+  //   }
+  // }
+  
+
+
+  table.responsive-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  table.responsive-table th,
+  table.responsive-table td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  table.responsive-table th {
+    background-color: #f2f2f2;
+    color: #555;
+  }
+  
+  table.responsive-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  table.responsive-table td.expand-row {
+    display: none;
+    padding: 0;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    table.responsive-table {
+      display: block;
+      overflow-x: auto;
+    }
+  
+    table.responsive-table thead {
+      display: none;
+    }
+  
+    table.responsive-table td.expand-row {
+      display: table-row;
+    }
+  
+    table.responsive-table td.expand-row div {
+      padding: 8px;
+      border: 1px solid #ddd;
+    }
+    
+    table.responsive-table td.expand-row .expand-content {
+      display: none;
+    }
+    
+    table.responsive-table td.expand-row.expanded .expand-content {
+      display: block;
+    }
+  
+    table.responsive-table td:before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+    }
+  }
+}
+
+
 

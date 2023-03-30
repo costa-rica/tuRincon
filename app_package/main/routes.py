@@ -1,8 +1,12 @@
 from flask import Blueprint
-from flask import render_template, request
+from flask import render_template, url_for, redirect, flash, request, \
+    abort, session, Response, current_app, send_from_directory, make_response
+# import bcrypt
+from flask_login import login_required, login_user, logout_user, current_user
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons
 
 
 main = Blueprint('main', __name__)
@@ -13,7 +17,7 @@ formatter_terminal = logging.Formatter('%(asctime)s:%(filename)s:%(name)s:%(mess
 logger_main = logging.getLogger(__name__)
 logger_main.setLevel(logging.DEBUG)
 
-file_handler = RotatingFileHandler(os.path.join(os.environ.get('PROJ_ROOT_PATH'),'logs','main_routes.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
+file_handler = RotatingFileHandler(os.path.join(os.environ.get('WEB_ROOT'),'logs','main_routes.log'), mode='a', maxBytes=5*1024*1024,backupCount=2)
 file_handler.setFormatter(formatter)
 
 stream_handler = logging.StreamHandler()
@@ -31,3 +35,141 @@ def home():
         formDict = request.form.to_dict()
 
     return render_template('home.html')
+
+
+@main.route("/rincons", methods=["GET", "POST"])
+def rincons():
+    users_rincons_list = [i.rincon.name for i in current_user.rincons]
+
+    return render_template('main/rincons.html',users_rincons_list=users_rincons_list )
+
+
+
+@main.route("/search_rincons", methods=["GET", "POST"])
+def search_rincons():
+
+    print(f"- search_rincons -")
+
+    rincon_list = request.args.get('rincon_list')
+    print(f"rincon_list: {rincon_list}")
+    print(type(rincon_list))
+    if rincon_list == "reset" or rincon_list==None:
+        rincon_list = "no_rincons"
+    else:
+
+        rincon_list = request.args.getlist('rincon_list')
+        print("- converted rincon_list back to list - ")
+        print(type(rincon_list))
+        print(list(rincon_list[0])[0])
+    column_names = ["ID", "Name", "Manager Name"]
+
+    if request.method == "POST":
+        formDict = request.form.to_dict()
+        print(f"- search_rincons POST -")
+        print("formDict: ", formDict)
+
+        # print(f"reset_serach: {formDict.get('reset_search') }")
+        
+
+        if formDict.get('reset_search') == 'true':
+            print("- RESET_search")
+            rincon_list = "reset"
+            return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
+
+        elif formDict.get('join'):
+            print("- JOIN was selected -")
+            new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= int(formDict.get('join')))
+            sess.add(new_member)
+            sess.commit()
+            print("Rincon ID: ", formDict.get('join'))
+            flash("Added to Rincon", "success")
+            return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
+
+        elif formDict.get('leave'):
+            print("- leave was selected -")
+
+            # TODO: This doesn't work - figure out deleteing from association table (UsersToRincons)
+
+            sess.query(UsersToRincons,(current_user.id, int(formDict.get('leave')))).delete()
+            sess.commit()
+            print("Rincon ID: ", formDict.get('leave'))
+            flash("Removed to Rincon", "warning")
+            return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
+        else:
+            search_string = formDict.get("search_string")
+            print(f"- search_string: {search_string} -")
+            if search_string != "":
+                search_list = sess.query(Rincons).filter(Rincons.name.contains(search_string))
+            else:
+                print("- get all the rincons -")
+                search_list = sess.query(Rincons).all()
+
+
+            # rincon list id, name of rincon, manager name, is user alraedy a member
+            rincon_list = []
+            for rincon in search_list:
+                temp_list =[]
+                temp_list.append(rincon.id)
+                temp_list.append(rincon.name)
+                temp_list.append(sess.get(Users, rincon.manager_id).username)
+                members_id_list = [i.users_table_id for i in rincon.users]
+                member = True if current_user.id in members_id_list else False
+                temp_list.append(member)
+                rincon_list.append(temp_list)
+
+            
+            print(f"rincon_list: {rincon_list }")
+            print(f"rincon_list: {type(rincon_list) }")
+            # return redirect(url_for('main.search_rincons', rincon_list=rincon_list, column_names=column_names))
+
+
+    return render_template('main/rincons_search.html', rincon_list=rincon_list, column_names=column_names  )
+
+
+@main.route("/create_rincon", methods=["GET", "POST"])
+@login_required
+def create_rincon():
+
+    print(f"current_user: {current_user.username}")
+
+    if request.method == "POST":
+        formDict = request.form.to_dict()
+
+        print(f"formDict: {formDict}")
+
+        public = False
+        if formDict.get('public_checkbox') == 'true':
+            public = True
+        if formDict.get('rincon_name') != "":
+            new_rincon = Rincons(name= formDict.get('rincon_name'), manager_id=current_user.id, public=public)
+            
+            sess.add(new_rincon)
+            sess.commit()
+
+            new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= new_rincon.id)
+            sess.add(new_member)
+            sess.commit()
+            flash("Rincon successfully created!", "success")
+            
+            return redirect(url_for('main.search_rincons'))
+        
+        flash("Rincon needs name", "warning")
+
+        return redirect(url_for('main.create_rincon'))
+
+
+
+    return render_template('main/create_rincon.html')
+
+
+@main.route("/rincon/<rincon_name>", methods=["GET","POST"])
+@login_required
+def rincon(rincon_name):
+    # rincon_name = request.args.get('rincon_name')
+    print("- rincon page -")
+    if request.method == "POST":
+        formDict = request.form.to_dict()
+        print(f"- search_rincons POST -")
+        print("formDict: ", formDict)
+
+    return render_template('main/rincon_template.html', rincon_name=rincon_name)

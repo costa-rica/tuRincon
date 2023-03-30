@@ -1,0 +1,42 @@
+{% extends "_layout.html" %}
+{% block main %}
+<form method="POST" id="form_1"></form>
+
+<section class="main">
+  <div class="create_rincon_page">
+    <div class="title">
+      <h1>Create New Rincon</h1>
+    </div>
+    
+    <div class="rincons_sub">
+
+
+      <div class="create_form_group">
+        <!-- <label for="search">Name:</label> -->
+        <input type="text" id="rincon" name="rincon_name" class="register_text" form="form_1" placeholder="Enter rincón name">
+
+
+
+          <div class="submit_form_group">
+            <input class="form-check-input" type="checkbox" value="true" name="public_checkbox" form="form_1">
+            <label class="form-check-label" for="password_checkbox">
+              Public
+            </label>
+            <br>
+            <div class="element_right">
+              <input type="submit" value="Create" class="btn btn-secondary btn_custom01" form="form_1">
+            </div>
+          </div>
+
+      </div>
+
+
+    </div>
+
+
+
+  </div>
+</section>
+
+
+{% endblock %}
