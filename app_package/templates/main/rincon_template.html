@@ -1,6 +1,7 @@
 {% extends "_layout.html" %}
 {% block main %}
 <form method="POST" id="form_1"></form>
+<form method="POST" id="form_modal_comment" ></form>
 
 <section class="main">
   <div class="rincon_page">
@@ -77,5 +78,13 @@
   </div><!--rincon_page-->
 
 </section>
+
+
+  <!-- Modal  -->
+  <div class="modal" tabindex="-1" role="dialog" id="commentModal">
+    {% include "modals/comment.html" %}
+
+  </div>
+
 
 {% endblock %}

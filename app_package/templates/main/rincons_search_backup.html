@@ -19,21 +19,15 @@
 
         {% if rincon_list == "no_rincons" %}
         <div class="search_form_group">
-          <div class="input_form_div">
-            <input type="text" id="rincon" name="search_string" class="register_text" form="form_1"
-            placeholder="Enter rincón name">
-          </div>
 
+          <input type="text" id="rincon" name="search_string" class="register_text" form="form_1"
+            placeholder="Enter rincón name">
 
           <div class="element_right">
             <input type="submit" value="Submit" class="btn btn-secondary btn_custom01" form="form_1">
           </div>
 
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
 
         {% else %}
         <div class="element_right_super">
@@ -55,15 +49,15 @@
         <div class="search-container">
           <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for names...">
         </div>
-        <table id="searchableTable01" class="responsive-table">
+        <table id="myTable" class="responsive-table">
           <thead>
             <tr>
-
+              
               {% for col in column_names %}
               <th>{{ col }}</th>
               {% endfor %}
               <th> </th>
-
+ 
             </tr>
           </thead>
           <tbody>
@@ -106,5 +100,5 @@
   </div><!-- rincons_search_page -->
 </section>
 
-<script src="../static/custom_js_and_css/searchTable01.js"></script>
+<script src="../static/custom_js_and_css/searchTable.js"></script>
 {% endblock %}

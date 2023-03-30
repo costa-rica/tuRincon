@@ -1,0 +1,46 @@
+<div class="modal-dialog create_post_modal" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Comment</h5>
+      <button type="button" id="close_button" class="btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Text box -->
+      <textarea class="form-control" name="post_text" form="form_modal_post"></textarea>
+
+      <!-- Add image icon -->
+      
+      <div id="fileList"></div>
+        <!-- <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"> -->
+     
+    </div>
+    <div class="modal-footer">
+      <div class="add_photo_icon_div">
+
+<!--
+        <input id="fileInput" type="file" style="display:none;" form="form_modal_post" accept=".png,.jpeg" name="add_photo_file" />
+
+         <button class="btn btn_hide">
+          <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png" 
+          onclick="document.getElementById('fileInput').click();"
+          >
+        </button> -->
+        <!-- <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png"> -->
+      </div>
+      
+      <button type="submit" name="btn_post" value="true"class="btn btn-primary" form="form_modal_post">Post</button>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#close_button").click(function(){
+      $("#commentModal").modal("hide");
+    });
+  });
+</script>
+

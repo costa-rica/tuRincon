@@ -11030,18 +11030,29 @@ section.main {
 /* Login Page */
 .login_page {
   width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.login_page .title {
+  width: 100%;
 }
 .login_page .login_form {
   border-radius: 1.5em;
-  padding: 3rem 0 10rem 0.2rem;
-  margin: 0 0 0 0.2rem;
+  padding: 3rem 0 3rem 0;
+  width: calc(100% - 0.5rem);
   font-size: 1.5em;
   background-color: white;
-  color: var(--bs-gray-800);
+  display: flex;
+  justify-content: center;
+}
+.login_page .login_form .login_form_sub {
+  width: calc(100% - 1rem);
 }
 .login_page .login_form .email_form input,
 .login_page .login_form .password_form input {
-  width: 95%;
+  width: 100%;
 }
 .login_page .login_form .element_right {
   float: right;
@@ -11051,7 +11062,6 @@ section.main {
   padding: 1rem 1rem;
 }
 .login_page .login_form .element_right_sub {
-  padding: 1rem 1rem;
   float: right;
 }
 .login_page .login_form .forgot_password {
@@ -11061,7 +11071,7 @@ section.main {
 
 /* Register Page */
 .register_page {
-  width: 90%;
+  width: 95%;
   padding: 3rem 0 0 0;
   display: flex;
   justify-content: center;
@@ -11072,31 +11082,48 @@ section.main {
 }
 .register_page .register_form {
   border-radius: 1.5em;
-  padding: 3rem 0 10rem 0.2rem;
-  margin: 0 0 0 0.2rem;
+  padding: 3rem 0 3rem 0;
+  width: calc(100% - 0.5rem);
   font-size: 1.5em;
   background-color: white;
+  display: flex;
+  justify-content: center;
 }
-.register_page .register_form .submit_form_group {
+.register_page .register_form_sub {
+  width: calc(100% - 1rem);
+}
+.register_page .register_text {
+  width: 100%;
+}
+.register_page .submit_form_group {
   float: right;
   padding: 1rem 1rem 0 0;
 }
-.register_page .register_form .element_right {
+.register_page .element_right {
   float: right;
 }
 
 /* Rincons Page */
 .rincons_page {
   width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   /* Table */
 }
-.rincons_page .rincons_sub {
+.rincons_page .rincons_form_super {
   border-radius: 1.5em;
   padding: 3rem 0 10rem 0.2rem;
   margin: 0 0 0 0.2rem;
   font-size: 1.5em;
   background-color: white;
   color: var(--bs-gray-800);
+  display: flex;
+  justify-content: center;
+}
+.rincons_page .rincons_form {
+  width: calc(100% - 0.5rem);
 }
 .rincons_page .rincon_buttons {
   display: flex;
@@ -11120,12 +11147,25 @@ section.main {
   color: var(--bs-gray-200);
   margin-bottom: 1rem;
   text-decoration: none;
+  font-size: 1.8rem;
 }
 .rincons_page .create {
   color: var(--bs-primary);
   border: solid var(--bs-primary);
   border-width: 0.5rem;
   text-decoration: none;
+  font-size: 2rem;
+}
+.rincons_page .line_break_div {
+  padding: 2rem 0.5rem;
+}
+.rincons_page hr {
+  border-top: 0.25rem solid var(--bs-gray-900);
+  border-radius: 1rem;
+}
+.rincons_page table {
+  border-collapse: collapse;
+  width: 100%;
 }
 .rincons_page .search-container {
   display: flex;
@@ -11145,7 +11185,6 @@ section.main {
 }
 .rincons_page #searchableTable01 {
   border-collapse: collapse;
-  width: 100%;
 }
 .rincons_page #searchableTable01 th,
 .rincons_page #searchableTable01 td {
@@ -11195,66 +11234,92 @@ section.main {
 /* Search Rincons Page */
 .rincons_search_page {
   width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* Table */
 }
-.rincons_search_page .rincons_sub {
+.rincons_search_page .rincons_form_super {
   border-radius: 1.5em;
   padding: 3rem 0 10rem 0.2rem;
   margin: 0 0 0 0.2rem;
   font-size: 1.5em;
   background-color: white;
   color: var(--bs-gray-800);
+  display: flex;
+  justify-content: center;
 }
-.rincons_search_page .element_right {
-  padding: 1rem 1rem;
-  float: right;
+.rincons_search_page .rincons_search_form {
+  width: calc(100% - 0.5rem);
 }
-.rincons_search_page table.responsive-table {
-  border-collapse: collapse;
+.rincons_search_page .search_form_group {
   width: 100%;
 }
-.rincons_search_page table.responsive-table th,
-.rincons_search_page table.responsive-table td {
+.rincons_search_page .register_text {
+  width: 100%;
+}
+.rincons_search_page .element_right_super {
+  width: 100%;
+}
+.rincons_search_page .element_right {
+  padding: 1rem 0;
+  float: right;
+}
+.rincons_search_page .line_break_div {
+  padding: 2rem 0.5rem;
+  width: 100%;
+}
+.rincons_search_page hr {
+  border-top: 0.25rem solid var(--bs-gray-900);
+  border-radius: 1rem;
+}
+.rincons_search_page table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1rem;
+}
+.rincons_search_page .search-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+.rincons_search_page input[type=text] {
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  width: 80%;
+  font-size: 16px;
+  outline: none;
+}
+.rincons_search_page input[type=text]:focus {
+  border-bottom: 2px solid #555;
+}
+.rincons_search_page #searchableTable01 {
+  border-collapse: collapse;
+}
+.rincons_search_page #searchableTable01 th,
+.rincons_search_page #searchableTable01 td {
   text-align: left;
   padding: 8px;
   border: 1px solid #ddd;
 }
-.rincons_search_page table.responsive-table th {
+.rincons_search_page #searchableTable01 th {
   background-color: #f2f2f2;
   color: #555;
 }
-.rincons_search_page table.responsive-table tr:nth-child(even) {
+.rincons_search_page #searchableTable01 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-.rincons_search_page table.responsive-table td.expand-row {
-  display: none;
-  padding: 0;
+.rincons_search_page #searchableTable01 tbody tr:hover {
+  background-color: #ddd;
 }
-@media only screen and (max-width: 600px) {
-  .rincons_search_page table.responsive-table {
-    display: block;
-    overflow-x: auto;
-  }
-  .rincons_search_page table.responsive-table thead {
-    display: none;
-  }
-  .rincons_search_page table.responsive-table td.expand-row {
-    display: table-row;
-  }
-  .rincons_search_page table.responsive-table td.expand-row div {
-    padding: 8px;
-    border: 1px solid #ddd;
-  }
-  .rincons_search_page table.responsive-table td.expand-row .expand-content {
-    display: none;
-  }
-  .rincons_search_page table.responsive-table td.expand-row.expanded .expand-content {
-    display: block;
-  }
-  .rincons_search_page table.responsive-table td:before {
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-  }
+.rincons_search_page #searchableTable01 a {
+  text-decoration: none;
+  color: inherit;
+}
+.rincons_search_page #searchableTable01 a:hover {
+  background-color: #ddd;
 }
 
 /* Rincon Page */

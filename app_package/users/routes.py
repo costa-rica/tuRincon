@@ -135,7 +135,7 @@ def register():
 @users.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('users.home'))
+    return redirect(url_for('main.home'))
 
 
 

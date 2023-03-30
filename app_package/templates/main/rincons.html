@@ -4,66 +4,73 @@
 
 <section class="main">
   <div class="rincons_page">
-    <div class="title">
+    <!-- <div class="title">
       <h1>Rincons</h1>
-    </div>
-    
-    <div class="rincons_sub">
+    </div> -->
 
-      {% if users_rincons_list != "no_rincons" %}
- 
+    <div class="rincons_form_super">
 
+      <div class="rincons_form">
+        {% if users_rincons_list != "no_rincons" %}
 
-      <div class="search-container">
-        <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search your rincóns">
-      </div>
-      <table id="searchableTable01" class="responsive-table">
-        <thead>
-          <tr>
-            
-            <th></th>
+        <div class="line_break_div">
+          <hr>
+        </div>
 
-          </tr>
-        </thead>
-        <tbody>
-          {% for row in users_rincons_list %}
-          
-          <tr>
-            <td><a  href="{{ url_for('main.rincon', rincon_name=row[1], rincon_id=row[0] ) }}">{{ row[1] }}</a></td>
-            
-          </tr>
-        <!-- </a> -->
-          {% endfor %}
+        <div class="search-container">
+          <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search your rincóns">
+        </div>
+        <div class="title">
+          <h1>Your Rincons</h1>
+        </div>
+        <table id="searchableTable01" class="responsive-table">
+          <thead>
+            <tr>
 
-        </tbody>
-      </table>
+              <th></th>
 
-      <script src="../static/custom_js_and_css/searchTable01.js"></script>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in users_rincons_list %}
 
+            <tr>
+              <td><a href="{{ url_for('main.rincon', rincon_name=row[1], rincon_id=row[0] ) }}">{{ row[1] }}</a></td>
 
-      <br>
-      <hr>
-      {% endif %}
-      <div class="rincon_buttons">
+            </tr>
+            <!-- </a> -->
+            {% endfor %}
 
-        <a class="div_button search" href="{{ url_for('main.search_rincons') }}">
-          Search Rincóns
-        </a>
+          </tbody>
+        </table>
+
+        <div class="line_break_div">
+          <hr>
+        </div>
         
-        <a class="div_button create" href="{{ url_for('main.create_rincon') }}">
-          Create New Rincón
-        </a>
-  
-      </div>
 
 
+        {% endif %}
+        <div class="rincon_buttons">
 
-    </div>
+          <a class="div_button search" href="{{ url_for('main.search_rincons') }}">
+            Search Other Rincóns
+          </a>
+
+          <a class="div_button create" href="{{ url_for('main.create_rincon') }}">
+            Create New Rincón
+          </a>
+
+        </div>
+
+      </div><!-- rincons_form_super-->
+
+    </div><!-- rincons_form_super-->
 
 
 
   </div>
 </section>
-
+<script src="../static/custom_js_and_css/searchTable01.js"></script>
 
 {% endblock %}
