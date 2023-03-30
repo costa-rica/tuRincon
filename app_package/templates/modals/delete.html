@@ -1,0 +1,35 @@
+<div class="modal-dialog delete_post_modal" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Are you sure?</h5>
+      <button type="button" id="close_button1" class="btn btn-light">&times;</button>
+    </div>
+    <div class="modal-body">
+      
+      <!-- Text box -->
+
+
+      <!-- Add image icon -->
+      <div class="form-group">
+        <label class="col-form-label mt-4" for="inputDefault">Enter rincón name (<i>{{ rincon_name }}</i>) to delete:</label>
+        <input type="text" class="form-control" name="text_delete" form="form_modal_delete">
+      </div>
+
+      <button type="submit" name="btn_delete" value="true"class="btn btn-warning" form="form_modal_delete">Delete</button>
+
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#close_button1").click(function(){
+      $("#deleteModal").modal("hide");
+    });
+  });
+</script>
+

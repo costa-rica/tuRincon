@@ -29,7 +29,7 @@
           {% for row in users_rincons_list %}
           
           <tr>
-            <td><a  href="{{ url_for('main.rincon', rincon_name=row) }}">{{ row }}</a></td>
+            <td><a  href="{{ url_for('main.rincon', rincon_name=row[1], rincon_id=row[0] ) }}">{{ row[1] }}</a></td>
             
           </tr>
         <!-- </a> -->

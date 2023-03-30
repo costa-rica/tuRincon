@@ -381,7 +381,6 @@ section.main {
 }
 
 
-
 /* Search Rincons Page */
 .rincons_search_page{
   width: 95%;
@@ -511,5 +510,59 @@ section.main {
   }
 }
 
+/* Rincon Page */
+.rincon_page {
 
+  width: 95%;
+  .rincon_post_super{
+    padding:1rem 0 0 0;
+    display:flex;
+    justify-content: center;
+  }
+  .rincon_post_sub {
+    width: 100%;
+    border-radius: 1.5em;
+    padding: 1rem 0 2rem .2rem;
+    margin: 0 0 0 .2rem;
+    font-size: 1.5em;
+    background-color: white;
+    color: var(--bs-gray-800);
+    display:flex;
+    justify-content: center;
+  }
+  .post{width:90%}
+  .username_super{
+    color:gray;
+    display:flex;
+    justify-content: space-between;
+  }
+  .date{font-size: 1rem;}
+  .post_image{
+    max-width: 100%;
+    img{width:20rem}
+
+  }
+  .all_members{
+    display:flex;
+  }
+  .like_post{
+    img{width:2rem}
+  }
+.post_actions_sub{
+  display:flex;
+  justify-content: space-between;
+}
+}
+
+/* Rincon page Modal */
+.create_post_modal{
+  .add_photo_icon_div{
+    padding-right: 2rem;
+  }
+  .add_photo_icon{
+    width: 2rem;
+  }
+
+
+}
 

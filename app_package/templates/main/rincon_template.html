@@ -5,11 +5,77 @@
 <section class="main">
   <div class="rincon_page">
 
-
     <div class="rincon_sub">
 
-    </div>
-  </div>
+      {% for post in rincon_posts %}
+      <div class="rincon_post_super">
+        <div class="rincon_post_sub">
+
+          <div class="post">
+            <div class="username_super">
+              <div class="username">
+                {{ post.username }}
+              </div>
+
+              <div class="date">
+                {{ post.date }}
+              </div>
+
+            </div>
+
+            <br>
+            <div class="post_text">
+              {{ post.text }}
+            </div>
+
+            <br>
+            <div class="post_image">
+              <img class="add_photo_icon" id="add_photo_icon" alt=""
+                src="{{ url_for('static', filename= post.image_name_and_path) }}">
+            </div>
+            <div class="post_actions">
+              <hr>
+              <div class="post_actions_sub">
+                <div class="user_only">
+                  <div class="delete_post">
+                    <button type="submit">Delete</button>
+                  </div>
+                </div>
+
+                <div class="all_members">
+
+                  <div class="comment_post">
+                    <button type="button" class="btn"
+                    data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-whatever="Some data">comment
+                  </button>
+                  </div>
+
+                  <div class="like_post">
+                    <img class="add_photo_icon" id="add_photo_icon" alt=""
+                      src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
+                    </div>
+                  </div>
+  
+
+                </div>
+
+
+              </div><!-- post_actions_sub -->
+
+
+            </div>
+          </div><!--post-->
+
+
+        </div><!--rincon_post_sub-->
+      </div>
+
+      {% endfor %}
+
+    </div><!--rincon_sub-->
+
+  </div><!--rincon_page-->
+
 </section>
 
 {% endblock %}

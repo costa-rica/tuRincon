@@ -11257,4 +11257,60 @@ section.main {
   }
 }
 
+/* Rincon Page */
+.rincon_page {
+  width: 95%;
+}
+.rincon_page .rincon_post_super {
+  padding: 1rem 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+.rincon_page .rincon_post_sub {
+  width: 100%;
+  border-radius: 1.5em;
+  padding: 1rem 0 2rem 0.2rem;
+  margin: 0 0 0 0.2rem;
+  font-size: 1.5em;
+  background-color: white;
+  color: var(--bs-gray-800);
+  display: flex;
+  justify-content: center;
+}
+.rincon_page .post {
+  width: 90%;
+}
+.rincon_page .username_super {
+  color: gray;
+  display: flex;
+  justify-content: space-between;
+}
+.rincon_page .date {
+  font-size: 1rem;
+}
+.rincon_page .post_image {
+  max-width: 100%;
+}
+.rincon_page .post_image img {
+  width: 20rem;
+}
+.rincon_page .all_members {
+  display: flex;
+}
+.rincon_page .like_post img {
+  width: 2rem;
+}
+.rincon_page .post_actions_sub {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Rincon page Modal */
+.create_post_modal .add_photo_icon_div {
+  padding-right: 2rem;
+}
+.create_post_modal .add_photo_icon {
+  width: 2rem;
+}
+
 /*# sourceMappingURL=main.css.map */

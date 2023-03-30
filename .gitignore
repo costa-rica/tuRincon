@@ -5,4 +5,5 @@ __pycache__/
 *.log
 /logs/
 /app_package/static/node_modules/
+/app_package/static/rincon_files/*
 
