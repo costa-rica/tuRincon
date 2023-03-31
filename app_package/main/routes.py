@@ -36,7 +36,7 @@ def home():
     if current_user.is_authenticated:
         return redirect(url_for('main.rincons'))
 
-    
+
 
     if request.method == "POST":
         formDict = request.form.to_dict()
@@ -261,6 +261,12 @@ def rincon(rincon_name):
                 post_image = request.files.get('add_photo_file')
                 post_image_filename = post_image.filename
                 _, file_extension = os.path.splitext(post_image_filename)
+                logger_main.info(f"-- Get image file name --")
+                logger_main.info(f"-- file_extension: {file_extension} --")
+
+                if file_extension == None:
+                    file_extension = '.jpg'
+
 
                 ## rename image
                 new_image_name = f"post_image_{new_post.id}{file_extension}"
