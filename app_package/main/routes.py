@@ -264,8 +264,6 @@ def rincon(rincon_name):
                 logger_main.info(f"-- Get image file name --")
                 logger_main.info(f"-- file_extension: {file_extension} --")
 
-                if file_extension == None:
-                    file_extension = '.jpg'
 
 
                 ## rename image
