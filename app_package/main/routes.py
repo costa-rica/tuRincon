@@ -100,7 +100,8 @@ def search_rincons():
 
             # TODO: This doesn't work - figure out deleteing from association table (UsersToRincons)
 
-            sess.query(UsersToRincons,(current_user.id, int(formDict.get('leave')))).delete()
+            # sess.query(UsersToRincons,(current_user.id, int(formDict.get('leave')))).delete()
+            sess.query(UsersToRincons).filter_by(users_table_id =current_user.id, rincons_table_id= int(formDict.get('leave'))).delete()
             sess.commit()
             print("Rincon ID: ", formDict.get('leave'))
             flash("Removed to Rincon", "warning")
