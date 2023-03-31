@@ -11153,8 +11153,7 @@ section.main {
   width: 100%;
   border-radius: 3rem;
   font-size: 2.5rem;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
 .rincons_page .search {
   background-color: var(--bs-primary);
@@ -11229,14 +11228,28 @@ section.main {
 /* Create Rincons Page */
 .create_rincon_page {
   width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .create_rincon_page .rincons_sub {
   border-radius: 1.5em;
-  padding: 3rem 0 10rem 0.2rem;
-  margin: 0 0 0 0.2rem;
+  padding: 3rem 0 3rem 0;
+  width: calc(100% - 0.5rem);
   font-size: 1.5em;
   background-color: white;
-  color: var(--bs-gray-800);
+  display: flex;
+  justify-content: center;
+}
+.create_rincon_page .title {
+  width: 100%;
+}
+.create_rincon_page .create_form_group {
+  width: calc(100% - 1rem);
+}
+.create_rincon_page .register_text {
+  width: 100%;
 }
 .create_rincon_page .element_right {
   padding-top: 1rem;

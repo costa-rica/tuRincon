@@ -54,6 +54,13 @@ logger_init.info(f'--- Starting Tu Rincón ---')
 # logger_init.info(f'--- secrete key: {os.environ.get("SECRET_KEY")} ---')
 # logger_init.info(f'--- WEB_ROOT: {os.environ.get("WEB_ROOT")} ---')
 
+
+# Create rincon_files folder
+if not os.path.exists(os.path.join(os.environ.get('WEB_ROOT'),'app_package','static','rincon_files')):
+    os.makedirs(os.path.join(os.environ.get('WEB_ROOT'),'app_package','static','rincon_files'))
+    print('- created static/rincon_files/ -')
+
+
 mail = Mail()
 
 def create_app(config_for_flask = config):

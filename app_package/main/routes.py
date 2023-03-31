@@ -35,6 +35,9 @@ def home():
     logger_main.info(f"-- in home page route --")
     if current_user.is_authenticated:
         return redirect(url_for('main.rincons'))
+
+    
+
     if request.method == "POST":
         formDict = request.form.to_dict()
 
@@ -192,6 +195,9 @@ def rincon(rincon_name):
         temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
         temp_dict['text'] = i.text
+        print("-- what is image ---")
+        print(i.image)
+        temp_dict['image_exists'] = False if i.image == None else True
         temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name}/{i.image}"
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
@@ -248,22 +254,25 @@ def rincon(rincon_name):
             sess.add(new_post)
             sess.commit()
 
-            # get image
-            post_image = request.files.get('add_photo_file')
-            post_image_filename = post_image.filename
-            _, file_extension = os.path.splitext(post_image_filename)
+            if request.files.get('add_photo_file'):
+                print("*********")
+                print("- posting an image -")
+                # get image
+                post_image = request.files.get('add_photo_file')
+                post_image_filename = post_image.filename
+                _, file_extension = os.path.splitext(post_image_filename)
 
-            ## rename image
-            new_image_name = f"post_image_{new_post.id}.{file_extension}"
+                ## rename image
+                new_image_name = f"post_image_{new_post.id}{file_extension}"
 
-            ## save to static rincon directory
-            this_rincon_dir_name = f"{rincon_id}_{rincon.name}"
-            path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
-            post_image.save(os.path.join(path_to_rincon_files, new_image_name))
+                ## save to static rincon directory
+                this_rincon_dir_name = f"{rincon_id}_{rincon.name}"
+                path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
+                post_image.save(os.path.join(path_to_rincon_files, new_image_name))
 
-            # save new image name in post entry
-            new_post.image = new_image_name
-            sess.commit()
+                # save new image name in post entry
+                new_post.image = new_image_name
+                sess.commit()
 
             return redirect(request.url)
         
