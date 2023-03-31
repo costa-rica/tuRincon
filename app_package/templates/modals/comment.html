@@ -1,36 +1,23 @@
-<div class="modal-dialog create_post_modal" role="document">
+<div class="modal-dialog create_comment_modal" role="document">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title">Comment</h5>
-      <button type="button" id="close_button" class="btn">&times;</button>
+      <h5 class="modal-title">Enter comment here: </h5>
+      <!-- <button type="button" id="close_button" class="btn btn-secondary">&times;</button>
+      <button type="submit" name="btn_comment2" value="true"class="btn btn-primary" form="form_modal_post">Post</button> -->
     </div>
     <div class="modal-body">
       
-      <!-- Text box -->
-      <textarea class="form-control" name="post_text" form="form_modal_post"></textarea>
+      <input type="text" class="form-control hide_textbox" id="recipient-name" name="post_id" form="form_modal_comment" readonly>
 
-      <!-- Add image icon -->
-      
-      <div id="fileList"></div>
-        <!-- <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"> -->
-     
+      <!-- Text box -->
+      <textarea class="form-control" name="comment_text" form="form_modal_comment"></textarea>
+
+    
     </div>
     <div class="modal-footer">
-      <div class="add_photo_icon_div">
-
-<!--
-        <input id="fileInput" type="file" style="display:none;" form="form_modal_post" accept=".png,.jpeg" name="add_photo_file" />
-
-         <button class="btn btn_hide">
-          <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png" 
-          onclick="document.getElementById('fileInput').click();"
-          >
-        </button> -->
-        <!-- <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png"> -->
-      </div>
       
-      <button type="submit" name="btn_post" value="true"class="btn btn-primary" form="form_modal_post">Post</button>
-
+      <button type="submit" name="btn_comment" value="true" class="btn btn-primary custom_modal_comment_btn" 
+      form="form_modal_comment">Post Comment</button>
 
     </div>
   </div>
@@ -44,3 +31,25 @@
   });
 </script>
 
+
+
+<!--Delete modal read record id-->
+<script>
+  var deleteModal = document.getElementById('commentModal')
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    var recipient = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = deleteModal.querySelector('.modal-title')
+    var modalBodyInput = deleteModal.querySelector('.modal-body input')
+  
+    // modalTitle.textContent = 'Delete record ' + recipient +'?'
+    modalBodyInput.value = recipient
+  
+  });
+  </script>

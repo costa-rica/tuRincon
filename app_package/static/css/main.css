@@ -10884,6 +10884,22 @@ section.navbar_section .navbar_custom nav .dropdown {
 section.navbar_section .navbar_custom nav .dropdown:hover {
   background-color: none;
 }
+section.navbar_section .navbar_custom nav .btn_list_div {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+section.navbar_section .navbar_custom nav .btn_list_div_sub {
+  width: calc(100% - 2rem);
+}
+section.navbar_section .navbar_custom nav .custom_post_btn {
+  background-color: var(--bs-blue);
+  width: 100%;
+}
+section.navbar_section .navbar_custom nav .custom_delete_btn {
+  background-color: #df382c;
+  width: 100%;
+}
 
 /* Footer */
 .footer {
@@ -11324,14 +11340,14 @@ section.main {
 
 /* Rincon Page */
 .rincon_page {
-  width: 95%;
+  width: calc(100% - 0.5rem);
 }
-.rincon_page .rincon_post_super {
+.rincon_page .rincon_post_card_super {
   padding: 1rem 0 0 0;
   display: flex;
   justify-content: center;
 }
-.rincon_page .rincon_post_sub {
+.rincon_page .rincon_post_card {
   width: 100%;
   border-radius: 1.5em;
   padding: 1rem 0 2rem 0.2rem;
@@ -11342,32 +11358,137 @@ section.main {
   display: flex;
   justify-content: center;
 }
-.rincon_page .post {
-  width: 90%;
+.rincon_page .post_and_engagement {
+  width: calc(100% - 0.5rem);
 }
-.rincon_page .username_super {
-  color: gray;
+.rincon_page .date_div {
+  width: 100%;
+}
+.rincon_page .date_div_sub {
   display: flex;
-  justify-content: space-between;
-}
-.rincon_page .date {
+  justify-content: end;
   font-size: 1rem;
+  color: var(--bs-gray-400);
+  padding: 0 0.2rem 0 0;
 }
-.rincon_page .post_image {
-  max-width: 100%;
+.rincon_page .username_div {
+  width: 100%;
 }
-.rincon_page .post_image img {
+.rincon_page .username_div_sub {
+  display: flex;
+  font-size: 1.2rem;
+  color: var(--bs-gray-500);
+}
+.rincon_page .post_text_div {
+  width: 100%;
+}
+.rincon_page .post_text_div_sub {
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+}
+.rincon_page .img_div {
+  width: 100%;
+}
+.rincon_page .img_div_sub {
+  display: flex;
+  justify-content: center;
+}
+.rincon_page .img_class {
   width: 20rem;
 }
-.rincon_page .all_members {
-  display: flex;
+.rincon_page .line_break_div {
+  width: 100%;
 }
-.rincon_page .like_post img {
+.rincon_page .post_engagement {
+  width: 100%;
+}
+.rincon_page .post_engagement_sub {
+  display: flex;
+  justify-content: end;
+}
+.rincon_page .post_engagement_sub_left {
+  width: 50%;
+}
+.rincon_page .post_engagement_sub_right {
+  width: 50%;
+}
+.rincon_page .delete_btn_div {
+  padding: 0 0 0 1rem;
+}
+.rincon_page .delete_btn_div button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: var(--bs-gray-500);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.rincon_page .post_engagement_sub_right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.rincon_page .comment_btn_div .btn-primary {
+  background-color: var(--bs-blue);
+  --bs-btn-border-color: var(--bs-blue);
+}
+.rincon_page .thumbs_up_icon {
   width: 2rem;
+  max-height: 2rem;
 }
-.rincon_page .post_actions_sub {
+.rincon_page .show_comments {
+  padding: 1rem 0 0 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.rincon_page .show_comments_sub {
+  width: calc(100% - 0.5rem);
+  padding: 0.25rem;
+}
+.rincon_page .comment_card {
+  width: 100%;
+  font-size: 0.8rem;
+  background-color: var(--bs-gray-200);
+  color: var(--bs-gray-800);
+  border-radius: 1.5em;
+  padding: 0.5rem;
+}
+.rincon_page .comments_date {
+  display: flex;
+  justify-content: end;
+  color: var(--bs-gray-600);
+  padding: 0 0.2rem 0 0;
+  font-size: 0.7rem;
+  margin: 0;
+}
+.rincon_page .comments_username {
+  display: flex;
+  color: var(--bs-gray-800);
+  font-size: 0.8rem;
+  margin: 0;
+}
+.rincon_page .delete_comment_div {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+.rincon_page .delete_comment_div_sub {
+  font-size: 0.9rem;
+  color: var(--bs-gray-500);
+}
+.rincon_page .delete_comment_div_sub button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: var(--bs-gray-500);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Rincon page Modal */
@@ -11376,6 +11497,16 @@ section.main {
 }
 .create_post_modal .add_photo_icon {
   width: 2rem;
+  height: auto;
+}
+
+/* Rincon Comment Modal */
+.create_comment_modal .custom_modal_comment_btn {
+  background-color: var(--bs-blue);
+  --bs-btn-border-color: var(--bs-blue);
+}
+.create_comment_modal .hide_textbox {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -115,6 +115,22 @@ section.navbar_section {
               background-color: none;
               &:hover {background-color: none;}
           }
+          .btn_list_div{
+            width:100%;
+            display:flex;
+            justify-content: end;
+          }
+          .btn_list_div_sub{
+            width: calc(100% - 2rem);
+          }
+          .custom_post_btn{
+            background-color: var(--bs-blue);
+            width: 100%;
+          }
+          .custom_delete_btn{
+            background-color: #df382c;
+            width: 100%;
+          }
       }
   }
 }

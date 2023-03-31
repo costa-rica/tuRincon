@@ -2,6 +2,9 @@
 {% block main %}
 <form method="POST" id="form_1"></form>
 <form method="POST" id="form_modal_comment" ></form>
+<form method="POST" id="form_delete_post" ></form>
+<form method="POST" id="form_delete_comment" ></form>
+
 
 <section class="main">
   <div class="rincon_page">
@@ -9,67 +12,158 @@
     <div class="rincon_sub">
 
       {% for post in rincon_posts %}
-      <div class="rincon_post_super">
-        <div class="rincon_post_sub">
+      <div class="rincon_post_card_super">
 
-          <div class="post">
-            <div class="username_super">
-              <div class="username">
-                {{ post.username }}
+        <div class="rincon_post_card">
+
+          <div class="post_and_engagement">
+
+            <div class="post">
+
+              <div class="date_div">
+                <div class="date_div_sub">
+                  {{ post.date }}
+                </div>
+              </div>
+              
+              <div class="username_div">
+                <div class="username_div_sub">
+                  {{post.username}}
+                </div>
+              </div>
+              
+              <div class="post_text_div">
+                <div class="post_text_div_sub">
+                  {{post.text}}
+                </div>
               </div>
 
-              <div class="date">
-                {{ post.date }}
+              <div class="img_div">
+                <div class="img_div_sub">
+                  <img class="img_class" alt=""
+                  src="{{ url_for('static', filename= post.image_name_and_path) }}"/>
+                </div>
               </div>
+              
 
-            </div>
+            
+            </div><!-- post -->
 
-            <br>
-            <div class="post_text">
-              {{ post.text }}
-            </div>
-
-            <br>
-            <div class="post_image">
-              <img class="add_photo_icon" id="add_photo_icon" alt=""
-                src="{{ url_for('static', filename= post.image_name_and_path) }}">
-            </div>
-            <div class="post_actions">
+            <div class="line_break_div">
               <hr>
-              <div class="post_actions_sub">
-                <div class="user_only">
-                  <div class="delete_post">
-                    <button type="submit">Delete</button>
-                  </div>
-                </div>
-
-                <div class="all_members">
-
-                  <div class="comment_post">
-                    <button type="button" class="btn"
-                    data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-whatever="Some data">comment
-                  </button>
-                  </div>
-
-                  <div class="like_post">
-                    <img class="add_photo_icon" id="add_photo_icon" alt=""
-                      src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
-                    </div>
-                  </div>
-  
-
-                </div>
-
-
-              </div><!-- post_actions_sub -->
-
-
             </div>
-          </div><!--post-->
+
+            <div class="post_engagement">
+              <div class="post_engagement_sub">
+
+                <div class="post_engagement_sub_left">
+                  {% if post.delete_post_permission %}
+                    <div class="delete_btn_div">
+                      <button type="submit" name="btn_delete_post" value="{{ post.post_id }}" 
+                      form="form_delete_post">Delete</button>
+                    </div>
+                  {% endif %}
+                </div><!-- post_engagement_sub_left -->
 
 
-        </div><!--rincon_post_sub-->
-      </div>
+                <div class="post_engagement_sub_right">
+
+                  <div class="comment_btn_div">
+                    <button type="button" class="btn btn-primary"
+                      data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-whatever="{{post.post_id}}">
+                      comment
+                    </button>
+                  </div>
+
+  
+                  <img class="thumbs_up_icon" alt=""
+                  src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
+                </div><!-- post_engagement_sub_right -->
+
+              </div><!-- post_engagement_sub -->
+            
+            </div><!-- post_engagement -->
+
+            <div class="line_break_div">
+              <hr>
+            </div>
+            <div class="show_comments">
+
+
+              {% for comment in post.comments %}
+              <div class="show_comments_sub">
+
+
+                <div class="comment_card">
+                  {% for key, item in comment.items() %}
+                    
+                      {% if key == 'date' %}
+                      <div class="date_div">
+                        <div class="comments_date">
+                          {{ item }}
+                        </div>
+                      </div>
+                      {% endif %}
+
+                      {% if key == 'username' %}
+                      <div class="username_div ">
+                        <div class="comments_username">
+                          {{item}}
+                        </div>
+                      </div>
+                      {% endif %}
+
+                      {% if key == 'text' %}
+                      <div class="post_text_div">
+                        <div class="post_text_div_sub">
+                          {{item}}
+                        </div>
+                      </div>
+                      {% endif %}
+
+                      {% if key == 'delete_comment_permission' %}
+
+                        {% if item %}
+                        <div class="delete_comment_div">
+                          <div class="delete_comment_div_sub">
+                            <button type="submit" name="btn_delete_comment" value="{{ comment.comment_id }}" 
+                             form="form_delete_comment">Delete</button>
+                          </div>
+                          
+                        </div>
+                        
+                        {% endif %}
+
+                      {% endif %}
+
+                  {% endfor %}
+
+
+                </div>
+              
+              
+
+
+
+
+              </div><!-- show_comment_sub-->
+              {% endfor %}
+
+            </div><!-- show_comments -->
+
+          </div><!-- post_and_engagement -->
+
+        </div><!-- rincon_post_card -->
+        
+      </div><!-- rincon_post_card_super -->
+
+  <!-- Modal  -->
+  <div class="modal" tabindex="-1" role="dialog" id="commentModal">
+    
+    {% include "modals/comment.html" %}
+
+  </div>
+
 
       {% endfor %}
 
@@ -80,11 +174,11 @@
 </section>
 
 
-  <!-- Modal  -->
-  <div class="modal" tabindex="-1" role="dialog" id="commentModal">
-    {% include "modals/comment.html" %}
 
-  </div>
+
+
+
+
 
 
 {% endblock %}

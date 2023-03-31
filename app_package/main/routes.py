@@ -6,7 +6,8 @@ from flask_login import login_required, login_user, logout_user, current_user
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons
+from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons, \
+    RinconsPostsComments, RinconsPostsLikes, RinconsPostsCommentsLikes
 import shutil
 from werkzeug.utils import secure_filename
 
@@ -162,7 +163,7 @@ def create_rincon():
 
             flash("Rincon successfully created!", "success")
             
-            return redirect(url_for('main.search_rincons'))
+            return redirect(url_for('main.rincons'))
         
         flash("Rincon needs name", "warning")
 
@@ -179,19 +180,55 @@ def rincon(rincon_name):
     rincon_id = request.args.get('rincon_id')
     print("- rincon page -")
 
-    print("rincon_id: ", rincon_id)
+    # print("rincon_id: ", rincon_id)
     rincon = sess.get(Rincons, int(rincon_id))
-    print(f"rincon: {rincon}")
-    print(f"rincon posts: {rincon.posts}")
+    # print(f"rincon: {rincon}")
+    # print(f"rincon posts: {rincon.posts}")
     rincon_posts = []
     for i in rincon.posts:
         temp_dict = {}
+
+        temp_dict['post_id'] = i.id
+        temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
         temp_dict['text'] = i.text
         temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name}/{i.image}"
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
+        temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
+        # temp_dict['comments'] = {}
+        comments_list = []
+        for comment in i.comments:
+            temp_sub_dict = {}
+            temp_sub_dict['date'] = comment.time_stamp_utc.strftime("%m/%d/%y %H:%M")
+            temp_sub_dict['username'] = sess.get(Users,comment.user_id).username
+            temp_sub_dict['text'] = comment.text
+            temp_sub_dict['delete_comment_permission'] = False if comment.user_id != current_user.id else True
+            temp_sub_dict['comment_id'] = comment.id
+
+            comments_list.append(temp_sub_dict)
+
+        temp_dict['comments'] = comments_list
+            # temp_list = []
+            # temp_list.append(comment.time_stamp_utc.strftime("%m/%d/%y %H:%M"))
+            # temp_list.append(sess.get(Users,comment.user_id).username)
+            # temp_list.append(comment.text)
+            # temp_dict['comments']=temp_list
+
         rincon_posts.append(temp_dict)
-    print(rincon_posts)
+
+    # print("- rincon_posts -")
+    # print(rincon_posts)
+    # print(len(rincon_posts))
+
+    # print("-- is this a dict? --")
+    # print(type(rincon_posts[1]['comments']))
+    # print(rincon_posts[1]['comments'])
+    # print(rincon_posts[1]['comments']['text'])
+    # print(rincon_posts)
+    rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
+
+
+
     if request.method == "POST":
         formDict = request.form.to_dict()
         print(f"- search_rincons POST -")
@@ -229,8 +266,36 @@ def rincon(rincon_name):
             sess.commit()
 
             return redirect(request.url)
+        
+        elif formDict.get('btn_comment'):
+            print("- Receieved Comment -")
+
+            # add to RinconsPostsComments
+            new_comment = RinconsPostsComments(post_id=formDict.get('post_id'),user_id=current_user.id,
+                rincon_id=rincon.id,
+                text= formDict.get('comment_text')
+            )
+            sess.add(new_comment)
+            sess.commit()
+            return redirect(request.url)
+
+        elif formDict.get('btn_delete_post'):
 
 
+
+            sess.query(RinconsPosts).filter_by(id = formDict.get('btn_delete_post')).delete()
+            sess.query(RinconsPostsLikes).filter_by(post_id = formDict.get('btn_delete_post')).delete()
+            sess.query(RinconsPostsComments).filter_by(post_id = formDict.get('btn_delete_post')).delete()
+            sess.query(RinconsPostsCommentsLikes).filter_by(post_id = formDict.get('btn_delete_post')).delete()
+            sess.commit()
+            return redirect(request.url)
+
+        elif formDict.get('btn_delete_comment'):
+            sess.query(RinconsPostsComments).filter_by(id = formDict.get('btn_delete_comment')).delete()
+            sess.query(RinconsPostsCommentsLikes).filter_by(comment_id = formDict.get('btn_delete_comment')).delete()
+            sess.commit()
+            return redirect(request.url)
+            
 
 
     return render_template('main/rincon_template.html', rincon_name=rincon_name, rincon_posts=rincon_posts)

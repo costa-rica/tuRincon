@@ -72,16 +72,32 @@
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
           {% if rincon_name %}
-          <li class="nav-item li_primary">
-            <button type="button" class="dash_id_button form-control"
+          <br><br>
+
+
+          <li class="li_primary">
+            <div class="btn_list_div">
+              <div class="btn_list_div_sub">
+            <button type="button" class="form-control custom_post_btn"
             data-bs-toggle="modal" data-bs-target="#postModal" data-bs-whatever="Some data">Post
           </button>
+          </div>
+          </div>
           </li>
-          <li class="nav-item li_primary">
-            <button type="button" class="dash_id_button form-control btn-warning"
-            data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="Some data">Delete
-          </button>
+
+          <br><br>
+          <li class=" ">
+            <div class="btn_list_div">
+              <div class="btn_list_div_sub">
+                <button type="button" class="form-control custom_delete_btn"
+                data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-whatever="Some data">Delete Rincón
+              </button>
+              </div>
+
+            </div>
+
           </li>
+          
           {% endif %}
         </ul>
       </nav>

@@ -508,13 +508,14 @@ section.main {
 /* Rincon Page */
 .rincon_page {
 
-  width: 95%;
-  .rincon_post_super{
+  // width: 95%;
+  width: calc(100% - .5rem);
+  .rincon_post_card_super{//Gray area between cards
     padding:1rem 0 0 0;
     display:flex;
     justify-content: center;
   }
-  .rincon_post_sub {
+  .rincon_post_card {// white area containing post with corner radius
     width: 100%;
     border-radius: 1.5em;
     padding: 1rem 0 2rem .2rem;
@@ -525,28 +526,160 @@ section.main {
     display:flex;
     justify-content: center;
   }
-  .post{width:90%}
-  .username_super{
-    color:gray;
-    display:flex;
-    justify-content: space-between;
+  .post_and_engagement{// div containing everything inside card
+    width: calc(100% - .5rem);
   }
-  .date{font-size: 1rem;}
-  .post_image{
-    max-width: 100%;
-    img{width:20rem}
+
+
+
+  // Section with only user's actual post stuff
+  .date_div{
+    width:100%;
+  }
+  .date_div_sub{
+    display: flex;
+    justify-content: end;
+    font-size: 1rem;
+    color: var(--bs-gray-400);
+    padding:0 .2rem 0 0;
+  }
+  .username_div{
+    width: 100%;
+  }
+  .username_div_sub{
+    display: flex;
+    font-size: 1.2rem;
+    color: var(--bs-gray-500)
+  }
+  .post_text_div{
+    width:100%;
+  }
+  .post_text_div_sub{
+    padding:.5rem .2rem .5rem .2rem;
+  }
+  .img_div{
+    width:100%;
+  }
+  .img_div_sub{
+    display: flex;
+    justify-content: center;
+  }
+  .img_class{// <-- This controls image size in post
+    width: 20rem;
+  }
+
+  // END section of user's posts
+
+  .line_break_div{
+    width:100%
+  }
+
+  // START section of engagement with post
+  .post_engagement{
+    width:100%;
+  }
+  .post_engagement_sub{
+    display: flex;
+    justify-content: end;
+    // width: 100%;
+  }
+  .post_engagement_sub_left{
+    width:50%;
+  }
+  .post_engagement_sub_right{
+    width:50%;
+  }
+  .delete_btn_div{
+    padding: 0 0 0 1rem;
+    button{
+      background: none!important;
+      border: none;
+      padding: 0!important;
+      /*optional*/
+      font-family: arial, sans-serif;
+      /*input has OS specific font-family*/
+      color: var(--bs-gray-500);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  .post_engagement_sub_right{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .comment_btn_div{
+    .btn-primary{
+      background-color: var(--bs-blue);
+      --bs-btn-border-color: var(--bs-blue);
+    }
+  }
+
+  .thumbs_up_icon{
+    width: 2rem;
+    max-height: 2rem;
+  }
+// END section of engagement with post
+
+// START comments section
+  .show_comments{
+    padding:1rem 0 0 0;
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .show_comments_sub{
+    width: calc(100% - .5rem);
+    padding: .25rem;
+  }
+  .comment_card{
+    width:100%;
+    font-size: .8rem;
+    background-color: var(--bs-gray-200);
+    color: var(--bs-gray-800);
+    border-radius: 1.5em;
+    padding: .5rem;
 
   }
-  .all_members{
-    display:flex;
+  .comments_date{
+    display: flex;
+    justify-content: end;
+    color: var(--bs-gray-600);
+    padding:0 .2rem 0 0;
+    font-size: .7rem;
+    margin:0
   }
-  .like_post{
-    img{width:2rem}
+  .comments_username{
+    display: flex;
+    // font-size: 1.2rem;
+    color: var(--bs-gray-800);
+    font-size: .8rem;
+    margin:0
   }
-.post_actions_sub{
-  display:flex;
-  justify-content: space-between;
-}
+
+  .delete_comment_div{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+  }
+  .delete_comment_div_sub{
+    font-size: .9rem;
+    color: var(--bs-gray-500);
+    // padding: 0 0 0 1rem;
+    button{
+      background: none!important;
+      border: none;
+      padding: 0!important;
+      /*optional*/
+      font-family: arial, sans-serif;
+      /*input has OS specific font-family*/
+      color: var(--bs-gray-500);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+
 }
 
 /* Rincon page Modal */
@@ -556,8 +689,19 @@ section.main {
   }
   .add_photo_icon{
     width: 2rem;
+    height: auto;
   }
+}
 
+/* Rincon Comment Modal */
+.create_comment_modal{
+
+  .custom_modal_comment_btn{
+    background-color: var(--bs-blue);
+    --bs-btn-border-color: var(--bs-blue);
+  }
+  .hide_textbox{display:none}
 
 }
+
 
