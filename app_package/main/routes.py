@@ -89,8 +89,11 @@ def search_rincons():
             sess.add(new_member)
             sess.commit()
             print("Rincon ID: ", formDict.get('join'))
+            rincon_name = sess.get(Rincons,int(formDict.get('join'))).name
+
             flash("Added to Rincon", "success")
-            return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
+            # return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
+            return redirect(url_for('main.rincon', rincon_name=rincon_name, rincon_id=int(formDict.get('join')) ) )
 
         elif formDict.get('leave'):
             print("- leave was selected -")
@@ -333,6 +336,13 @@ def delete_rincon(rincon_id):
                 
     # delete Association Table link
     sess.query(UsersToRincons).filter_by(users_table_id=current_user.id ,rincons_table_id=rincon_id ).delete()
+
+    sess.query(RinconsPosts).filter_by(rincon_id = rincon_id).delete()
+    sess.query(RinconsPostsLikes).filter_by(rincon_id = rincon_id).delete()
+    sess.query(RinconsPostsComments).filter_by(rincon_id = rincon_id).delete()
+    sess.query(RinconsPostsCommentsLikes).filter_by(rincon_id = rincon_id).delete()
+
+
     sess.commit()
 
     return redirect(url_for('main.rincons'))
