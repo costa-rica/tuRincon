@@ -42,7 +42,7 @@ def home():
     if request.method == "POST":
         formDict = request.form.to_dict()
 
-    return render_template('home.html')
+    return render_template('main/home.html')
 
 
 @main.route("/rincons", methods=["GET", "POST"])
@@ -135,8 +135,11 @@ def create_rincon():
             public = True
         if formDict.get('rincon_name') != "":
             
+            rincon_name_no_spaces = formDict.get('rincon_name').replace(" ","_")
+
             #create_rincon
-            new_rincon = Rincons(name= formDict.get('rincon_name'), manager_id=current_user.id, public=public)
+            new_rincon = Rincons(name= formDict.get('rincon_name'), manager_id=current_user.id, 
+                public=public, name_no_spaces = rincon_name_no_spaces)
             sess.add(new_rincon)
             sess.commit()
 
@@ -146,9 +149,9 @@ def create_rincon():
             sess.commit()
 
             #create static/rincon_files/<id_rincon_name>
-            direcotry_name = f"{new_rincon.id}_{new_rincon.name}"
+            direcotry_name = f"{new_rincon.id}_{rincon_name_no_spaces}"
             new_dir_path = os.path.join(current_app.static_folder,"rincon_files", direcotry_name)
-            print(new_dir_path)
+            # print(new_dir_path)
             os.mkdir(new_dir_path)
 
             flash("Rincon successfully created!", "success")
@@ -183,9 +186,9 @@ def rincon(rincon_name):
         temp_dict['username'] = sess.get(Users,i.user_id).username
         temp_dict['text'] = i.text
         print("-- what is image ---")
-        print(i.image)
-        temp_dict['image_exists'] = False if i.image == None else True
-        temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name}/{i.image}"
+        print(i.image_file_name)
+        temp_dict['image_exists'] = False if i.image_file_name == None else True
+        temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name_no_spaces}/{i.image_file_name}"
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
 
@@ -240,12 +243,12 @@ def rincon(rincon_name):
                 new_image_name = f"post_image_{new_post.id}{file_extension}"
 
                 ## save to static rincon directory
-                this_rincon_dir_name = f"{rincon_id}_{rincon.name}"
+                this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
                 path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
                 post_image.save(os.path.join(path_to_rincon_files, new_image_name))
 
                 # save new image name in post entry
-                new_post.image = new_image_name
+                new_post.image_file_name = new_image_name
                 sess.commit()
 
             return redirect(request.url)
@@ -264,13 +267,21 @@ def rincon(rincon_name):
 
         elif formDict.get('btn_delete_post'):
 
-
-
+            # TODO: delete photo
+            rincon_post = sess.get(RinconsPosts, formDict.get('btn_delete_post'))
+            post_image_path_and_name = os.path.join(current_app.static_folder, "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}",rincon_post.image_file_name)
+            
+            print("post_image_path_and_name: ", post_image_path_and_name)
+            if os.path.exists(post_image_path_and_name):
+                os.remove(post_image_path_and_name)
             sess.query(RinconsPosts).filter_by(id = formDict.get('btn_delete_post')).delete()
             sess.query(RinconsPostsLikes).filter_by(post_id = formDict.get('btn_delete_post')).delete()
             sess.query(RinconsPostsComments).filter_by(post_id = formDict.get('btn_delete_post')).delete()
             sess.query(RinconsPostsCommentsLikes).filter_by(post_id = formDict.get('btn_delete_post')).delete()
             sess.commit()
+
+            
+
             return redirect(request.url)
 
         elif formDict.get('btn_delete_comment'):

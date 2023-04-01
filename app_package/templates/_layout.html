@@ -71,6 +71,11 @@
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
+          {% if current_user.admin %}
+          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('admin.admin_page') }}">Admin Page</a></li>
+          {% endif %}
+
+
           {% if rincon_name %}
           <br><br>
 
@@ -84,7 +89,7 @@
               </div>
             </div>
           </li>
-          
+
           {% if rincon %}
           <li class="li_primary">
             <div class="btn_list_div">
@@ -115,6 +120,9 @@
           {% endif %}
 
           {% endif %}
+
+
+
         </ul>
       </nav>
 

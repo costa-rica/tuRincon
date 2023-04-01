@@ -1,55 +1,55 @@
 <div class="modal-dialog create_post_modal" role="document">
   <div class="modal-content">
+
     <div class="modal-header">
       <h5 class="modal-title">Create Post</h5>
       <button type="button" id="close_button" class="btn">&times;</button>
     </div>
+
     <div class="modal-body">
-      
       <!-- Text box -->
-      <textarea class="form-control" name="post_text" form="form_modal_post"></textarea>
-
-      <!-- Add image icon -->
-      
-      <div id="fileList"></div>
-        <!-- <input id="file-upload" name='upload_cont_img' type="file" style="display:none;"> -->
-     
+      <textarea class="form-control" name="post_text" form="form_modal_post" rows="5"></textarea>
+      <!-- Add image file name -->
+      <div id="file-name"></div>
     </div>
+
     <div class="modal-footer">
-      <div class="add_photo_icon_div">
-
-        <!-- <div class="upload-btn-wrapper">
+      <div class="footer_sub">
         
-          
-          <button class="btn btn_hide">
-            <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png">
-          </button>
-          <input type="file" accept=".png,.jpeg" name="add_photo_file" form="form_modal_post"/>
-        </div> -->
-        <input id="fileInput" type="file" style="display:none;" form="form_modal_post" accept=".png,.jpeg,.jpg" name="add_photo_file" />
+        <div class="icon_add_photo">
+          <a href="#">
+            <img src="../static/images/collections-3-512.png" alt="Photo Album Icon" id="album-icon">
+          </a>
+          <input type="file" id="file-input" name="add_photo_file" style="display:none" form="form_modal_post"
+            accept=".png,.jpeg,.jpg,.gif, .MP4, .mp4" >
+        </div>
 
-        <button class="btn btn_hide">
-          <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png" 
-          onclick="document.getElementById('fileInput').click();"
-          >
-        </button>
-        <!-- <img class="add_photo_icon" id="add_photo_icon" alt="collections image" src="../static/images/collections-3-512.png"> -->
-      </div>
-      
-      <button type="submit" name="btn_post" value="true"class="btn btn-primary" form="form_modal_post">Post</button>
-      <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-      <!-- <i class="material-icons" style="font-size:36px"></i> -->
+        <div class="btn_div">
+          <button type="submit" name="btn_post" value="true" class="btn btn-primary"
+            form="form_modal_post">Post</button>
+        </div>
+      </div><!--footer_sub-->
+    </div><!--modal-footer-->
 
-
-    </div>
-  </div>
-</div>
+  </div><!-- modal-content -->
+</div><!-- modal-dialog create_post_modal -->
 
 <script>
-  $(document).ready(function(){
-    $("#close_button").click(function(){
+  $(document).ready(function () {
+    $("#close_button").click(function () {
       $("#postModal").modal("hide");
     });
   });
 </script>
 
+
+<script>
+  const fileInput = document.getElementById("file-input");
+  const fileNameDisplay = document.getElementById("file-name");
+  document.getElementById("album-icon").onclick = function () {
+    fileInput.click();
+  };
+  fileInput.onchange = function () {
+    fileNameDisplay.innerHTML = "Selected file: " + fileInput.files[0].name;
+  };
+</script>

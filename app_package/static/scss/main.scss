@@ -95,37 +95,6 @@ section.main {
 
   }
 
-  // code { 
-  //   // background: black;
-  //   color: var(--bs-gray-200)
-  // }
-
-  // .code_block{
-  //   width: 90%;
-  //   padding-left: 3rem;
-  // }
-
-  // pre{
-  //   // background-color: rgb(255, 247, 229);
-  //   background-color: var(--bs-gray-800);
-  //   border: 0px solid ;
-  //   white-space: pre-line;
-  //   padding: 1rem
-  // }
-  // .table_custom {
-  //   // background-color: gray;
-  //   background-color: var(--bs-gray-300);
-  //   padding:1rem;
-  //   border-radius: 1rem;
-  //   td {
-  //     // white-space:nowrap;
-  //     margin:0;
-  //     padding:0;
-  //     // width:min-content;
-  //     // text-align: center;
-  //     vertical-align: middle;
-  //   }
-  // }
 
 }
 
@@ -722,14 +691,37 @@ section.main {
 
 /* Rincon page Modal */
 .create_post_modal{
-  .add_photo_icon_div{
-    padding-right: 2rem;
+  // .footer_sub{
+  //   padding-right: 2rem;
+  // }
+  // .add_photo_icon{
+  //   width: 2rem;
+  //   height: auto;
+  // }
+  .footer_sub{
+    display:flex;
+    justify-content: end;
+    width:100%;
   }
-  .add_photo_icon{
-    width: 2rem;
-    height: auto;
+  .icon_add_photo{
+    padding:0 2rem 0 0;
+  }
+  #album-icon{
+    width:2rem;
+    // height:auto;
+    border-radius: .5rem;
+  }
+  
+  #album-icon {
+    transition: background-color 0.1s ease-in-out;
+  }
+  
+  #album-icon:active {
+    background-color: var(--bs-gray-600);
+    border-radius: .5rem;
   }
 }
+
 
 /* Rincon Comment Modal */
 .create_comment_modal{
@@ -753,4 +745,81 @@ section.main {
   }
   .hide_textbox{display:none}
 
+}
+
+/* Admin DB Page */
+.admin_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+  }
+  .home_buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+  .div_button {
+    // margin: 0 0 0 0;
+    padding: 1rem 0 1rem 0;
+    width: 100%;
+    border-radius: 3rem;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .home_register {
+    background-color: var(--bs-primary);
+    border: solid var(--bs-primary);
+    border-width: .5rem;
+    color: var(--bs-gray-200);
+    margin-bottom: 1rem;
+    text-decoration: none;
+  }
+
+  .home_login {
+    color: var(--bs-primary);
+    border: solid var(--bs-primary);
+    border-width: .5rem;
+    text-decoration: none;
+
+  }
+}
+
+/* Admin DB Download Page */
+.admin_db_download_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+  }
+
+  .admin_db_sub {
+    // padding: 2rem 5rem 2rem 5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .download_db_tables_form{padding:1rem;}
+  .btn_div{
+    display: flex;
+    justify-content: end;
+  }
+  .ul_no_bullets {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+  }
 }

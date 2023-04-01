@@ -11520,12 +11520,24 @@ section.main {
 }
 
 /* Rincon page Modal */
-.create_post_modal .add_photo_icon_div {
-  padding-right: 2rem;
+.create_post_modal .footer_sub {
+  display: flex;
+  justify-content: end;
+  width: 100%;
 }
-.create_post_modal .add_photo_icon {
+.create_post_modal .icon_add_photo {
+  padding: 0 2rem 0 0;
+}
+.create_post_modal #album-icon {
   width: 2rem;
-  height: auto;
+  border-radius: 0.5rem;
+}
+.create_post_modal #album-icon {
+  transition: background-color 0.1s ease-in-out;
+}
+.create_post_modal #album-icon:active {
+  background-color: var(--bs-gray-600);
+  border-radius: 0.5rem;
 }
 
 /* Rincon Comment Modal */
@@ -11544,6 +11556,76 @@ section.main {
 }
 .create_invite_modal .hide_textbox {
   display: none;
+}
+
+/* Admin DB Page */
+.admin_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.admin_page .title {
+  width: 100%;
+}
+.admin_page .home_buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  width: 100%;
+}
+.admin_page .div_button {
+  padding: 1rem 0 1rem 0;
+  width: 100%;
+  border-radius: 3rem;
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+.admin_page .home_register {
+  background-color: var(--bs-primary);
+  border: solid var(--bs-primary);
+  border-width: 0.5rem;
+  color: var(--bs-gray-200);
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+.admin_page .home_login {
+  color: var(--bs-primary);
+  border: solid var(--bs-primary);
+  border-width: 0.5rem;
+  text-decoration: none;
+}
+
+/* Admin DB Download Page */
+.admin_db_download_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.admin_db_download_page .title {
+  width: 100%;
+}
+.admin_db_download_page .admin_db_sub {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.admin_db_download_page .download_db_tables_form {
+  padding: 1rem;
+}
+.admin_db_download_page .btn_div {
+  display: flex;
+  justify-content: end;
+}
+.admin_db_download_page .ul_no_bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
 }
 
 /*# sourceMappingURL=main.css.map */

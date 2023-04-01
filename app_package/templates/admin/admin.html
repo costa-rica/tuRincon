@@ -1,0 +1,51 @@
+{% extends "_layout.html" %}
+{% block main %}
+
+<form method="POST" id="form_download_db" enctype=multipart/form-data></form>
+
+<section class="main">
+  <div class="admin_page">
+    <div class="title">
+      <h1>Admin</h1>
+    </div>
+
+    <div class="admin_db_sub">
+
+      <div class="std_framing ">
+
+
+        <div class="download_db_tables_form">
+
+        
+        Database Options
+
+
+        <!-- <div class="home_sub"> -->
+
+
+      
+          <div class="home_buttons">
+    
+            <a class="div_button home_register" href="{{ url_for('admin.admin_db_download') }}">
+              Download
+            </a>
+            
+            <a class="div_button home_login" href="{{ url_for('admin.admin_db_upload') }}">
+              Upload
+            </a>
+      
+          </div><!-- home_buttons -->
+    
+        <!-- </div> -->
+
+      </div><!-- download_db_tables_form -->
+      </div><!-- std_framing -->
+    </div><!-- admin_db_sub -->
+
+
+
+  </div><!-- admin_db_page -->
+</section>
+
+
+{% endblock %}

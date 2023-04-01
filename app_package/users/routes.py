@@ -39,24 +39,6 @@ salt = bcrypt.gensalt()
 
 users = Blueprint('users', __name__)
 
-# @users.route('/', methods=['GET', 'POST'])
-# def home():
-#     if current_user.is_authenticated:
-#         return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
-
-#     latest_post = sess.query(Posts).all()
-#     if len(latest_post) > 0:
-#         latest_post = latest_post[-1]
-
-#         blog = {}
-#         keys = latest_post.__table__.columns.keys()
-#         blog = {key: getattr(latest_post, key) for key in keys}
-#         blog['blog_name']='blog'+str(latest_post.id).zfill(4)
-#         blog['date_published'] = blog['date_published'].strftime("%b %d %Y")
-#     else:
-#         blog =''
-
-#     return render_template('home.html', blog=blog)
 
 @users.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -93,7 +75,7 @@ def login():
             flash('No user by that name', 'warning')
 
 
-    return render_template('login.html', page_name = page_name)
+    return render_template('users/login.html', page_name = page_name)
 
 @users.route('/register', methods = ['GET', 'POST'])
 def register():
@@ -129,14 +111,13 @@ def register():
         flash(f'Succesfully registered: {new_email}', 'info')
         return redirect(url_for('main.rincons'))
 
-    return render_template('register.html', page_name = page_name)
+    return render_template('users/register.html', page_name = page_name)
 
 
 @users.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
-
 
 
 @users.route('/reset_password', methods = ["GET", "POST"])
@@ -160,7 +141,7 @@ def reset_password():
             flash('Email has not been registered with What Sticks','warning')
 
         return redirect(url_for('users.reset_password'))
-    return render_template('reset_request.html', page_name = page_name)
+    return render_template('users/reset_request.html', page_name = page_name)
 
 
 @users.route('/reset_password/<token>', methods = ["GET", "POST"])
@@ -185,5 +166,5 @@ def reset_token(token):
             flash('Must enter non-empty password', 'warning')
             return redirect(url_for('users.reset_token', token=token))
 
-    return render_template('reset_request.html', page_name='Reset Password')
+    return render_template('users/sreset_request.html', page_name='Reset Password')
 
