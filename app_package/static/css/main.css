@@ -11269,18 +11269,21 @@ section.main {
   flex-wrap: wrap;
   /* Table */
 }
-.rincons_search_page .rincons_form_super {
+.rincons_search_page .rincons_search_card {
   border-radius: 1.5em;
-  padding: 3rem 0 10rem 0.2rem;
+  padding: 3rem 0 10rem 0;
   margin: 0 0 0 0.2rem;
   font-size: 1.5em;
   background-color: white;
   color: var(--bs-gray-800);
   display: flex;
   justify-content: center;
+  width: calc(100% - 0.5rem);
 }
 .rincons_search_page .rincons_search_form {
   width: calc(100% - 0.5rem);
+  display: flex;
+  flex-wrap: wrap;
 }
 .rincons_search_page .search_form_group {
   width: 100%;
@@ -11294,6 +11297,18 @@ section.main {
 .rincons_search_page .element_right {
   padding: 1rem 0;
   float: right;
+}
+.rincons_search_page .search_string_display_label {
+  width: 100%;
+}
+.rincons_search_page .search_string_display_div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.rincons_search_page .search_string_display_div_sub {
+  background-color: var(--bs-gray-200);
+  padding: 1rem;
 }
 .rincons_search_page .line_break_div {
   padding: 2rem 0.5rem;
@@ -11519,6 +11534,15 @@ section.main {
   --bs-btn-border-color: var(--bs-blue);
 }
 .create_comment_modal .hide_textbox {
+  display: none;
+}
+
+/* Rincon Invite Modal */
+.create_invite_modal .custom_modal_comment_btn {
+  background-color: var(--bs-blue);
+  --bs-btn-border-color: var(--bs-blue);
+}
+.create_invite_modal .hide_textbox {
   display: none;
 }
 

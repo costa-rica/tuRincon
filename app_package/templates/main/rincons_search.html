@@ -1,6 +1,8 @@
 {% extends "_layout.html" %}
 {% block main %}
-<form method="POST" id="form_1"></form>
+<form method="POST" id="form_search"></form>
+<form method="POST" id="form_reset"></form>
+<form method="POST" id="form_rincon_membership"></form>
 
 <section class="main">
   <div class="rincons_search_page">
@@ -8,38 +10,48 @@
       <h1>Search Rincons</h1>
     </div>
 
-    <div class="rincons_form_super">
+    <div class="rincons_search_card">
+
+
       <div class="rincons_search_form">
 
 
-
-
-
-
-
-        {% if rincon_list == "no_rincons" %}
+        {% if rincon_list == None %}
         <div class="search_form_group">
           <div class="input_form_div">
-            <input type="text" id="rincon" name="search_string" class="register_text" form="form_1"
-            placeholder="Enter rincón name">
+            <input type="text" id="rincon" name="search_string" class="register_text" form="form_search"
+              placeholder="Enter rincón name">
           </div>
 
 
           <div class="element_right">
-            <input type="submit" value="Submit" class="btn btn-secondary btn_custom01" form="form_1">
+            <input type="submit" value="Submit" class="btn btn-secondary btn_custom01" form="form_search">
           </div>
 
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
 
         {% else %}
         <div class="element_right_super">
           <div class="element_right">
-            <button type="submit" name="reset_search" value="true" class="btn btn-secondary btn_custom01" form="form_1">Reset Search</button>
+            <button type="submit" name="reset_search" value="true" class="btn btn-secondary btn_custom01"
+              form="form_reset">Reset Search</button>
           </div>
+        </div>
+
+        {% if search_string != "" %}
+        <div class="search_string_display_label">
+          Showing results containing:
+        </div>
+        {% endif %}
+
+        <div class="search_string_display_div">
+          {% if search_string != "" %}
+          <div class="search_string_display_div_sub">
+            {{ search_string }}
+          </div>
+          {% else %}
+            Showing all Rincóns
+          {% endif %}
         </div>
 
 
@@ -47,60 +59,56 @@
           <hr>
         </div>
 
-        <div class="table_super">
+        <div class="table_and_search_div">
+
+          <!-- The blow code will work fine if you uncomment -->
+          <!-- <div class="search-container">
+            <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for names...">
+          </div> -->
+          <table id="searchableTable01" class="responsive-table">
+            <thead>
+              <tr>
+
+                {% for col in column_names %}
+                <th>{{ col }}</th>
+                {% endfor %}
+                <th> </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in rincon_list %}
+              <tr>
+
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>
+                  {% if row[3] == False %}
+                  <button type="submit" name="join" value="{{ row[0] }}" class="btn btn-info btn_custom01"
+                    form="form_rincon_membership">Join</button>
+                  {% else %}
+                  <button type="submit" name="leave" value="{{ row[0] }}" class="btn btn-warning btn_custom01"
+                    form="form_rincon_membership">Leave</button>
+                  {% endif %}
+
+                </td>
 
 
-        </div>
-
-        <div class="search-container">
-          <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search for names...">
-        </div>
-        <table id="searchableTable01" class="responsive-table">
-          <thead>
-            <tr>
-
-              {% for col in column_names %}
-              <th>{{ col }}</th>
+              </tr>
               {% endfor %}
-              <th> </th>
 
-            </tr>
-          </thead>
-          <tbody>
-            {% for row in rincon_list %}
-            <tr>
-              
-              <td>{{ row[0] }}</td>
-              <td>{{ row[1] }}</td>
-              <td>{{ row[2] }}</td>
-              <td>
-                {% if row[3] == False %}
-                <button type="submit" name="join"value="{{ row[0] }}" class="btn btn-info btn_custom01" form="form_1">Join</button>
-                {% else %}
-                <button type="submit" name="leave"value="{{ row[0] }}" class="btn btn-warning btn_custom01" form="form_1">Leave</button>
-                {% endif %}
+            </tbody>
+          </table>
+        </div><!-- table_and_search_div -->
 
-              </td>
-
-
-            </tr>
-            {% endfor %}
-
-          </tbody>
-        </table>
-
-        
-    
 
         {% endif %}
 
       </div><!--rincons_search_form-->
-      
 
 
-
-    </div><!-- rincons_form_super -->
-
+    </div><!-- rincons_search_form_super -->
 
 
   </div><!-- rincons_search_page -->

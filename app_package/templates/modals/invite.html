@@ -1,0 +1,60 @@
+<div class="modal-dialog create_invite_modal" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Enter email to invite: </h5>
+      <!-- <button type="button" id="close_button" class="btn btn-secondary">&times;</button>
+      <button type="submit" name="btn_comment2" value="true"class="btn btn-primary" form="form_modal_post">Post</button> -->
+    </div>
+    <div class="modal-body">
+      
+      <!-- <input type="text" class="form-control hide_textbox" id="recipient-name" name="rincon_id" form="form_modal_invite" readonly> -->
+      <input type="text" class="form-control hide_textbox" id="rincon_id" name="rincon_id" form="form_modal_invite" readonly>
+
+      <!-- Text box -->
+      <!-- <textarea class="form-control" name="comment_text" form="form_modal_comment"></textarea> -->
+
+      <div class="col-sm-10">
+        <input type="email" class="form-control" name="invite_email" placeholder="Enter email" form="form_modal_invite">
+      </div>
+    
+    </div>
+    <div class="modal-footer">
+      
+      <button type="submit" name="btn_invite" value="true" class="btn btn-primary custom_modal_comment_btn" 
+      form="form_modal_invite">Send invite</button>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#close_button").click(function(){
+      $("#inviteModal").modal("hide");
+    });
+  });
+</script>
+
+
+
+<!--Delete modal read record id-->
+<script>
+  var inviteModal = document.getElementById('inviteModal')
+  inviteModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    var recipient = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = inviteModal.querySelector('.modal-title')
+    // var modalBodyInput = inviteModal.querySelector('.modal-body input')
+    var modalBodyInput = document.getElementById('rincon_id')
+  
+    // modalTitle.textContent = 'Delete record ' + recipient +'?'
+    modalBodyInput.value = recipient
+  
+  });
+  </script>

@@ -10,6 +10,7 @@ from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons, \
     RinconsPostsComments, RinconsPostsLikes, RinconsPostsCommentsLikes
 import shutil
 from werkzeug.utils import secure_filename
+import json
 
 
 main = Blueprint('main', __name__)
@@ -56,31 +57,18 @@ def rincons():
 def search_rincons():
 
     print(f"- search_rincons -")
-
-    rincon_list = request.args.get('rincon_list')
-    print(f"rincon_list: {rincon_list}")
-    print(type(rincon_list))
-    if rincon_list == "reset" or rincon_list==None:
-        rincon_list = "no_rincons"
-    else:
-
-        rincon_list = request.args.getlist('rincon_list')
-        print("- converted rincon_list back to list - ")
-        print(type(rincon_list))
-        print(list(rincon_list[0])[0])
     column_names = ["ID", "Name", "Manager Name"]
-
+    rincon_list = request.args.getlist('rincon_list') if request.args.get('rincon_list') != None else request.args.get('rincon_list') 
+    search_string = request.args.get('search_string')
+    
     if request.method == "POST":
         formDict = request.form.to_dict()
         print(f"- search_rincons POST -")
-        print("formDict: ", formDict)
-
-        # print(f"reset_serach: {formDict.get('reset_search') }")
-        
+        print("formDict: ", formDict)      
 
         if formDict.get('reset_search') == 'true':
             print("- RESET_search")
-            rincon_list = "reset"
+            rincon_list = None
             return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
 
         elif formDict.get('join'):
@@ -115,26 +103,21 @@ def search_rincons():
                 print("- get all the rincons -")
                 search_list = sess.query(Rincons).all()
 
-
             # rincon list id, name of rincon, manager name, is user alraedy a member
             rincon_list = []
             for rincon in search_list:
                 temp_list =[]
-                temp_list.append(rincon.id)
-                temp_list.append(rincon.name)
-                temp_list.append(sess.get(Users, rincon.manager_id).username)
-                members_id_list = [i.users_table_id for i in rincon.users]
-                member = True if current_user.id in members_id_list else False
-                temp_list.append(member)
-                rincon_list.append(temp_list)
+                print('** rincon.public: ', rincon.public)
+                if rincon.public:
+                    temp_list.append(rincon.id)
+                    temp_list.append(rincon.name)
+                    temp_list.append(sess.get(Users, rincon.manager_id).username)
+                    members_id_list = [i.users_table_id for i in rincon.users]
+                    member = True if current_user.id in members_id_list else False
+                    temp_list.append(member)
+                    rincon_list.append(temp_list)
 
-            
-            print(f"rincon_list: {rincon_list }")
-            print(f"rincon_list: {type(rincon_list) }")
-            # return redirect(url_for('main.search_rincons', rincon_list=rincon_list, column_names=column_names))
-
-
-    return render_template('main/rincons_search.html', rincon_list=rincon_list, column_names=column_names  )
+    return render_template('main/rincons_search.html', rincon_list=rincon_list, column_names=column_names, search_string=search_string )
 
 
 @main.route("/create_rincon", methods=["GET", "POST"])
@@ -205,7 +188,7 @@ def rincon(rincon_name):
         temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name}/{i.image}"
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
-        # temp_dict['comments'] = {}
+
         comments_list = []
         for comment in i.comments:
             temp_sub_dict = {}
@@ -214,27 +197,10 @@ def rincon(rincon_name):
             temp_sub_dict['text'] = comment.text
             temp_sub_dict['delete_comment_permission'] = False if comment.user_id != current_user.id else True
             temp_sub_dict['comment_id'] = comment.id
-
             comments_list.append(temp_sub_dict)
-
         temp_dict['comments'] = comments_list
-            # temp_list = []
-            # temp_list.append(comment.time_stamp_utc.strftime("%m/%d/%y %H:%M"))
-            # temp_list.append(sess.get(Users,comment.user_id).username)
-            # temp_list.append(comment.text)
-            # temp_dict['comments']=temp_list
-
         rincon_posts.append(temp_dict)
 
-    # print("- rincon_posts -")
-    # print(rincon_posts)
-    # print(len(rincon_posts))
-
-    # print("-- is this a dict? --")
-    # print(type(rincon_posts[1]['comments']))
-    # print(rincon_posts[1]['comments'])
-    # print(rincon_posts[1]['comments']['text'])
-    # print(rincon_posts)
     rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
 
 
@@ -246,7 +212,7 @@ def rincon(rincon_name):
 
         requestFiles = request.files
 
-        if formDict.get('btn_delete') and formDict.get('text_delete')==rincon.name:
+        if formDict.get('btn_delete_rincon') and formDict.get('text_delete')==rincon.name:
             print("- ENTERED in if for btn_delete -")
 
             return redirect(url_for('main.delete_rincon', rincon_id=rincon_id))
@@ -315,7 +281,7 @@ def rincon(rincon_name):
             
 
 
-    return render_template('main/rincon_template.html', rincon_name=rincon_name, rincon_posts=rincon_posts)
+    return render_template('main/rincon_template.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
 
 
 @main.route("/delete/<rincon_id>", methods=["GET"])

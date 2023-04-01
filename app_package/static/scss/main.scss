@@ -427,27 +427,22 @@ section.main {
   justify-content: center;
   flex-wrap: wrap;
 
-  .rincons_form_super {
+  .rincons_search_card {
     border-radius: 1.5em;
-    padding: 3rem 0 10rem .2rem;
+    padding: 3rem 0 10rem 0;
     margin: 0 0 0 .2rem;
     font-size: 1.5em;
     background-color: white;
     color: var(--bs-gray-800);
     display: flex;
     justify-content: center;
+    width:calc(100% - .5rem);
   }
   .rincons_search_form{
     width: calc(100% - .5rem);
+    display:flex;
+    flex-wrap:wrap;
   }
-  // .rincons_sub {
-  //   border-radius: 1.5em;
-  //   padding: 3rem 0 10rem .2rem;
-  //   margin: 0 0 0 .2rem;
-  //   font-size: 1.5em;
-  //   background-color: white;
-  //   color: var(--bs-gray-800);
-  // }
   .search_form_group{
     width:100%;
   }
@@ -462,6 +457,18 @@ section.main {
     float:right;
     // width:100%;
 
+  }
+  .search_string_display_label{
+    width:100%;
+  }
+  .search_string_display_div{
+    width:100%;
+    display:flex;
+    justify-content: center;
+  }
+  .search_string_display_div_sub{
+    background-color: var(--bs-gray-200);
+    padding:1rem;
   }
   .line_break_div{
     padding:2rem .5rem;
@@ -736,3 +743,14 @@ section.main {
 }
 
 
+
+/* Rincon Invite Modal */
+.create_invite_modal{
+
+  .custom_modal_comment_btn{
+    background-color: var(--bs-blue);
+    --bs-btn-border-color: var(--bs-blue);
+  }
+  .hide_textbox{display:none}
+
+}
