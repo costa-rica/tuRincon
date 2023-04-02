@@ -735,7 +735,6 @@ section.main {
 }
 
 
-
 /* Rincon Invite Modal */
 .create_invite_modal{
 
@@ -794,7 +793,7 @@ section.main {
   }
 }
 
-/* Admin DB Download Page */
+/* Admin DB DOWNload Page */
 .admin_db_download_page {
   width: 90%;
   padding: 3rem 0 0 0;
@@ -813,6 +812,66 @@ section.main {
     flex-wrap: wrap;
   }
   .download_db_tables_form{padding:1rem;}
+
+  .ul_no_bullets {
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+  }
+
+  .download_options{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+    padding: 0 3rem;
+  }
+
+
+}
+
+
+
+/* Admin DB UPload Page */
+.admin_db_upload_table_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+  }
+
+
+  .admin_db_sub {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    max-width: 50rem;
+    height: 100vh;
+  }
+  .section_div {
+    width: 100%;
+    padding:1rem;
+  }
+  .section_div_sub {
+    width: 97%;
+    padding:1rem;
+  }
+
+  .details{
+    padding: 1rem;
+  }
+
+  .download_db_tables_form{
+    padding:1rem;
+
+    .upload_input{width:100%;}
+    .missing{background-color: var(--bs-warning);}
+  }
   .btn_div{
     display: flex;
     justify-content: end;
@@ -822,4 +881,16 @@ section.main {
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margins */
   }
+  .white_bkground{
+    background-color: var(--bs-gray-100);
+    border-radius: .25rem;
+    padding:0 .25rem;
+  }
+
+  .input_div_for_new_data{
+    display: flex;
+  }
 }
+
+
+

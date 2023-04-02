@@ -11599,7 +11599,7 @@ section.main {
   text-decoration: none;
 }
 
-/* Admin DB Download Page */
+/* Admin DB DOWNload Page */
 .admin_db_download_page {
   width: 90%;
   padding: 3rem 0 0 0;
@@ -11618,14 +11618,74 @@ section.main {
 .admin_db_download_page .download_db_tables_form {
   padding: 1rem;
 }
-.admin_db_download_page .btn_div {
-  display: flex;
-  justify-content: end;
-}
 .admin_db_download_page .ul_no_bullets {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove padding */
   margin: 0; /* Remove margins */
+}
+.admin_db_download_page .download_options {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1rem;
+  padding: 0 3rem;
+}
+
+/* Admin DB UPload Page */
+.admin_db_upload_table_page {
+  width: 90%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.admin_db_upload_table_page .title {
+  width: 100%;
+}
+.admin_db_upload_table_page .admin_db_sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  max-width: 50rem;
+  height: 100vh;
+}
+.admin_db_upload_table_page .section_div {
+  width: 100%;
+  padding: 1rem;
+}
+.admin_db_upload_table_page .section_div_sub {
+  width: 97%;
+  padding: 1rem;
+}
+.admin_db_upload_table_page .details {
+  padding: 1rem;
+}
+.admin_db_upload_table_page .download_db_tables_form {
+  padding: 1rem;
+}
+.admin_db_upload_table_page .download_db_tables_form .upload_input {
+  width: 100%;
+}
+.admin_db_upload_table_page .download_db_tables_form .missing {
+  background-color: var(--bs-warning);
+}
+.admin_db_upload_table_page .btn_div {
+  display: flex;
+  justify-content: end;
+}
+.admin_db_upload_table_page .ul_no_bullets {
+  list-style-type: none; /* Remove bullets */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margins */
+}
+.admin_db_upload_table_page .white_bkground {
+  background-color: var(--bs-gray-100);
+  border-radius: 0.25rem;
+  padding: 0 0.25rem;
+}
+.admin_db_upload_table_page .input_div_for_new_data {
+  display: flex;
 }
 
 /*# sourceMappingURL=main.css.map */
