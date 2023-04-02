@@ -11539,6 +11539,12 @@ section.main {
   background-color: var(--bs-gray-600);
   border-radius: 0.5rem;
 }
+.create_post_modal .custom_textarea {
+  white-space: pre-line;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  background-color: green;
+}
 
 /* Rincon Comment Modal */
 .create_comment_modal .custom_modal_comment_btn {

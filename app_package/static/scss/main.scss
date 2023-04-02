@@ -720,6 +720,12 @@ section.main {
     background-color: var(--bs-gray-600);
     border-radius: .5rem;
   }
+  .custom_textarea{
+    white-space: pre-line;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    background-color: green;
+  }
 }
 
 
