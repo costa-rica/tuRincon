@@ -171,7 +171,7 @@ def create_rincon():
 @main.route("/rincon/<rincon_name>", methods=["GET","POST"])
 def rincon(rincon_name):
     
-    # rincon_id = request.args.get('rincon_id')
+    rincon_id = request.args.get('rincon_id')
     # if user signed in redirect
     print(dir(current_user))
     print("current_user: ", current_user.is_authenticated)
