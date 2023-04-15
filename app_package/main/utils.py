@@ -5,6 +5,7 @@ from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons, \
 import os
 import re
 import urlextract
+from flask_login import current_user
 
 
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
@@ -29,70 +30,11 @@ def get_post_dict(post_string):
     http_start_pos = [spaces.start() for spaces in re.finditer("https://", post_string)]
     post_dict = {}
     counter = 1
-    # # case no http found
-    # if len(http_start_pos) == 0:
-    #     post_dict['text'+str(counter)] = post_string
-    # # case where only http is found: 1 
-    # elif len(http_start_pos)==1:
-    # # else:
-    #     ## http start start of post_string
-    #     if len(spaces_start_pos) == 0:
-    #         post_dict['link'+str(counter)] = post_string
-    #     else:
-    #         index=0
-    #         print(f"http: {http_start_pos[0]}; spaces: {spaces_start_pos[index]}")
-    #         for link_loc in http_start_pos:
-    #             while spaces_start_pos[index] < link_loc:
-    #                 index += 1
-    #             if http_start_pos[0] != 0:
-    #                 post_dict['text'+str(counter)] = post_string[:link_loc]
-    #             post_dict['link'+str(counter)] = post_string[link_loc:spaces_start_pos[index]]
-            
-    #         post_dict['text'+str(counter+1)] = post_string[spaces_start_pos[index]:]
+
     post_dict = {"text":post_string}
 
     return post_dict
 
-
-
-# def extract_url_info(text):
-#     extractor = urlextract.URLExtract()
-#     urls = extractor.find_urls(text)
-    
-#     if len(urls) != 1:
-#         # raise ValueError("Input string must contain exactly one URL")
-#         return {"text":text}
-    
-#     url = urls[0]
-#     split_text = text.split(url)
-    
-#     return {
-#         "text01": split_text[0],
-#         "url01": url,
-#         "text02": split_text[1]
-#     }
-
-# def extract_urls_info(text):
-#     extractor = urlextract.URLExtract()
-#     urls = extractor.find_urls(text)
-#     original_text = text
-#     if len(urls) == 0:
-#         return {"text": text}
-    
-#     url_dict = {}
-    
-#     for i, url in enumerate(urls):
-#         split_text = text.split(url)
-#         url_dict[f"text{i+1:02d}"] = split_text[0]
-#         url_dict[f"url{i+1:02d}"] = url
-#         # try:
-#         text = split_text[1]
-#         # except:
-#         #     print("*** Error parsing:", original_text)
-#         #     return {"text": text}
-#     url_dict[f"text{len(urls)+1:02d}"] = text
-    
-#     return url_dict
 
 def extract_urls_info(text):
     extractor = urlextract.URLExtract()
@@ -130,3 +72,62 @@ def extract_urls_info(text):
         url_dict[f"text{len(urls)+1:02d}"] = text
     
     return url_dict
+
+
+def create_rincon_posts_list(rincon_id):
+
+    rincon = sess.get(Rincons,rincon_id)
+
+    rincon_posts = []
+
+    user_likes = current_user.post_like
+    user_likes_this_rincon = [like.post_id  for like in user_likes if like.rincon_id == rincon.id]
+
+
+
+    print(user_likes)
+
+    for i in rincon.posts:
+        temp_dict = {}
+
+        temp_dict['post_id'] = i.id
+        temp_dict['date_for_sorting'] = i.time_stamp_utc
+        temp_dict['username'] = sess.get(Users,i.user_id).username
+
+        temp_dict['text'] = extract_urls_info(i.text)
+
+        temp_dict['image_exists'] = False if i.image_file_name == None else True
+        temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
+        temp_dict['image_filename'] = f"{i.image_file_name}"
+        temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
+        
+        temp_dict['liked'] = False if i.id not in user_likes_this_rincon else True
+        
+        temp_dict['like_count'] = len(i.post_like)
+
+        if current_user.is_authenticated:
+            temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
+        else:
+            temp_dict['delete_post_permission'] = False
+
+        comments_list = []
+        for comment in i.comments:
+            temp_sub_dict = {}
+            temp_sub_dict['date'] = comment.time_stamp_utc.strftime("%m/%d/%y %H:%M")
+            temp_sub_dict['username'] = sess.get(Users,comment.user_id).username
+            temp_sub_dict['text'] = comment.text
+            if current_user.is_authenticated:
+                temp_sub_dict['delete_comment_permission'] = False if comment.user_id != current_user.id else True
+            else:
+                temp_sub_dict['delete_comment_permission'] = False
+
+            temp_sub_dict['comment_id'] = comment.id
+            comments_list.append(temp_sub_dict)
+        temp_dict['comments'] = comments_list
+        rincon_posts.append(temp_dict)
+
+    rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
+
+    return rincon_posts
+
+

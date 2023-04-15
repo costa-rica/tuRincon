@@ -12,13 +12,13 @@
     <div class="rincon_sub">
 
       {% for post in rincon_posts %}
-      <div class="rincon_post_card_super">
+      <div class="rincon_post_card_super" id="like_{{ post.post_id }}"><!-- id is for anchor to return from like-->
 
         <div class="rincon_post_card">
 
           <div class="post_and_engagement">
 
-            <div class="post">
+            <div class="post" >
 
               <div class="date_div">
                 <div class="date_div_sub">
@@ -35,8 +35,6 @@
               <div class="post_text_div">
                 <div class="post_text_div_sub">
                   
-
-
                   <div class="keep_inline">
                     {% for key, value in post.text.items() %}
                     {% if key.0 == 't' %}
@@ -48,12 +46,9 @@
                     {% endif %}
                   {% endfor %}
                   </div>
-                  
-
-
+ 
                 </div>
               </div>
-
               
               {% if post.image_exists %}
               <div class="img_div">
@@ -109,9 +104,23 @@
 
                   </div>
 
-  
-                  <img class="thumbs_up_icon" alt=""
-                  src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
+                  <div class="post_like_count">
+                    {% if post.like_count > 0 %}
+                    {{ post.like_count }}
+                    {% endif %}
+                  </div>
+
+                  <a href="{{ url_for('main.like_post', rincon_id=rincon.id, post_id= post.post_id)}}" >
+                    {% if post.liked %}
+                    <img class="thumbs_up_icon" alt="" id="thumbs_up_icon"
+                    src="{{ url_for('static', filename= 'images/thumbs-up-15-512.png') }}">
+                    {% else %}
+                    <img class="thumbs_up_icon" alt="" id="thumbs_up_icon"
+                    src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
+                    {% endif %}
+                  </a>
+
+
                 </div><!-- post_engagement_sub_right -->
 
               </div><!-- post_engagement_sub -->
@@ -179,10 +188,6 @@
 
                 </div>
               
-              
-
-
-
 
               </div><!-- show_comment_sub-->
               {% endfor %}

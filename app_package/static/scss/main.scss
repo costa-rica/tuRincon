@@ -659,6 +659,23 @@ body {
     width: 2rem;
     max-height: 2rem;
   }
+
+  #thumbs_up_icon{
+    width:2rem;
+    // height:auto;
+    border-radius: .5rem;
+  }
+  
+  #thumbs_up_icon {
+    transition: background-color 0.1s ease-in-out;
+  }
+  
+  #thumbs_up_icon:active {
+    background-color: var(--bs-gray-600);
+    border-radius: .5rem;
+  }
+
+
 // END section of engagement with post
 
 // START comments section
@@ -742,15 +759,8 @@ body {
 
 }
 
-/* Rincon page Modal */
+/* Create Post Modal */
 .create_post_modal{
-  // .footer_sub{
-  //   padding-right: 2rem;
-  // }
-  // .add_photo_icon{
-  //   width: 2rem;
-  //   height: auto;
-  // }
   .footer_sub{
     display:flex;
     justify-content: end;

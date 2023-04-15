@@ -11490,6 +11490,17 @@ body {
   width: 2rem;
   max-height: 2rem;
 }
+.rincon_page #thumbs_up_icon {
+  width: 2rem;
+  border-radius: 0.5rem;
+}
+.rincon_page #thumbs_up_icon {
+  transition: background-color 0.1s ease-in-out;
+}
+.rincon_page #thumbs_up_icon:active {
+  background-color: var(--bs-gray-600);
+  border-radius: 0.5rem;
+}
 .rincon_page .show_comments {
   padding: 1rem 0 0 0;
   display: flex;
@@ -11559,7 +11570,7 @@ body {
   cursor: pointer;
 }
 
-/* Rincon page Modal */
+/* Create Post Modal */
 .create_post_modal .footer_sub {
   display: flex;
   justify-content: end;

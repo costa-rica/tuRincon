@@ -11,7 +11,8 @@ from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons, \
 import shutil
 from werkzeug.utils import secure_filename
 import json
-from app_package.main.utils import get_post_dict, extract_urls_info
+from app_package.main.utils import get_post_dict, extract_urls_info, \
+    create_rincon_posts_list
 
 
 main = Blueprint('main', __name__)
@@ -56,36 +57,35 @@ def rincons():
 
 @main.route("/search_rincons", methods=["GET", "POST"])
 def search_rincons():
+    logger_main.info("- Search Rincón -")
 
-    print(f"- search_rincons -")
     column_names = ["ID", "Name", "Manager Name"]
     rincon_list = request.args.getlist('rincon_list') if request.args.get('rincon_list') != None else request.args.get('rincon_list') 
     search_string = request.args.get('search_string')
     
     if request.method == "POST":
         formDict = request.form.to_dict()
-        print(f"- search_rincons POST -")
-        print("formDict: ", formDict)      
 
         if formDict.get('reset_search') == 'true':
-            print("- RESET_search")
+            logger_main.info("- RESET_search")
             rincon_list = None
             return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
 
         elif formDict.get('join'):
-            print("- JOIN was selected -")
-            new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= int(formDict.get('join')))
+            logger_main.info(f"- Selected JOIN {formDict.get('join')} -")
+            rincon_id = int(formDict.get('join'))
+            new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= rincon_id)
             sess.add(new_member)
             sess.commit()
-            print("Rincon ID: ", formDict.get('join'))
-            rincon_name = sess.get(Rincons,int(formDict.get('join'))).name
+
+            rincon_name = sess.get(Rincons,rincon_id).name
 
             flash("Added to Rincon", "success")
             # return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
-            return redirect(url_for('main.rincon', rincon_name=rincon_name, rincon_id=int(formDict.get('join')) ) )
+            return redirect(url_for('main.rincon', rincon_id=rincon_id))
 
         elif formDict.get('leave'):
-            print("- leave was selected -")
+            logger_main.info("- leave was selected -")
 
             # TODO: This doesn't work - figure out deleteing from association table (UsersToRincons)
 
@@ -97,7 +97,7 @@ def search_rincons():
             return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
         else:
             search_string = formDict.get("search_string")
-            print(f"- search_string: {search_string} -")
+            logger_main.info(f"- search_string: {search_string} -")
             if search_string != "":
                 search_list = sess.query(Rincons).filter(Rincons.name.contains(search_string))
             else:
@@ -108,7 +108,6 @@ def search_rincons():
             rincon_list = []
             for rincon in search_list:
                 temp_list =[]
-                print('** rincon.public: ', rincon.public)
                 if rincon.public:
                     temp_list.append(rincon.id)
                     temp_list.append(rincon.name)
@@ -124,12 +123,10 @@ def search_rincons():
 @main.route("/create_rincon", methods=["GET", "POST"])
 @login_required
 def create_rincon():
-
-    print(f"current_user: {current_user.username}")
+    logger_main.info("- Create Rincón -")
     if request.method == "POST":
         formDict = request.form.to_dict()
 
-        print(f"formDict: {formDict}")
 
         public = False
         if formDict.get('public_checkbox') == 'true':
@@ -170,102 +167,38 @@ def create_rincon():
     return render_template('main/create_rincon.html')
 
 
-@main.route("/rincon/<rincon_name>", methods=["GET","POST"])
-def rincon(rincon_name):
+@main.route("/rincon/<rincon_id>", methods=["GET","POST"])
+def rincon(rincon_id):
     
-    rincon_id = request.args.get('rincon_id')
-    # if user signed in redirect
-    print(dir(current_user))
-    print("current_user: ", current_user.is_authenticated)
-    
-    if current_user.is_authenticated:
+    # rincon_id = request.args.get('rincon_id')
+    rincon = sess.get(Rincons,rincon_id)
+    rincon_name = rincon.name
 
+    # if user signed in redirect  
+    if current_user.is_authenticated:
         return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id, rincon_name=rincon_name))
     
-    # rincon = sess.get(Rincons, int(rincon_id))
-    rincon = sess.query(Rincons).filter_by(name_no_spaces=rincon_name).first()
-    rincon_id = rincon.id
+    # rincon = sess.query(Rincons).filter_by(name_no_spaces=rincon_name).first()
+    # rincon_id = rincon.id
     if not rincon.public:
         flash("Register and search for a rincoón.", "warning")
         return redirect(url_for('users.register', rincon_id=rincon_id))
 
-
-    rincon_posts = []
-    for i in rincon.posts:
-        temp_dict = {}
-
-        temp_dict['post_id'] = i.id
-        temp_dict['date_for_sorting'] = i.time_stamp_utc
-        temp_dict['username'] = sess.get(Users,i.user_id).username
-
-        # temp_dict['text'] = i.text
-        temp_dict['text'] = extract_urls_info(i.text)
-
-        temp_dict['image_exists'] = False if i.image_file_name == None else True
-        temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
-        temp_dict['image_filename'] = f"{i.image_file_name}"
-        temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
-        temp_dict['delete_post_permission'] = False
-
-        comments_list = []
-        for comment in i.comments:
-            temp_sub_dict = {}
-            temp_sub_dict['date'] = comment.time_stamp_utc.strftime("%m/%d/%y %H:%M")
-            temp_sub_dict['username'] = sess.get(Users,comment.user_id).username
-            temp_sub_dict['text'] = comment.text
-            temp_sub_dict['delete_comment_permission'] = False
-            temp_sub_dict['comment_id'] = comment.id
-            comments_list.append(temp_sub_dict)
-        temp_dict['comments'] = comments_list
-        rincon_posts.append(temp_dict)
-
-    rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
-
+    rincon_posts = create_rincon_posts_list(rincon_id)
     
 
     return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
 
-@main.route("/rincon_signed_in/<rincon_name>", methods=["GET","POST"])
+@main.route("/rincon_signed_in/<rincon_id>", methods=["GET","POST"])
 @login_required
-def rincon_signed_in(rincon_name):
-    rincon_id = request.args.get('rincon_id')
-    print("- rincon page -")
-
+def rincon_signed_in(rincon_id):
+    # rincon_id = request.args.get('rincon_id')
+    logger_main.info("- Rincon signed in page -")
+    
     # print("rincon_id: ", rincon_id)
     rincon = sess.get(Rincons, int(rincon_id))
-
-    rincon_posts = []
-    for i in rincon.posts:
-        temp_dict = {}
-
-        temp_dict['post_id'] = i.id
-        temp_dict['date_for_sorting'] = i.time_stamp_utc
-        temp_dict['username'] = sess.get(Users,i.user_id).username
-        # temp_dict['text'] = i.text
-        temp_dict['text'] = extract_urls_info(i.text)
-
-        temp_dict['image_exists'] = False if i.image_file_name == None else True
-        temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
-        temp_dict['image_filename'] = f"{i.image_file_name}"
-
-        temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
-        temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
-
-        comments_list = []
-        for comment in i.comments:
-            temp_sub_dict = {}
-            temp_sub_dict['date'] = comment.time_stamp_utc.strftime("%m/%d/%y %H:%M")
-            temp_sub_dict['username'] = sess.get(Users,comment.user_id).username
-            temp_sub_dict['text'] = comment.text
-            temp_sub_dict['delete_comment_permission'] = False if comment.user_id != current_user.id else True
-            temp_sub_dict['comment_id'] = comment.id
-            comments_list.append(temp_sub_dict)
-        temp_dict['comments'] = comments_list
-        rincon_posts.append(temp_dict)
-
-    rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
-
-
+    
+    rincon_posts = create_rincon_posts_list(rincon_id)
 
     if request.method == "POST":
         formDict = request.form.to_dict()
@@ -354,13 +287,13 @@ def rincon_signed_in(rincon_name):
             
     # print(rincon_posts)
 
-    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+    return render_template('main/rincon.html', rincon_name=rincon.name, rincon_posts=rincon_posts, rincon=rincon)
 
 
 @main.route("/delete/<rincon_id>", methods=["GET"])
 @login_required
 def delete_rincon(rincon_id):
-    print("- Entered delete/rinocon route -")
+    logger_main.info("- Entered delete/rinocon route -")
 
     rincon = sess.get(Rincons, rincon_id)
     # remove static rincon_dir folder
@@ -397,4 +330,38 @@ def custom_static(image_path, image_filename):
     
     return send_from_directory(os.path.join(current_app.config.get('DB_ROOT'),"rincon_files", \
         image_path), image_filename)
+
+
+
+@main.route('/like_post/<rincon_id>/<post_id>/')
+@login_required
+def like_post(rincon_id,post_id):
+    logger_main.info(f"- Like {rincon_id} {post_id} -")
+
+    rincon_id = int(rincon_id)
+    post_id = int(post_id)
+    post_like = sess.query(RinconsPostsLikes).filter_by(rincon_id=rincon_id, post_id=post_id, user_id=current_user.id).first()
+    
+    if post_like:
+        print("- post already LIKED -")
+        sess.query(RinconsPostsLikes).filter_by(rincon_id=rincon_id, post_id=post_id, user_id=current_user.id).delete()
+        sess.commit()
+    else:
+        print("- post NOT liked")
+        new_post_like = RinconsPostsLikes(rincon_id=rincon_id, post_id=post_id, user_id=current_user.id, post_like=True)
+        sess.add(new_post_like)
+        sess.commit()
+
+
+    # new_post_like = RinconsPostsLikes(rincon_id=rincon_id, post_id=post_id, user_id=current_user.id, post_like=True)
+    # sess.add(new_post_like)
+    # sess.commit()
+
+    # post_like = sess.query(RinconsPostsLikes).filter_by(rincon_id=rincon_id, post_id=post_id, user_id=current_user.id).first()
+    print("Post Like:", post_like)
+
+
+
+    # return redirect(request.referrer, _anchor='like_'+post_id)
+    return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id,post_id=post_id, _anchor='like_'+str(post_id)))
 
