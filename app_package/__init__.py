@@ -56,9 +56,9 @@ logger_init.info(f'--- Starting Tu Rincón ---')
 
 
 # Create rincon_files folder
-if not os.path.exists(os.path.join(os.environ.get('WEB_ROOT'),'app_package','static','rincon_files')):
-    os.makedirs(os.path.join(os.environ.get('WEB_ROOT'),'app_package','static','rincon_files'))
-    print('- created static/rincon_files/ -')
+if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),'rincon_files')):
+    os.makedirs(os.path.join(os.environ.get('DB_ROOT'),'rincon_files'))
+    print(f"- created {os.path.join(os.environ.get('DB_ROOT'),'rincon_files')} -")
 
 
 mail = Mail()

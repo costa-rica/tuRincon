@@ -171,7 +171,7 @@ def create_rincon():
 @main.route("/rincon/<rincon_name>", methods=["GET","POST"])
 def rincon(rincon_name):
     
-    rincon_id = request.args.get('rincon_id')
+    # rincon_id = request.args.get('rincon_id')
     # if user signed in redirect
     print(dir(current_user))
     print("current_user: ", current_user.is_authenticated)
@@ -182,7 +182,7 @@ def rincon(rincon_name):
     
     # rincon = sess.get(Rincons, int(rincon_id))
     rincon = sess.query(Rincons).filter_by(name_no_spaces=rincon_name).first()
-
+    rincon_id = rincon.id
     if not rincon.public:
         flash("Register and search for a rincoón.", "warning")
         return redirect(url_for('users.register', rincon_id=rincon_id))
@@ -210,7 +210,8 @@ def rincon(rincon_name):
         print("-- what is image ---")
         print(i.image_file_name)
         temp_dict['image_exists'] = False if i.image_file_name == None else True
-        temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name_no_spaces}/{i.image_file_name}"
+        temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
+        temp_dict['image_filename'] = f"{i.image_file_name}"
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         temp_dict['delete_post_permission'] = False
 
