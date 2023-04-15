@@ -11409,9 +11409,33 @@ section.main {
 }
 .rincon_page .post_text_div {
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 .rincon_page .post_text_div_sub {
-  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+  padding: 0 0.2rem 0 0.2rem;
+}
+.rincon_page .post_text_div_sub .post {
+  display: flex;
+  flex-wrap: wrap;
+}
+.rincon_page .post_text_div_sub .post-text {
+  white-space: pre-wrap;
+  flex-basis: 100%;
+}
+.rincon_page .post_text_div_sub .post-url {
+  color: blue;
+  text-decoration: underline;
+}
+.rincon_page .post_text_div_sub .post-url:before {
+  content: "(";
+}
+.rincon_page .post_text_div_sub .post-url:after {
+  content: ")";
+}
+.rincon_page .post_text_line_break_custom {
+  white-space: pre-line;
+  margin-top: -2rem;
 }
 .rincon_page .img_div {
   width: 100%;
@@ -11484,6 +11508,22 @@ section.main {
   border-radius: 1.5em;
   padding: 0.5rem;
 }
+.rincon_page .comment_text_div {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.rincon_page .comment_text_div_sub {
+  padding: 0 0.2rem 0 0.2rem;
+}
+.rincon_page .comment_text_line_break_custom {
+  white-space: pre-line;
+  margin-top: -1.1rem;
+  margin-bottom: -0.5rem;
+}
+.rincon_page .comment_date_div {
+  margin-bottom: -0.5rem;
+}
 .rincon_page .comments_date {
   display: flex;
   justify-content: end;
@@ -11494,7 +11534,7 @@ section.main {
 }
 .rincon_page .comments_username {
   display: flex;
-  color: var(--bs-gray-800);
+  color: var(--bs-gray-600);
   font-size: 0.8rem;
   margin: 0;
 }
@@ -11538,12 +11578,6 @@ section.main {
 .create_post_modal #album-icon:active {
   background-color: var(--bs-gray-600);
   border-radius: 0.5rem;
-}
-.create_post_modal .custom_textarea {
-  white-space: pre-line;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  background-color: green;
 }
 
 /* Rincon Comment Modal */

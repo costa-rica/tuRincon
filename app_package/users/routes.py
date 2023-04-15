@@ -166,5 +166,5 @@ def reset_token(token):
             flash('Must enter non-empty password', 'warning')
             return redirect(url_for('users.reset_token', token=token))
 
-    return render_template('users/sreset_request.html', page_name='Reset Password')
+    return render_template('users/reset_request.html', page_name='Reset Password')
 

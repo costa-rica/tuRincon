@@ -68,9 +68,12 @@
 
         <ul class="primary-nav ul_primary" id="nav_horizontal_list">
           <br>
-          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('main.home') }}">Home</a></li>
-          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
+
+          {% if current_user.id %}
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
+          {% else %}
+          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
+          {% endif %}
           {% if current_user.admin %}
           <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('admin.admin_page') }}">Admin Page</a></li>
           {% endif %}
@@ -83,9 +86,15 @@
           <li class="li_primary">
             <div class="btn_list_div">
               <div class="btn_list_div_sub">
+                {% if current_user.is_authenticated %}
                 <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
                   data-bs-target="#postModal" data-bs-whatever="Some data">Post
                 </button>
+                {% else %}
+                <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
+                  data-bs-target="#notSignedInModal" data-bs-whatever="Some data">Post
+                </button>
+                {% endif %}
               </div>
             </div>
           </li>
@@ -142,7 +151,9 @@
   <div class="modal" tabindex="-1" role="dialog" id="deleteModal">
     {% include "modals/delete.html" %}
   </div>
-
+  <div class="modal" tabindex="-1" role="dialog" id="notSignedInModal">
+    {% include "modals/notSignedIn.html" %}
+  </div>
 
   <div class="flash_custom_parent">
 

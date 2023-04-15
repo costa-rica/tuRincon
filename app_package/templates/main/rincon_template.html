@@ -34,7 +34,23 @@
               
               <div class="post_text_div">
                 <div class="post_text_div_sub">
-                  {{post.text}}
+                  
+
+
+                  <div class="keep_inline">
+                    {% for key, value in post.text.items() %}
+                    {% if key.0 == 't' %}
+                    <!-- <p class="post_text_line_break_custom"> -->
+                    {{ value }} 
+                    <!-- </p> -->
+                    {% else %} 
+                    <a href="{{ value }}">{{ value }}</a>
+                    {% endif %}
+                  {% endfor %}
+                  </div>
+                  
+
+
                 </div>
               </div>
 
@@ -72,10 +88,20 @@
                 <div class="post_engagement_sub_right">
 
                   <div class="comment_btn_div">
+
+                    {% if current_user.is_authenticated %}
                     <button type="button" class="btn btn-primary"
                       data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-whatever="{{post.post_id}}">
                       comment
                     </button>
+                    {% else %}
+                    <button type="button" class="btn btn-primary"
+                      data-bs-toggle="modal" data-bs-target="#notSignedInModal" data-bs-whatever="{{post.post_id}}">
+                      comment
+                    </button>
+                    {% endif %}
+
+
                   </div>
 
   
@@ -101,7 +127,7 @@
                   {% for key, item in comment.items() %}
                     
                       {% if key == 'date' %}
-                      <div class="date_div">
+                      <div class="comment_date_div">
                         <div class="comments_date">
                           {{ item }}
                         </div>
@@ -117,9 +143,12 @@
                       {% endif %}
 
                       {% if key == 'text' %}
-                      <div class="post_text_div">
-                        <div class="post_text_div_sub">
-                          {{item}}
+                      <div class="comment_text_div">
+                        <div class="comment_text_div_sub">
+                          <p class="comment_text_line_break_custom">
+                            {{item}}
+                          </p>
+                          
                         </div>
                       </div>
                       {% endif %}
@@ -129,6 +158,7 @@
                         {% if item %}
                         <div class="delete_comment_div">
                           <div class="delete_comment_div_sub">
+
                             <button type="submit" name="btn_delete_comment" value="{{ comment.comment_id }}" 
                              form="form_delete_comment">Delete</button>
                           </div>
@@ -162,11 +192,11 @@
 
   <!-- Modal  -->
   <div class="modal" tabindex="-1" role="dialog" id="commentModal">
-    
     {% include "modals/comment.html" %}
-
   </div>
-
+  <div class="modal" tabindex="-1" role="dialog" id="notSignedInModal">
+    {% include "modals/notSignedIn.html" %}
+  </div>
 
       {% endfor %}
 

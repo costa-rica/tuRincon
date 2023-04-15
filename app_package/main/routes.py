@@ -11,6 +11,7 @@ from tr01_models import sess, Users, Rincons, RinconsPosts, UsersToRincons, \
 import shutil
 from werkzeug.utils import secure_filename
 import json
+from app_package.main.utils import get_post_dict, extract_urls_info
 
 
 main = Blueprint('main', __name__)
@@ -168,8 +169,71 @@ def create_rincon():
 
 
 @main.route("/rincon/<rincon_name>", methods=["GET","POST"])
-@login_required
 def rincon(rincon_name):
+    
+    rincon_id = request.args.get('rincon_id')
+    # if user signed in redirect
+    print(dir(current_user))
+    print("current_user: ", current_user.is_authenticated)
+    
+    if current_user.is_authenticated:
+
+        return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id, rincon_name=rincon_name))
+    
+    # rincon = sess.get(Rincons, int(rincon_id))
+    rincon = sess.query(Rincons).filter_by(name_no_spaces=rincon_name).first()
+
+    if not rincon.public:
+        flash("Register and search for a rincoón.", "warning")
+        return redirect(url_for('users.register', rincon_id=rincon_id))
+
+
+
+
+    rincon_posts = []
+    for i in rincon.posts:
+        temp_dict = {}
+
+        temp_dict['post_id'] = i.id
+        temp_dict['date_for_sorting'] = i.time_stamp_utc
+        temp_dict['username'] = sess.get(Users,i.user_id).username
+
+        #search for http in i.text
+
+
+        # temp_dict['text'] = i.text
+        temp_dict['text'] = extract_urls_info(i.text)
+        # print(temp_dict['text'])
+
+
+
+        print("-- what is image ---")
+        print(i.image_file_name)
+        temp_dict['image_exists'] = False if i.image_file_name == None else True
+        temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name_no_spaces}/{i.image_file_name}"
+        temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
+        temp_dict['delete_post_permission'] = False
+
+        comments_list = []
+        for comment in i.comments:
+            temp_sub_dict = {}
+            temp_sub_dict['date'] = comment.time_stamp_utc.strftime("%m/%d/%y %H:%M")
+            temp_sub_dict['username'] = sess.get(Users,comment.user_id).username
+            temp_sub_dict['text'] = comment.text
+            temp_sub_dict['delete_comment_permission'] = False
+            temp_sub_dict['comment_id'] = comment.id
+            comments_list.append(temp_sub_dict)
+        temp_dict['comments'] = comments_list
+        rincon_posts.append(temp_dict)
+
+    rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
+
+
+    return render_template('main/rincon_template.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+
+@main.route("/rincon_signed_in/<rincon_name>", methods=["GET","POST"])
+@login_required
+def rincon_signed_in(rincon_name):
     rincon_id = request.args.get('rincon_id')
     print("- rincon page -")
 
@@ -184,7 +248,16 @@ def rincon(rincon_name):
         temp_dict['post_id'] = i.id
         temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
-        temp_dict['text'] = i.text
+
+        #search for http in i.text
+
+
+        # temp_dict['text'] = i.text
+        temp_dict['text'] = extract_urls_info(i.text)
+        # print(temp_dict['text'])
+
+
+
         print("-- what is image ---")
         print(i.image_file_name)
         temp_dict['image_exists'] = False if i.image_file_name == None else True

@@ -560,10 +560,43 @@ section.main {
   }
   .post_text_div{
     width:100%;
+    padding:0;
+    margin:0;
   }
   .post_text_div_sub{
-    padding:.5rem .2rem .5rem .2rem;
+    padding:0 .2rem 0 .2rem;
+
+    .post {
+      // border: 1px solid gray;
+      // padding: 10px;
+      // margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .post-text {
+      white-space: pre-wrap;
+      flex-basis: 100%;
+    }
+    .post-url {
+      color: blue;
+      text-decoration: underline;
+    }
+    .post-url:before {
+      content: "(";
+    }
+    .post-url:after {
+      content: ")";
+    }
+
   }
+  .post_text_line_break_custom{
+    white-space: pre-line;
+    // overflow-wrap: break-word;
+    margin-top: -2rem;
+  }
+  // .keep_inline{
+  //   display: inline;
+  // }
   .img_div{
     width:100%;
   }
@@ -645,8 +678,27 @@ section.main {
     background-color: var(--bs-gray-200);
     color: var(--bs-gray-800);
     border-radius: 1.5em;
-    padding: .5rem;
+    padding: .5rem ;
+  }
 
+  .comment_text_div{
+    width:100%;
+    padding:0;
+    margin:0;
+    // background-color: red;
+  }
+  .comment_text_div_sub{
+    padding:0 .2rem 0 .2rem;
+
+  }
+  .comment_text_line_break_custom{
+    white-space: pre-line;
+    // overflow-wrap: break-word;
+    margin-top: -1.1rem;
+    margin-bottom: -.5rem;
+  }
+  .comment_date_div{
+    margin-bottom:-.5rem;
   }
   .comments_date{
     display: flex;
@@ -659,7 +711,7 @@ section.main {
   .comments_username{
     display: flex;
     // font-size: 1.2rem;
-    color: var(--bs-gray-800);
+    color: var(--bs-gray-600);
     font-size: .8rem;
     margin:0
   }
@@ -668,6 +720,7 @@ section.main {
     width: 100%;
     display: flex;
     justify-content: end;
+    // background-color: green;
   }
   .delete_comment_div_sub{
     font-size: .9rem;
@@ -720,12 +773,7 @@ section.main {
     background-color: var(--bs-gray-600);
     border-radius: .5rem;
   }
-  .custom_textarea{
-    white-space: pre-line;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-    background-color: green;
-  }
+
 }
 
 
