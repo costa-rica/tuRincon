@@ -10977,7 +10977,7 @@ body {
   font-family: "Roboto Slab", serif;
 }
 
-section.main {
+.main {
   padding-top: var(--nav-height);
   padding-bottom: var(--nav-height);
   display: flex;
@@ -11726,6 +11726,22 @@ section.main {
 }
 .admin_db_upload_table_page .input_div_for_new_data {
   display: flex;
+}
+
+.register_page_super {
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.register_page_super .title {
+  width: 100%;
+}
+.register_page_super .register_page {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /*# sourceMappingURL=main.css.map */

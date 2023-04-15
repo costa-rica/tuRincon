@@ -16,7 +16,7 @@ body {
   font-family: 'Roboto Slab', serif;
 }
 
-section.main {
+.main {
   padding-top: var(--nav-height);
   padding-bottom: var(--nav-height);
   display: flex;
@@ -946,5 +946,21 @@ section.main {
   }
 }
 
+.register_page_super{
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+    .title {
+    width: 100%;
+  }
 
+  .register_page {
+    // padding: 2rem 5rem 2rem 5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
 

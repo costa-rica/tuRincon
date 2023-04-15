@@ -7,8 +7,10 @@
     </div>
     <div class="modal-body">
       
-      <input type="text" class="form-control hide_textbox" id="recipient-name" name="post_id" form="form_modal_comment" readonly>
-
+      <!-- <input type="text" class="form-control hide_textbox" id="recipient-name" name="post_id" form="form_modal_comment" readonly> -->
+      <!-- <input type="text" class="form-control " id="recipient-name" name="post_id" form="form_modal_comment" > -->
+      <!-- <input type="text"  name="comment_on_post_id" id="recipient-name" form="form_modal_comment" > -->
+      <input type="text" class="form-control hide_textbox" id="recipient-name" name="comment_on_post_id" form="form_modal_comment" readonly>
       <!-- Text box -->
       <textarea class="form-control" name="comment_text" form="form_modal_comment"></textarea>
 
@@ -23,20 +25,14 @@
   </div>
 </div>
 
-<script>
-  $(document).ready(function(){
-    $("#close_button").click(function(){
-      $("#commentModal").modal("hide");
-    });
-  });
-</script>
+
 
 
 
 <!--Delete modal read record id-->
 <script>
-  var deleteModal = document.getElementById('commentModal')
-  deleteModal.addEventListener('show.bs.modal', function (event) {
+  var commentModal = document.getElementById('commentModal')
+  commentModal.addEventListener('show.bs.modal', function (event) {
     // Button that triggered the modal
     var button = event.relatedTarget
     // Extract info from data-bs-* attributes
@@ -45,8 +41,8 @@
     // and then do the updating in a callback.
     //
     // Update the modal's content.
-    var modalTitle = deleteModal.querySelector('.modal-title')
-    var modalBodyInput = deleteModal.querySelector('.modal-body input')
+    var modalTitle = commentModal.querySelector('.modal-title')
+    var modalBodyInput = commentModal.querySelector('.modal-body input')
   
     // modalTitle.textContent = 'Delete record ' + recipient +'?'
     modalBodyInput.value = recipient

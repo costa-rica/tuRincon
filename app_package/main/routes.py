@@ -151,7 +151,9 @@ def create_rincon():
 
             #create static/rincon_files/<id_rincon_name>
             direcotry_name = f"{new_rincon.id}_{rincon_name_no_spaces}"
-            new_dir_path = os.path.join(current_app.static_folder,"rincon_files", direcotry_name)
+            new_dir_path = os.path.join(current_app.config.get('DB_ROOT'),"rincon_files", direcotry_name)
+
+
             # print(new_dir_path)
             os.mkdir(new_dir_path)
 
@@ -188,8 +190,6 @@ def rincon(rincon_name):
         return redirect(url_for('users.register', rincon_id=rincon_id))
 
 
-
-
     rincon_posts = []
     for i in rincon.posts:
         temp_dict = {}
@@ -198,17 +198,9 @@ def rincon(rincon_name):
         temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
 
-        #search for http in i.text
-
-
         # temp_dict['text'] = i.text
         temp_dict['text'] = extract_urls_info(i.text)
-        # print(temp_dict['text'])
 
-
-
-        print("-- what is image ---")
-        print(i.image_file_name)
         temp_dict['image_exists'] = False if i.image_file_name == None else True
         temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
         temp_dict['image_filename'] = f"{i.image_file_name}"
@@ -229,8 +221,9 @@ def rincon(rincon_name):
 
     rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
 
+    
 
-    return render_template('main/rincon_template.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
 
 @main.route("/rincon_signed_in/<rincon_name>", methods=["GET","POST"])
 @login_required
@@ -240,8 +233,7 @@ def rincon_signed_in(rincon_name):
 
     # print("rincon_id: ", rincon_id)
     rincon = sess.get(Rincons, int(rincon_id))
-    # print(f"rincon: {rincon}")
-    # print(f"rincon posts: {rincon.posts}")
+
     rincon_posts = []
     for i in rincon.posts:
         temp_dict = {}
@@ -249,18 +241,9 @@ def rincon_signed_in(rincon_name):
         temp_dict['post_id'] = i.id
         temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
-
-        #search for http in i.text
-
-
         # temp_dict['text'] = i.text
         temp_dict['text'] = extract_urls_info(i.text)
-        # print(temp_dict['text'])
 
-
-
-        print("-- what is image ---")
-        print(i.image_file_name)
         temp_dict['image_exists'] = False if i.image_file_name == None else True
         temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
         temp_dict['image_filename'] = f"{i.image_file_name}"
@@ -335,7 +318,7 @@ def rincon_signed_in(rincon_name):
             print("- Receieved Comment -")
 
             # add to RinconsPostsComments
-            new_comment = RinconsPostsComments(post_id=formDict.get('post_id'),user_id=current_user.id,
+            new_comment = RinconsPostsComments(post_id=formDict.get('comment_on_post_id'),user_id=current_user.id,
                 rincon_id=rincon.id,
                 text= formDict.get('comment_text')
             )
@@ -345,12 +328,10 @@ def rincon_signed_in(rincon_name):
 
         elif formDict.get('btn_delete_post'):
 
-            # TODO: delete photo
             rincon_post = sess.get(RinconsPosts, formDict.get('btn_delete_post'))
 
-
             if rincon_post.image_file_name != None:
-                post_image_path_and_name = os.path.join(current_app.static_folder, "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}",rincon_post.image_file_name)
+                post_image_path_and_name = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}",rincon_post.image_file_name)
             
                 print("post_image_path_and_name: ", post_image_path_and_name)
                 if os.path.exists(post_image_path_and_name):
@@ -371,9 +352,9 @@ def rincon_signed_in(rincon_name):
             sess.commit()
             return redirect(request.url)
             
+    # print(rincon_posts)
 
-
-    return render_template('main/rincon_template.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
 
 
 @main.route("/delete/<rincon_id>", methods=["GET"])
@@ -411,7 +392,7 @@ def delete_rincon(rincon_id):
 # Custom static data
 @main.route('/<image_path>/<image_filename>')
 def custom_static(image_path, image_filename):
-    print("-- enterd custom static -")
+    # print("-- enterd custom static -")
     # name_no_spaces = ""
     
     return send_from_directory(os.path.join(current_app.config.get('DB_ROOT'),"rincon_files", \

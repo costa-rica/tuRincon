@@ -6,7 +6,7 @@
 <form method="POST" id="form_delete_comment" ></form>
 
 
-<section class="main">
+<div class="main">
   <div class="rincon_page">
 
     <div class="rincon_sub">
@@ -94,9 +94,11 @@
 
                     {% if current_user.is_authenticated %}
                     <button type="button" class="btn btn-primary"
-                      data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-whatever="{{post.post_id}}">
+                      data-bs-toggle="modal" data-bs-target="#commentModal" data-bs-whatever="{{ post.post_id }}"
+                      >
                       comment
                     </button>
+
                     {% else %}
                     <button type="button" class="btn btn-primary"
                       data-bs-toggle="modal" data-bs-target="#notSignedInModal" data-bs-whatever="{{post.post_id}}">
@@ -207,7 +209,7 @@
 
   </div><!--rincon_page-->
 
-</section>
+</div><!-- main -->
 
 
 
