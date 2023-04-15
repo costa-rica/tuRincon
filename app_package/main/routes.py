@@ -261,7 +261,9 @@ def rincon_signed_in(rincon_name):
         print("-- what is image ---")
         print(i.image_file_name)
         temp_dict['image_exists'] = False if i.image_file_name == None else True
-        temp_dict['image_name_and_path'] = f"rincon_files/{rincon_id}_{rincon.name_no_spaces}/{i.image_file_name}"
+        temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
+        temp_dict['image_filename'] = f"{i.image_file_name}"
+
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         temp_dict['delete_post_permission'] = False if i.user_id != current_user.id else True
 
@@ -317,7 +319,9 @@ def rincon_signed_in(rincon_name):
 
                 ## save to static rincon directory
                 this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
-                path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
+                # path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
+                path_to_rincon_files = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files",this_rincon_dir_name)
+
                 post_image.save(os.path.join(path_to_rincon_files, new_image_name))
 
                 # save new image name in post entry
@@ -400,3 +404,15 @@ def delete_rincon(rincon_id):
     sess.commit()
 
     return redirect(url_for('main.rincons'))
+
+
+
+# Custom static data
+@main.route('/<image_path>/<image_filename>')
+def custom_static(image_path, image_filename):
+    print("-- enterd custom static -")
+    # name_no_spaces = ""
+    
+    return send_from_directory(os.path.join(current_app.config.get('DB_ROOT'),"rincon_files", \
+        image_path), image_filename)
+
