@@ -79,13 +79,10 @@ def create_rincon_posts_list(rincon_id):
     rincon = sess.get(Rincons,rincon_id)
 
     rincon_posts = []
+    if current_user.is_authenticated:
+        user_likes = current_user.post_like
+        user_likes_this_rincon = [like.post_id  for like in user_likes if like.rincon_id == rincon.id]
 
-    user_likes = current_user.post_like
-    user_likes_this_rincon = [like.post_id  for like in user_likes if like.rincon_id == rincon.id]
-
-
-
-    print(user_likes)
 
     for i in rincon.posts:
         temp_dict = {}
@@ -101,7 +98,8 @@ def create_rincon_posts_list(rincon_id):
         temp_dict['image_filename'] = f"{i.image_file_name}"
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         
-        temp_dict['liked'] = False if i.id not in user_likes_this_rincon else True
+        if current_user.is_authenticated:
+            temp_dict['liked'] = False if i.id not in user_likes_this_rincon else True
         
         temp_dict['like_count'] = len(i.post_like)
 

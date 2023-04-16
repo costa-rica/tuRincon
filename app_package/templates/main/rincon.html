@@ -110,6 +110,7 @@
                     {% endif %}
                   </div>
 
+                  {% if current_user.is_authenticated %}
                   <a href="{{ url_for('main.like_post', rincon_id=rincon.id, post_id= post.post_id)}}" >
                     {% if post.liked %}
                     <img class="thumbs_up_icon" alt="" id="thumbs_up_icon"
@@ -119,6 +120,14 @@
                     src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
                     {% endif %}
                   </a>
+                  {% else %}
+                  <button type="button" class="btn"
+                  data-bs-toggle="modal" data-bs-target="#notSignedInModal" data-bs-whatever="{{post.post_id}}">
+                  <img class="thumbs_up_icon" alt="" id="thumbs_up_icon"
+                  src="{{ url_for('static', filename= 'images/thumbs-up-16-512.png') }}">
+                </button>
+
+                  {% endif %}
 
 
                 </div><!-- post_engagement_sub_right -->
