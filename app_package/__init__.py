@@ -75,9 +75,11 @@ def create_app(config_for_flask = config):
     from app_package.main.routes import main
     from app_package.users.routes import users
     from app_package.admin.routes import admin
+    from app_package.error_handlers.routes import eh
 
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(admin)
+    app.register_blueprint(eh)
 
     return app
