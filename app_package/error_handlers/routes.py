@@ -48,7 +48,7 @@ def handle_404(err):
     print('* --> In Error404 route: ',request.referrer)
     logger_error.info(f'@eh.app_errorhandler(404), err: {err}')
     error_message = "This page doesn't exist. Check what was typed in the address bar."
-    return render_template('error_template.html', error_number="404", error_message=error_message)
+    return render_template('error_template.html', error_number="404", error_message=error_message, description = err.description)
 #404 occurs if address isnt' right
 
 @eh.app_errorhandler(500)

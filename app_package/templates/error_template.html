@@ -1,11 +1,21 @@
 {% extends "_layout.html" %}
 {% block title %} {{ error_number }} {% endblock %}
 {% block main %}
-<section class="Error">
-    <div class="error_body">
-       <h1>Ooops... {{ error_number }}</h1>
-       <h3 >{{ error_message }}</h3>
+<div class="main">
+    <div class="error_page_super">
+        <div class="error_page">
+            <div class="title"><h1>Ooops... {{ error_number }}</h1></div>
+           
+           
+           <h3 >{{ error_message }}</h3>
+            {%if description %}
+           <div class="description">
+            *Note: {{ description }}
+           </div>
+           {% endif %}
+        </div>
     </div>
-</section>
+</div>
+
 
 {% endblock %}

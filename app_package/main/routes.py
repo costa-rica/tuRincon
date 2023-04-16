@@ -82,7 +82,7 @@ def search_rincons():
 
             flash("Added to Rincon", "success")
             # return redirect(url_for('main.search_rincons', rincon_list=rincon_list))
-            return redirect(url_for('main.rincon', rincon_id=rincon_id))
+            return redirect(url_for('main.rincon', rincon_id=rincon_id, rincon_name = rincon_name))
 
         elif formDict.get('leave'):
             logger_main.info("- leave was selected -")
@@ -167,8 +167,8 @@ def create_rincon():
     return render_template('main/create_rincon.html')
 
 
-@main.route("/rincon/<rincon_id>", methods=["GET","POST"])
-def rincon(rincon_id):
+@main.route("/rincon/<rincon_id>/<rincon_name>", methods=["GET","POST"])
+def rincon(rincon_id, rincon_name):
     
     # rincon_id = request.args.get('rincon_id')
     rincon = sess.get(Rincons,rincon_id)
@@ -290,6 +290,28 @@ def rincon_signed_in(rincon_id):
     return render_template('main/rincon.html', rincon_name=rincon.name, rincon_posts=rincon_posts, rincon=rincon)
 
 
+@main.route('/rincon/<rincon_name>')# <-- for clean names to send
+def rincon_name(rincon_name):
+
+    rincon = sess.query(Rincons).filter_by(name= rincon_name).all()
+    if len(rincon) != 1:
+        abort(404, description="Might be more than one rincon with that name. Go back to search.")
+    # abort(404, description="Might be more than one rincon with that name. Go back to search.")
+    rincon = rincon[0]
+    rincon_id = rincon.id
+
+    # if user signed in redirect  
+    if current_user.is_authenticated:
+        return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id, rincon_name=rincon_name))
+
+    if not rincon.public:
+        flash("Register and search for a rincoón.", "warning")
+        return redirect(url_for('users.register', rincon_id=rincon_id))
+
+    rincon_posts = create_rincon_posts_list(rincon_id)
+    
+    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+
 @main.route("/delete/<rincon_id>", methods=["GET"])
 @login_required
 def delete_rincon(rincon_id):
@@ -364,4 +386,9 @@ def like_post(rincon_id,post_id):
 
     # return redirect(request.referrer, _anchor='like_'+post_id)
     return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id,post_id=post_id, _anchor='like_'+str(post_id)))
+
+
+
+
+
 

@@ -11755,4 +11755,23 @@ body {
   flex-wrap: wrap;
 }
 
+.error_page_super {
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.error_page_super .title {
+  width: 100%;
+}
+.error_page_super .error_page {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.error_page_super .description {
+  width: 100%;
+}
+
 /*# sourceMappingURL=main.css.map */

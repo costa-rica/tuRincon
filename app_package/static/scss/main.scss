@@ -974,3 +974,25 @@ body {
   }
 }
 
+.error_page_super{
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+    .title {
+    width: 100%;
+  }
+
+  .error_page {
+    // padding: 2rem 5rem 2rem 5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .description{
+    width:100%;
+  }
+}
+
+
