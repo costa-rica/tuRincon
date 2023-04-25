@@ -1,3 +1,6 @@
+#######
+# Delete? using tr01-modules...
+#######
 from sqlalchemy import create_engine, inspect
 from sqlalchemy import Column, Integer, String, Text, Float, DateTime, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base

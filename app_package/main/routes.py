@@ -187,7 +187,8 @@ def rincon(rincon_id, rincon_name):
     rincon_posts = create_rincon_posts_list(rincon_id)
     
 
-    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, 
+        rincon=rincon, len=len)
 
 @main.route("/rincon_signed_in/<rincon_id>", methods=["GET","POST"])
 @login_required
@@ -211,11 +212,12 @@ def rincon_signed_in(rincon_id):
             print("- ENTERED in if for btn_delete -")
 
             return redirect(url_for('main.delete_rincon', rincon_id=rincon_id))
+
         elif formDict.get('btn_post'):
 
             # get text save a new_post entry
             post_text = formDict.get('post_text')
-            new_post = RinconsPosts(text=post_text,user_id=current_user.id, rincon_id=rincon.id)
+            new_post = RinconsPosts(post_text=post_text,user_id=current_user.id, rincon_id=rincon.id)
             sess.add(new_post)
             sess.commit()
 
@@ -287,7 +289,8 @@ def rincon_signed_in(rincon_id):
             
     # print(rincon_posts)
 
-    return render_template('main/rincon.html', rincon_name=rincon.name, rincon_posts=rincon_posts, rincon=rincon)
+    return render_template('main/rincon.html', rincon_name=rincon.name, rincon_posts=rincon_posts,
+        rincon=rincon, len=len)
 
 
 @main.route('/rincon/<rincon_name>')# <-- for clean names to send
@@ -310,7 +313,8 @@ def rincon_name(rincon_name):
 
     rincon_posts = create_rincon_posts_list(rincon_id)
     
-    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, rincon=rincon)
+    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, 
+        rincon=rincon, len=len)
 
 @main.route("/delete/<rincon_id>", methods=["GET"])
 @login_required

@@ -11437,6 +11437,9 @@ body {
   white-space: pre-line;
   margin-top: -2rem;
 }
+.rincon_page .keep_line_break {
+  white-space: pre-line;
+}
 .rincon_page .img_div {
   width: 100%;
 }

@@ -36,25 +36,25 @@ def get_post_dict(post_string):
     return post_dict
 
 
-def extract_urls_info(text):
+def extract_urls_info(feed_obj_text):
     extractor = urlextract.URLExtract()
-    urls = extractor.find_urls(text)
+    urls = extractor.find_urls(feed_obj_text)
     
     if len(urls) == 0:
-        return {"text":text}
+        return {"text":feed_obj_text}
 
 
     url_dict = {}
     
     # Handle the case where the first character(s) is a URL
-    if text.startswith(urls[0]):
+    if feed_obj_text.startswith(urls[0]):
         url_dict[f"url01"] = urls[0]
-        text = text[len(urls[0]):]
+        feed_obj_text = feed_obj_text[len(urls[0]):]
     
-    # Handle the case where the last character(s) is a URL
-    if text.endswith(urls[-1]):
-        url_dict[f"url{len(urls):02d}"] = urls[-1]
-        text = text[:-len(urls[-1])]
+    # # Handle the case where the last character(s) is a URL
+    # if feed_obj_text.endswith(urls[-1]):
+    #     url_dict[f"url{len(urls):02d}"] = urls[-1]
+    #     feed_obj_text = feed_obj_text[:-len(urls[-1])]
     
     # Handle all other URLs
     for i, url in enumerate(urls):
@@ -62,15 +62,19 @@ def extract_urls_info(text):
             continue
         if i == len(urls) - 1 and f"url{len(urls):02d}" in url_dict:
             continue
-        split_text = text.split(url)
+        split_text = feed_obj_text.split(url)
         url_dict[f"text{i+1:02d}"] = split_text[0]
         url_dict[f"url{i+1:02d}"] = url
-        text = split_text[1]
+        feed_obj_text = split_text[1]
     
     # Handle any remaining text after the last URL
-    if text:
-        url_dict[f"text{len(urls)+1:02d}"] = text
+    if feed_obj_text:
+        url_dict[f"text{len(urls)+1:02d}"] = feed_obj_text
     
+    # url_dict_list =[{i,j} for i,j in url_dict.items()]
+    # url_tup_list =[(i,j) for i,j in url_dict.items()]
+
+
     return url_dict
 
 
@@ -91,7 +95,7 @@ def create_rincon_posts_list(rincon_id):
         temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
 
-        temp_dict['text'] = extract_urls_info(i.text)
+        temp_dict['post_text'] = extract_urls_info(i.post_text)
 
         temp_dict['image_exists'] = False if i.image_file_name == None else True
         temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
@@ -113,7 +117,7 @@ def create_rincon_posts_list(rincon_id):
             temp_sub_dict = {}
             temp_sub_dict['date'] = comment.time_stamp_utc.strftime("%m/%d/%y %H:%M")
             temp_sub_dict['username'] = sess.get(Users,comment.user_id).username
-            temp_sub_dict['text'] = comment.text
+            temp_sub_dict['comment_text'] = comment.comment_text
             if current_user.is_authenticated:
                 temp_sub_dict['delete_comment_permission'] = False if comment.user_id != current_user.id else True
             else:

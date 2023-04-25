@@ -35,8 +35,16 @@
               <div class="post_text_div">
                 <div class="post_text_div_sub">
                   
-                  <div class="keep_inline">
-                    {% for key, value in post.text.items() %}
+
+                  {% if len(post.post_text) == 1 %}
+                  <div class="keep_line_break">
+                    {{ post.post_text['text'] }}
+                  </div>
+                    
+                  {% else %}
+                  <div class="no_line_break">
+                    
+                    {% for key, value in post.post_text.items() %}
                     {% if key.0 == 't' %}
                     <!-- <p class="post_text_line_break_custom"> -->
                     {{ value }} 
@@ -44,8 +52,10 @@
                     {% else %} 
                     <a href="{{ value }}">{{ value }}</a>
                     {% endif %}
-                  {% endfor %}
-                  </div>
+                    {% endfor %}
+                  
+                  </div><!-- keep_line_break-->
+                {% endif %}
  
                 </div>
               </div>
