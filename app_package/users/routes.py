@@ -13,6 +13,7 @@ from tr01_models import sess, engine, text, Base, \
     RinconsPostsComments, RinconsPostsCommentsLikes, UsersToRincons
 
 from app_package.users.utils import send_reset_email, send_confirm_email
+import datetime
 
 #Setting up Logger
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
@@ -40,6 +41,15 @@ salt = bcrypt.gensalt()
 users = Blueprint('users', __name__)
 
 
+@users.before_request
+def before_request():
+    logger_users.info("**** In: users.before_request *****")
+    session.permanent = True
+    current_app.permanent_session_lifetime = datetime.timedelta(days=31)
+    session.modified = True
+    logger_users.info(f"!--> current_app.permanent_session_lifetime: {current_app.permanent_session_lifetime}")
+
+
 @users.route('/login', methods = ['GET', 'POST'])
 def login():
     print('* in login *')
@@ -47,6 +57,7 @@ def login():
         return redirect(url_for('main.rincons'))
     page_name = 'Login'
     if request.method == 'POST':
+        # session.permanent = True
         formDict = request.form.to_dict()
         print(f"formDict: {formDict}")
         email = formDict.get('email')

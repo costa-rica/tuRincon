@@ -255,7 +255,7 @@ def rincon_signed_in(rincon_id):
             # add to RinconsPostsComments
             new_comment = RinconsPostsComments(post_id=formDict.get('comment_on_post_id'),user_id=current_user.id,
                 rincon_id=rincon.id,
-                text= formDict.get('comment_text')
+                comment_text= formDict.get('comment_text')
             )
             sess.add(new_comment)
             sess.commit()

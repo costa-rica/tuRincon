@@ -1,10 +1,11 @@
 from flask import Flask
+# from flask import session
 from app_package.config import config
 import os
 import logging
 from logging.handlers import RotatingFileHandler
 from pytz import timezone
-from datetime import datetime
+from datetime import datetime, timedelta
 
 ## AFTER rebuild ##
 from tr01_models import login_manager
@@ -55,6 +56,8 @@ logger_init.info(f'--- Starting Tu Rincón ---')
 # logger_init.info(f'--- WEB_ROOT: {os.environ.get("WEB_ROOT")} ---')
 
 
+
+
 # Create rincon_files folder
 if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),'rincon_files')):
     os.makedirs(os.path.join(os.environ.get('DB_ROOT'),'rincon_files'))
@@ -66,6 +69,7 @@ mail = Mail()
 def create_app(config_for_flask = config):
     app = Flask(__name__)   
     app.config.from_object(config_for_flask)
+    # app.permanent_session_lifetime = timedelta(seconds= 10)
     login_manager.init_app(app)
     mail.init_app(app)
 
