@@ -167,38 +167,27 @@ def create_rincon():
     return render_template('main/create_rincon.html')
 
 
-@main.route("/rincon/<rincon_id>/<rincon_name>", methods=["GET","POST"])
-def rincon(rincon_id, rincon_name):
-    
-    # rincon_id = request.args.get('rincon_id')
-    rincon = sess.get(Rincons,rincon_id)
-    rincon_name = rincon.name
 
-    # if user signed in redirect  
-    if current_user.is_authenticated:
-        return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id, rincon_name=rincon_name))
-    
-    # rincon = sess.query(Rincons).filter_by(name_no_spaces=rincon_name).first()
-    # rincon_id = rincon.id
-    if not rincon.public:
-        flash("Register and search for a rincoón.", "warning")
-        return redirect(url_for('users.register', rincon_id=rincon_id))
-
-    rincon_posts = create_rincon_posts_list(rincon_id)
-    
-
-    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, 
-        rincon=rincon, len=len)
-
-@main.route("/rincon_signed_in/<rincon_id>", methods=["GET","POST"])
-@login_required
-def rincon_signed_in(rincon_id):
-    # rincon_id = request.args.get('rincon_id')
+@main.route("/rincon/<rincon_id>", methods=["GET","POST"])
+# @login_required
+def rincon(rincon_id):
     logger_main.info("- Rincon signed in page -")
+    try:
+        rincon = sess.get(Rincons, int(rincon_id))
+        rincon_name = rincon.name
+    except ValueError:
+        rincons = sess.query(Rincons).filter_by(name= rincon_id).all()
+        if len(rincons) != 1:
+            abort(404, description="Might be more than one rincon with that name. Go back to search.")
+        else:
+            rincon = rincons[0]
+            rincon_name = rincon.name
+            rincon_id = rincon.id
+            
     
-    # print("rincon_id: ", rincon_id)
-    rincon = sess.get(Rincons, int(rincon_id))
-    
+    if not current_user.is_authenticated and not rincon.public:
+        return current_app.login_manager.unauthorized()
+
     rincon_posts = create_rincon_posts_list(rincon_id)
 
     if request.method == "POST":
@@ -207,6 +196,9 @@ def rincon_signed_in(rincon_id):
         print("formDict: ", formDict)
 
         requestFiles = request.files
+        print("--------------------")
+        print(requestFiles)
+        print(dir(requestFiles))
 
         if formDict.get('btn_delete_rincon') and formDict.get('text_delete')==rincon.name:
             print("- ENTERED in if for btn_delete -")
@@ -222,30 +214,63 @@ def rincon_signed_in(rincon_id):
             sess.commit()
 
             if request.files.get('add_photo_file'):
+                # print(len(requestFiles.getlist('add_photo_file')))
+                print(requestFiles.getlist('add_photo_file'))
                 print("*********")
                 print("- posting an image -")
-                # get image
-                post_image = request.files.get('add_photo_file')
-                post_image_filename = post_image.filename
-                _, file_extension = os.path.splitext(post_image_filename)
-                logger_main.info(f"-- Get image file name --")
-                logger_main.info(f"-- file_extension: {file_extension} --")
+                post_image_list = requestFiles.getlist('add_photo_file')
+                post_image_counter = 1
+
+                for post_image in post_image_list:
+
+                    post_image_filename = post_image.filename
+                    _, file_extension = os.path.splitext(post_image_filename)
+                    logger_main.info(f"-- file_extension: {file_extension} --")
+
+                    ## rename image
+                    new_image_name = f"post_{new_post.id}_image_{post_image_counter}{file_extension}"
+
+                    ## save to static rincon directory
+                    this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
+                    # path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
+                    path_to_rincon_files = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files",this_rincon_dir_name)
+
+                    post_image.save(os.path.join(path_to_rincon_files, new_image_name))
+
+                    # save new image name in post entry
+                    if new_post.image_file_name == "" or new_post.image_file_name == None:
+                        new_post.image_file_name = new_image_name
+                        
+                    else:
+                        new_post.image_file_name = new_post.image_file_name + "," + new_image_name
+                    sess.commit()
+
+                    post_image_counter += 1
+
+                #### OLD: using single photo #####
+                # # get image
+                # post_image = request.files.get('add_photo_file')
+                # # post_image_filename = post_image.filename
+                # # _, file_extension = os.path.splitext(post_image_filename)
+                # logger_main.info(f"-- Get image file name --")
+                # logger_main.info(f"-- {post_image} --")
+                # logger_main.info(f"-- file_extension: {file_extension} --")
 
 
 
-                ## rename image
-                new_image_name = f"post_image_{new_post.id}{file_extension}"
+                # ## rename image
+                # new_image_name = f"post_image_{new_post.id}{file_extension}"
 
-                ## save to static rincon directory
-                this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
-                # path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
-                path_to_rincon_files = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files",this_rincon_dir_name)
+                # ## save to static rincon directory
+                # this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
+                # # path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
+                # path_to_rincon_files = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files",this_rincon_dir_name)
 
-                post_image.save(os.path.join(path_to_rincon_files, new_image_name))
+                # post_image.save(os.path.join(path_to_rincon_files, new_image_name))
 
-                # save new image name in post entry
-                new_post.image_file_name = new_image_name
-                sess.commit()
+                # # save new image name in post entry
+                # new_post.image_file_name = new_image_name
+                # sess.commit()
 
             return redirect(request.url)
         
@@ -287,34 +312,44 @@ def rincon_signed_in(rincon_id):
             sess.commit()
             return redirect(request.url)
             
-    # print(rincon_posts)
 
     return render_template('main/rincon.html', rincon_name=rincon.name, rincon_posts=rincon_posts,
         rincon=rincon, len=len)
 
 
-@main.route('/rincon/<rincon_name>')# <-- for clean names to send
-def rincon_name(rincon_name):
 
-    rincon = sess.query(Rincons).filter_by(name= rincon_name).all()
-    if len(rincon) != 1:
-        abort(404, description="Might be more than one rincon with that name. Go back to search.")
-    # abort(404, description="Might be more than one rincon with that name. Go back to search.")
-    rincon = rincon[0]
-    rincon_id = rincon.id
+@main.route("/post_images/<rincon_id>/<post_id>")
+def post_images(rincon_id,post_id):
 
-    # if user signed in redirect  
-    if current_user.is_authenticated:
-        return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id, rincon_name=rincon_name))
-
-    if not rincon.public:
-        flash("Register and search for a rincoón.", "warning")
-        return redirect(url_for('users.register', rincon_id=rincon_id))
-
-    rincon_posts = create_rincon_posts_list(rincon_id)
+    logger_main.info("- Rincon signed in page -")
+    try:
+        rincon = sess.get(Rincons, int(rincon_id))
+        rincon_name = rincon.name
+    except ValueError:
+        rincons = sess.query(Rincons).filter_by(name= rincon_id).all()
+        if len(rincons) != 1:
+            abort(404, description="Might be more than one rincon with that name. Go back to search.")
+        else:
+            rincon = rincons[0]
+            rincon_name = rincon.name
+            rincon_id = rincon.id
+            
     
-    return render_template('main/rincon.html', rincon_name=rincon_name, rincon_posts=rincon_posts, 
-        rincon=rincon, len=len)
+    if not current_user.is_authenticated and not rincon.public:
+        return current_app.login_manager.unauthorized()
+
+    rincon_post = sess.query(RinconsPosts).filter_by(id = post_id).first()
+
+    post_images_path = f"{rincon_id}_{rincon.name_no_spaces}"
+
+    if not rincon_post.image_file_name.find(","):
+        photos_list =  [rincon_post.image_file_name]
+    else:
+        photos_list =  rincon_post.image_file_name.split(",")
+
+    return render_template('/main/post_images.html', photos_list=photos_list, post_images_path = post_images_path)
+
+
 
 @main.route("/delete/<rincon_id>", methods=["GET"])
 @login_required

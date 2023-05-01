@@ -1,5 +1,6 @@
 @use "custom";
 @use "navbar";
+@use "photo_multiple";
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
 
 :root {
@@ -600,16 +601,7 @@ body {
   .keep_line_break{
     white-space: pre-line;
   }
-  .img_div{
-    width:100%;
-  }
-  .img_div_sub{
-    display: flex;
-    justify-content: center;
-  }
-  .img_class{// <-- This controls image size in post
-    width: 15rem;
-  }
+
 
   // END section of user's posts
 
@@ -761,6 +753,44 @@ body {
 
 
 }
+
+/* Post Image Page */
+.post_image_page{
+  // width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .div_right_back{
+    width:100%;
+    text-align: end;
+    // background-color: red;
+    padding-right: 2rem;
+    font-size: 1.5rem;
+  }
+
+  .img_class_border_super{
+    width:100%;
+    border: 1px solid var(--bs-gray-500);
+    // border-width: .5em;
+    // width: 15rem;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+
+  }
+  img{
+    width: 100%;
+    width: calc(100% - 0rem);
+    height: auto;
+    max-width: 100%;
+  }
+
+}
+
+
+
 
 /* Create Post Modal */
 .create_post_modal{

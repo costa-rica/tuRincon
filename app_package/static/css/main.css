@@ -10965,6 +10965,77 @@ section.navbar_section .navbar_custom nav .custom_delete_btn {
     font-size: 2rem;
   }
 }
+/* Rincon Page */
+.rincon_page {
+  /* 1 photo */
+  /* 2 photos */
+  /* This removes box-sizing? (i.e. removes space between images*/
+  /* 3/4 photos */
+  /* 5 or more photos */
+  /* This removes box-sizing? (i.e. removes space between images*/
+}
+.rincon_page .photo_div_super {
+  width: 100%;
+}
+.rincon_page .photo_div_1 {
+  display: flex;
+  justify-content: center;
+}
+.rincon_page .photo_div_1 img {
+  width: 100%;
+  width: calc(100% - 0.2rem);
+  height: auto;
+  max-width: 100%;
+}
+.rincon_page .photo_div_2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  padding: 0.1rem;
+  margin: 0;
+}
+.rincon_page .photo_div_2 img {
+  width: 100%;
+  width: calc(100% - 0.2rem);
+  height: auto;
+  max-width: 100%;
+}
+.rincon_page .photo_div_3 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  padding: 0.1rem;
+  margin: 0;
+}
+.rincon_page .photo_div_3 img {
+  width: 100%;
+  width: calc(100% - 0.2rem);
+  height: auto;
+  max-width: 100%;
+}
+.rincon_page .photo_div_more_than_4 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  padding: 0.1rem;
+  margin: 0;
+}
+.rincon_page .photo_div_more_than_4 img {
+  width: 100%;
+  width: calc(100% - 0.2rem);
+  height: auto;
+  max-width: 100%;
+}
+.rincon_page .img_class_border_super {
+  border: 1px solid var(--bs-gray-400);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rincon_page .img_counter {
+  text-align: end;
+}
+
 :root {
   --nav-height: 123px;
 }
@@ -11440,16 +11511,6 @@ body {
 .rincon_page .keep_line_break {
   white-space: pre-line;
 }
-.rincon_page .img_div {
-  width: 100%;
-}
-.rincon_page .img_div_sub {
-  display: flex;
-  justify-content: center;
-}
-.rincon_page .img_class {
-  width: 15rem;
-}
 .rincon_page .line_break_div {
   width: 100%;
 }
@@ -11571,6 +11632,30 @@ body {
   color: var(--bs-gray-500);
   text-decoration: underline;
   cursor: pointer;
+}
+
+/* Post Image Page */
+.post_image_page {
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.post_image_page .div_right_back {
+  width: 100%;
+  text-align: end;
+  padding-right: 2rem;
+  font-size: 1.5rem;
+}
+.post_image_page .img_class_border_super {
+  width: 100%;
+  border: 1px solid var(--bs-gray-500);
+}
+.post_image_page img {
+  width: 100%;
+  width: calc(100% - 0rem);
+  height: auto;
+  max-width: 100%;
 }
 
 /* Create Post Modal */

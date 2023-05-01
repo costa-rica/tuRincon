@@ -35,8 +35,10 @@
 
             <div class="logo">
               <!-- ../static/images/blog600.png -->
-              <img class="ws_logo_big" width="128" alt="API Tester PNG" src="../static/images/tuRinconIcon.png">
-              <img class="ws_logo_small" alt="API Tester PNG" src="../static/images/tuRinconIcon.png">
+              
+              <img class="ws_logo_big" width="128" alt="API Tester PNG - big" src="{{ url_for('static', filename='images/tuRinconIcon.png') }}">
+              
+              <img class="ws_logo_small" alt="API Tester PNG - small" src="{{ url_for('static', filename='images/tuRinconIcon.png') }}">
 
             </div>
 
@@ -60,11 +62,11 @@
 
       </div>
 
-      <img class="mobile-menu" id="mobile-cta" src="../static/images/white-hamburger-menu-icon-24.png"
+      <img class="mobile-menu" id="mobile-cta" src="{{ url_for('static', filename='images/white-hamburger-menu-icon-24.png') }}"
         alt="Open Navigation">
 
       <nav>
-        <img id="mobile-exit" class="mobile-menu-exit" src="../static/images/exit.svg" alt="Close Navigation">
+        <img id="mobile-exit" class="mobile-menu-exit" src="{{ url_for('static', filename='images/exit.svg') }}" alt="Close Navigation">
 
         <ul class="primary-nav ul_primary" id="nav_horizontal_list">
           <br>

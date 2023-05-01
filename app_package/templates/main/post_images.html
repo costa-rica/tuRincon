@@ -1,0 +1,34 @@
+{% extends "_layout.html" %}
+{% block main %}
+<div class="main">
+
+<div class="post_image_page">
+
+<div class="div_right_back">
+  <a href="{{ url_for('main.rincon', rincon_id=1 ) }}"> Back </a>
+</div>
+
+  
+  {% for photo in photos_list %}
+
+  <div class="img_class_border_super">
+    <img class="img_class_border" alt="image missing - please let Nick know :)"
+    src="{{ url_for('main.custom_static', image_path= post_images_path, image_filename= photo) }}" />
+  </div>
+
+  {% endfor %}
+
+
+
+  <div class="div_right_back">
+    <a href="{{ url_for('main.rincon', rincon_id=1 ) }}"> Back </a>
+  </div>
+  
+</div><!-- post_image_page -->
+
+
+
+</div>
+
+
+{% endblock %}

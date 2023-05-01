@@ -60,17 +60,9 @@
                 </div>
               </div>
               
-              {% if post.image_exists %}
-              <div class="img_div">
-                <div class="img_div_sub">
-                  <!-- <img class="img_class" alt=""
-                  src="{ url_for('static', filename= post.image_name_and_path) "/> -->
 
-                  <img class="img_class" alt="image missing - please let Nick know :)"
-                  src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename) }}"/>
-                </div>
-              </div>
-              {% endif %}
+                {% include 'main/post_images_include.html' %}
+
               
 
             

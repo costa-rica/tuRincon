@@ -1,0 +1,81 @@
+{% if post.image_exists %}
+{% if len(post.image_filename) == 1 %}<!-- 1 Picutre -->
+
+<a href="{{ url_for('main.post_images', rincon_id=rincon.id , post_id=post.post_id) }}">
+  <div class="photo_div_super">
+    <div class="photo_div_1">
+  
+      <img class="img_class" alt="image missing - please let Nick know :)"
+        src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.0) }}" />
+  
+    </div><!-- photo_div_sub -->
+  
+  </div><!-- photo_div_super -->
+</a>
+
+
+{% elif len(post.image_filename) < 3 %}<!-- 2 Picutres -->
+<a href="{{ url_for('main.post_images', rincon_id=rincon.id , post_id=post.post_id) }}">
+<div class="photo_div_super">
+  <div class="photo_div_2">
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.0) }}" />
+    </div>
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.1) }}" />
+    </div>
+  </div><!-- photo_div_2 -->
+</div><!-- photo_div_super -->
+</a>
+
+{% elif len(post.image_filename) < 5 %}<!-- 3/4 Picutres -->
+<a href="{{ url_for('main.post_images', rincon_id=rincon.id , post_id=post.post_id) }}">
+<div class="photo_div_super">
+  <div class="photo_div_3">
+
+    {% for image_post in post.image_filename %}
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= image_post) }}" />
+    </div>
+
+    {% endfor %}
+  </div><!-- photo_div_3-->
+</div><!-- photo_div_super -->
+</a>
+
+{% else %}<!-- More than 4 Picutres -->
+<a href="{{ url_for('main.post_images', rincon_id=rincon.id , post_id=post.post_id) }}">
+<div class="photo_div_super">
+  <div class="photo_div_more_than_4">
+
+
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.0) }}" />
+    </div>
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.1) }}" />
+    </div>
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.2) }}" />
+    </div>
+    <div class="img_class_border_super">
+      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.3) }}" />
+    </div>
+
+
+  </div><!-- photo_div_more_than_4 -->
+  <div class="img_counter">
+    + {{ len(post.image_filename) - 4 }} more images ...
+  </div>
+</div><!-- photo_div_super -->
+</a>
+
+{% endif %}
+{% endif %}

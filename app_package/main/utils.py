@@ -98,8 +98,18 @@ def create_rincon_posts_list(rincon_id):
         temp_dict['post_text'] = extract_urls_info(i.post_text)
 
         temp_dict['image_exists'] = False if i.image_file_name == None else True
+        
         temp_dict['image_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
-        temp_dict['image_filename'] = f"{i.image_file_name}"
+
+        if i.image_file_name:
+            if not i.image_file_name.find(","):
+                temp_dict['image_filename'] = [i.image_file_name]
+            else:
+                temp_dict['image_filename'] = i.image_file_name.split(",")
+        
+            print("---- Splitting photo names ----")
+            print(temp_dict['image_filename'])
+            print("-------------")
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         
         if current_user.is_authenticated:
