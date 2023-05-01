@@ -33,13 +33,20 @@
 
     /* Navbar Left */
     .nav_left {
+      // display: flex;
+      // justify-content: center;
+      // align-items: center;
+      min-width: 0; // very important to keep other divs from being kicked out of screen on small screen ... max-width not set
+      max-width: 7rem;
+
+    }
+    .nav_left_a_href{
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 0; // very important to keep other divs from being kicked out of screen on small screen ... max-width not set
-      max-width: 8rem;
+      height: 100%;
+      width:100%;
     }
-
     .ws_logo_big {
       display: none;
     }
@@ -49,7 +56,7 @@
       height: 95%;
       // max-width: 100%;
       border-radius: 1rem;
-      ;
+      
     }
 
     /* Navbar Center */

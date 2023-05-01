@@ -10809,11 +10809,15 @@ textarea.form-control-lg {
   /* Navbar Right */
 }
 .navbar_super .navbar_custom .nav_left {
+  min-width: 0;
+  max-width: 7rem;
+}
+.navbar_super .navbar_custom .nav_left_a_href {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 0;
-  max-width: 8rem;
+  height: 100%;
+  width: 100%;
 }
 .navbar_super .navbar_custom .ws_logo_big {
   display: none;
