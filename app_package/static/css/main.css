@@ -11035,6 +11035,12 @@ section.navbar_section .navbar_custom nav .custom_delete_btn {
 .rincon_page .img_counter {
   text-align: end;
 }
+.rincon_page .video_class {
+  width: 100%;
+  width: calc(100% - 0.2rem);
+  height: auto;
+  max-width: 100%;
+}
 
 :root {
   --nav-height: 123px;
@@ -11667,14 +11673,28 @@ body {
 .create_post_modal .icon_add_photo {
   padding: 0 2rem 0 0;
 }
-.create_post_modal #album-icon {
+.create_post_modal #icon_photo_album {
   width: 2rem;
   border-radius: 0.5rem;
 }
-.create_post_modal #album-icon {
+.create_post_modal #icon_photo_album {
   transition: background-color 0.1s ease-in-out;
 }
-.create_post_modal #album-icon:active {
+.create_post_modal #icon_photo_album:active {
+  background-color: var(--bs-gray-600);
+  border-radius: 0.5rem;
+}
+.create_post_modal .icon_add_video {
+  padding: 0 2rem 0 0;
+}
+.create_post_modal #icon_video {
+  width: 2rem;
+  border-radius: 0.5rem;
+}
+.create_post_modal #icon_video {
+  transition: background-color 0.1s ease-in-out;
+}
+.create_post_modal #icon_video:active {
   background-color: var(--bs-gray-600);
   border-radius: 0.5rem;
 }

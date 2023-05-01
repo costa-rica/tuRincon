@@ -117,4 +117,10 @@
     text-align: end;
   }
 
+  .video_class{
+    width: 100%;
+    width: calc(100% - .2rem);
+    height: auto;
+    max-width: 100%;
+  }
 }

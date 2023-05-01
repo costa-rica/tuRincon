@@ -802,20 +802,41 @@ body {
   .icon_add_photo{
     padding:0 2rem 0 0;
   }
-  #album-icon{
+  #icon_photo_album{
     width:2rem;
     // height:auto;
     border-radius: .5rem;
   }
   
-  #album-icon {
+  #icon_photo_album {
     transition: background-color 0.1s ease-in-out;
   }
   
-  #album-icon:active {
+  #icon_photo_album:active {
     background-color: var(--bs-gray-600);
     border-radius: .5rem;
   }
+
+
+
+  .icon_add_video{
+    padding:0 2rem 0 0;
+  }
+  #icon_video{
+    width:2rem;
+    // height:auto;
+    border-radius: .5rem;
+  }
+  
+  #icon_video {
+    transition: background-color 0.1s ease-in-out;
+  }
+  
+  #icon_video:active {
+    background-color: var(--bs-gray-600);
+    border-radius: .5rem;
+  }
+
 
 }
 

@@ -10,19 +10,34 @@
       <!-- Text box -->
       <textarea class="form-control" name="post_text" form="form_modal_post" rows="5"></textarea>
       <!-- Add image file name -->
-      <div id="file-name"></div>
+      <div id="file_name_photos"></div>
+      <div id="file_name_video"></div>
     </div>
 
     <div class="modal-footer">
       <div class="footer_sub">
         
+
+        
+        <div class="icon_add_video">
+          <a href="#">
+            <img src="../static/images/video-207-512.png" alt="Photo Album Icon" id="icon_video">
+          </a>
+          <input type="file" id="file_input_video" style="display:none" form="form_modal_post"
+            accept=".MP4, .mp4" name="add_file_video"  >
+        </div>
+
+
         <div class="icon_add_photo">
           <a href="#">
-            <img src="../static/images/collections-3-512.png" alt="Photo Album Icon" id="album-icon">
+            <img src="../static/images/collections-3-512.png" alt="Photo Album Icon" id="icon_photo_album">
           </a>
-          <input type="file" id="file-input" style="display:none" form="form_modal_post"
-            accept=".png,.jpeg,.jpg,.gif, .MP4, .mp4" name="add_photo_file" multiple >
+          <input type="file" id="file_input_photo" style="display:none" form="form_modal_post"
+            accept=".png,.jpeg,.jpg,.gif" name="add_file_photo" multiple >
         </div>
+
+
+
 
         <div class="btn_div">
           <button type="submit" name="btn_post" value="true" class="btn btn-primary"
@@ -44,12 +59,24 @@
 
 
 <script>
-  const fileInput = document.getElementById("file-input");
-  const fileNameDisplay = document.getElementById("file-name");
-  document.getElementById("album-icon").onclick = function () {
+  const fileInput = document.getElementById("file_input_photo");
+  const fileNameDisplay = document.getElementById("file_name_photos");
+  document.getElementById("icon_photo_album").onclick = function () {
     fileInput.click();
   };
   fileInput.onchange = function () {
     fileNameDisplay.innerHTML = "Selected file: " + fileInput.files[0].name;
+  };
+</script>
+
+
+<script>
+  const fileInputVideo = document.getElementById("file_input_video");
+  const fileNameDisplayVideo = document.getElementById("file_name_video");
+  document.getElementById("icon_video").onclick = function () {
+    fileInputVideo.click();
+  };
+  fileInputVideo.onchange = function () {
+    fileNameDisplayVideo.innerHTML = "Selected file: " + fileInputVideo.files[0].name;
   };
 </script>

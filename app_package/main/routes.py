@@ -189,6 +189,8 @@ def rincon(rincon_id):
         return current_app.login_manager.unauthorized()
 
     rincon_posts = create_rincon_posts_list(rincon_id)
+    print("- rincon_posts -")
+    print(rincon_posts[0])
 
     if request.method == "POST":
         formDict = request.form.to_dict()
@@ -198,7 +200,7 @@ def rincon(rincon_id):
         requestFiles = request.files
         print("--------------------")
         print(requestFiles)
-        print(dir(requestFiles))
+        # print(dir(requestFiles))
 
         if formDict.get('btn_delete_rincon') and formDict.get('text_delete')==rincon.name:
             print("- ENTERED in if for btn_delete -")
@@ -213,12 +215,12 @@ def rincon(rincon_id):
             sess.add(new_post)
             sess.commit()
 
-            if request.files.get('add_photo_file'):
-                # print(len(requestFiles.getlist('add_photo_file')))
-                print(requestFiles.getlist('add_photo_file'))
-                print("*********")
+            if request.files.get('add_file_photo'):
+                # print(len(requestFiles.getlist('add_file_photo')))
+                print(requestFiles.getlist('add_file_photo'))
+
                 print("- posting an image -")
-                post_image_list = requestFiles.getlist('add_photo_file')
+                post_image_list = requestFiles.getlist('add_file_photo')
                 post_image_counter = 1
 
                 for post_image in post_image_list:
@@ -247,33 +249,64 @@ def rincon(rincon_id):
 
                     post_image_counter += 1
 
-                #### OLD: using single photo #####
-                # # get image
-                # post_image = request.files.get('add_photo_file')
-                # # post_image_filename = post_image.filename
-                # # _, file_extension = os.path.splitext(post_image_filename)
-                # logger_main.info(f"-- Get image file name --")
-                # logger_main.info(f"-- {post_image} --")
-                # logger_main.info(f"-- file_extension: {file_extension} --")
-
-
-
-                # ## rename image
-                # new_image_name = f"post_image_{new_post.id}{file_extension}"
-
-                # ## save to static rincon directory
-                # this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
-                # # path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
-                # path_to_rincon_files = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files",this_rincon_dir_name)
-
-                # post_image.save(os.path.join(path_to_rincon_files, new_image_name))
-
-                # # save new image name in post entry
-                # new_post.image_file_name = new_image_name
-                # sess.commit()
-
-            return redirect(request.url)
+                return redirect(request.url)
         
+
+
+
+
+
+
+
+
+
+            elif request.files.get('add_file_video'):
+
+                print(requestFiles.get('add_file_video'))
+                post_video = requestFiles.get('add_file_video')
+                # post_image_counter = 1
+
+                # for post_image in post_image_list:
+
+                post_video_filename = post_video.filename
+                _, file_extension = os.path.splitext(post_video_filename)
+                logger_main.info(f"-- file_extension: {file_extension} --")
+
+                ## rename image
+                new_video_name = f"post_{new_post.id}_video{file_extension}"
+
+                ## save to static rincon directory
+                this_rincon_dir_name = f"{rincon_id}_{rincon.name_no_spaces}"
+                # path_to_rincon_files = os.path.join(current_app.static_folder, "rincon_files",this_rincon_dir_name)
+                path_to_rincon_files = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files",this_rincon_dir_name)
+
+                post_video.save(os.path.join(path_to_rincon_files, new_video_name))
+
+                # save new image name in post entry
+                if new_post.video_file_name == "" or new_post.video_file_name == None:
+                    new_post.video_file_name = new_video_name
+                    
+                else:
+                    new_post.video_file_name = new_post.video_file_name + "," + new_video_name
+                sess.commit()
+
+                # post_image_counter += 1
+
+                return redirect(request.url)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         elif formDict.get('btn_comment'):
             print("- Receieved Comment -")
 

@@ -107,9 +107,27 @@ def create_rincon_posts_list(rincon_id):
             else:
                 temp_dict['image_filename'] = i.image_file_name.split(",")
         
-            print("---- Splitting photo names ----")
-            print(temp_dict['image_filename'])
-            print("-------------")
+            # print("---- Splitting photo names ----")
+            # print(temp_dict['image_filename'])
+            # print("-------------")
+
+        temp_dict['video_exists'] = False if i.video_file_name == None else True
+        
+        temp_dict['video_path'] = f"{rincon_id}_{rincon.name_no_spaces}"
+
+        if i.video_file_name:
+            # if not i.image_file_name.find(","):
+            temp_dict['video_filename'] = i.video_file_name
+            # else:
+            #     temp_dict['image_filename'] = i.image_file_name.split(",")
+        
+            # print("---- Splitting photo names ----")
+            # print(temp_dict['image_filename'])
+            # print("-------------")
+
+
+
+
         temp_dict['date'] = i.time_stamp_utc.strftime("%m/%d/%y %H:%M")
         
         if current_user.is_authenticated:

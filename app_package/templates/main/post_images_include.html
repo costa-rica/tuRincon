@@ -79,3 +79,18 @@
 
 {% endif %}
 {% endif %}
+
+{% if post.video_exists %}
+<div class="img_class_border_super">
+
+
+  <!-- <video width="320" height="240" controls> -->
+  <video class="video_class" controls>
+    <source src="{{ url_for('main.custom_static', image_path= post.video_path, image_filename=post.video_filename) }}" type="video/mp4">
+
+  </video> 
+
+
+</div>
+
+{% endif %}
