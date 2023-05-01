@@ -23,123 +23,133 @@
 
 <body id="body">
 
-  <section class="navbar_section">
+  <div class="navbar_super">
 
-    <div class="navbar navbar_custom  bg-primary " id="nav_section">
+    <div class="navbar_custom  bg-primary " id="nav_section">
 
-      <div class="left_and_middle">
+      <div class="nav_left">
 
-        <div class="nav_left">
+          <img class="ws_logo_big" width="128" alt="API Tester PNG - big"
+          src="{{ url_for('static', filename='images/tuRinconIcon.png') }}">
 
-          <a href="{{ url_for('main.home') }}">
+        <img class="ws_logo_small" alt="API Tester PNG - small"
+          src="{{ url_for('static', filename='images/tuRinconIcon.png') }}">
 
-            <div class="logo">
-              <!-- ../static/images/blog600.png -->
-              
-              <img class="ws_logo_big" width="128" alt="API Tester PNG - big" src="{{ url_for('static', filename='images/tuRinconIcon.png') }}">
-              
-              <img class="ws_logo_small" alt="API Tester PNG - small" src="{{ url_for('static', filename='images/tuRinconIcon.png') }}">
-
-            </div>
-
-          </a>
-
-        </div>
+      </div><!-- nav_left -->
 
 
-        <div class="middle_nav_div">
-          {% if rincon_name %}
+      <div class="nav_center">
+        {% if rincon_name %}
+        <div class="page_title">
           <h1>{{ rincon_name }}</h1>
+        </div><!-- page_title -->
           {% else %}
-          <h1>Tu Rincón</h1>
-          {% endif %}
+          <div class="page_title">
+            <h1>Tu Rincón</h1>
+          </div><!-- page_title -->
+          
 
-          {% if current_user %}
-          {{ current_user.username }}
-          {% endif %}
+        {% endif %}
 
-        </div>
+        {% if current_user %}
+        {{ current_user.username }}
+        {% endif %}
+      </div><!-- nav_center -->
+
+
+
+
+
+
+
+      <div class="nav_right">
+        <img class="nav_menu" id="nav_menu" src="{{ url_for('static', filename='images/white-hamburger-menu-icon-24.png') }}"
+        alt="Open Navigation">
+
+        <nav>
+          <div class="nav_exit_div">
+            <img id="nav_exit" class="nav_exit" src="{{ url_for('static', filename='images/exit.svg') }}" alt="Close Navigation">
+          </div>
+          
+
+          <ul class="primary-nav ul_primary" id="nav_horizontal_list">
+            <br>
+  
+            {% if current_user.id %}
+            <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
+            {% else %}
+            <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
+            {% endif %}
+            {% if current_user.admin %}
+            <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('admin.admin_page') }}">Admin Page</a></li>
+            {% endif %}
+  
+  
+            {% if rincon_name %}
+            <br><br>
+  
+  
+            <li class="li_primary">
+              <div class="btn_list_div">
+                <div class="btn_list_div_sub">
+                  {% if current_user.is_authenticated %}
+                  <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
+                    data-bs-target="#postModal" data-bs-whatever="Some data">Post
+                  </button>
+                  {% else %}
+                  <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
+                    data-bs-target="#notSignedInModal" data-bs-whatever="Some data">Post
+                  </button>
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+  
+            {% if rincon %}
+            <li class="li_primary">
+              <div class="btn_list_div">
+                <div class="btn_list_div_sub">
+                  <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
+                    data-bs-target="#inviteModal" data-bs-whatever="{{ rincon.id }}">Invite
+                  </button>
+                </div>
+              </div>
+            </li>
+            <br><br>
+  
+            
+            {% if current_user.id == rincon.manager_id %}
+            <li class=" ">
+              <div class="btn_list_div">
+  
+                <div class="btn_list_div_sub">
+                  <button type="button" class="form-control custom_delete_btn" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal" data-bs-whatever="Some data">Delete Rincón
+                  </button>
+                </div>
+  
+              </div>
+  
+            </li>
+            {% endif %}
+            {% endif %}
+  
+            {% endif %}
+  
+  
+  
+          </ul>
+        
+
+          </nav>
 
       </div>
 
-      <img class="mobile-menu" id="mobile-cta" src="{{ url_for('static', filename='images/white-hamburger-menu-icon-24.png') }}"
-        alt="Open Navigation">
-
-      <nav>
-        <img id="mobile-exit" class="mobile-menu-exit" src="{{ url_for('static', filename='images/exit.svg') }}" alt="Close Navigation">
-
-        <ul class="primary-nav ul_primary" id="nav_horizontal_list">
-          <br>
-
-          {% if current_user.id %}
-          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
-          {% else %}
-          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
-          {% endif %}
-          {% if current_user.admin %}
-          <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('admin.admin_page') }}">Admin Page</a></li>
-          {% endif %}
-
-
-          {% if rincon_name %}
-          <br><br>
-
-
-          <li class="li_primary">
-            <div class="btn_list_div">
-              <div class="btn_list_div_sub">
-                {% if current_user.is_authenticated %}
-                <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
-                  data-bs-target="#postModal" data-bs-whatever="Some data">Post
-                </button>
-                {% else %}
-                <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
-                  data-bs-target="#notSignedInModal" data-bs-whatever="Some data">Post
-                </button>
-                {% endif %}
-              </div>
-            </div>
-          </li>
-
-          {% if rincon %}
-          <li class="li_primary">
-            <div class="btn_list_div">
-              <div class="btn_list_div_sub">
-                <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
-                  data-bs-target="#inviteModal" data-bs-whatever="{{ rincon.id }}">Invite
-                </button>
-              </div>
-            </div>
-          </li>
-          <br><br>
-
-          
-          {% if current_user.id == rincon.manager_id %}
-          <li class=" ">
-            <div class="btn_list_div">
-
-              <div class="btn_list_div_sub">
-                <button type="button" class="form-control custom_delete_btn" data-bs-toggle="modal"
-                  data-bs-target="#deleteModal" data-bs-whatever="Some data">Delete Rincón
-                </button>
-              </div>
-
-            </div>
-
-          </li>
-          {% endif %}
-          {% endif %}
-
-          {% endif %}
 
 
 
-        </ul>
-      </nav>
-
-
-  </section>
-
+    </div><!-- navbar_custom-->
+</div><!-- navbar_super -->
   <form method="POST" id="form_modal_post" enctype=multipart/form-data></form>
   <form method="POST" id="form_modal_delete"></form>
   <form method="POST" id="form_modal_invite"></form>
@@ -181,16 +191,16 @@
 
   {% block main %}{% endblock %}
   <script>
-    const mobileBtn = document.getElementById('mobile-cta')
+    const mobileBtn = document.getElementById('nav_menu')
     nav = document.querySelector('nav')
-    mobileBtnExit = document.getElementById('mobile-exit');
-
+    mobileBtnExit = document.getElementById('nav_exit');
+  
     mobileBtn.addEventListener('click', () => {
-      nav.classList.add('menu-btn');
+      nav.classList.add('btn_menu');
     })
-
+  
     mobileBtnExit.addEventListener('click', () => {
-      nav.classList.remove('menu-btn');
+      nav.classList.remove('btn_menu');
     })
   </script>
 

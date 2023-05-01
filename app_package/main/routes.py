@@ -380,7 +380,8 @@ def post_images(rincon_id,post_id):
     else:
         photos_list =  rincon_post.image_file_name.split(",")
 
-    return render_template('/main/post_images.html', photos_list=photos_list, post_images_path = post_images_path)
+    return render_template('/main/post_images.html', photos_list=photos_list, post_images_path = post_images_path,
+        rincon_name=rincon_name)
 
 
 
@@ -457,7 +458,7 @@ def like_post(rincon_id,post_id):
 
 
     # return redirect(request.referrer, _anchor='like_'+post_id)
-    return redirect(url_for('main.rincon_signed_in', rincon_id=rincon_id,post_id=post_id, _anchor='like_'+str(post_id)))
+    return redirect(url_for('main.rincon', rincon_id=rincon_id,post_id=post_id, _anchor='like_'+str(post_id)))
 
 
 
