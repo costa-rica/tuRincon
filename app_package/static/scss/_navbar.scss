@@ -22,14 +22,23 @@ section.navbar_section {
   margin-top:0;
   .navbar_custom{
       justify-content: flex-start;
+    //   justify-content: space-between;
       position: fixed;
       width:100%;
       height: 5rem;
+    //   display: flex;
+      
+      .left_and_middle{
+        // background-color: aqua;
+        display: flex;
+        width: 80%;
+      }
       .nav_left{
           padding-left: 2rem;
           height: 6rem;
           padding-top: -1rem;
           margin-top:0;
+        //   background-color: #df382c;
           a{
               text-decoration: none;
               font-weight: bold;
@@ -55,6 +64,8 @@ section.navbar_section {
       }
       .middle_nav_div {
           display: none;
+        // h1{font-size: .9rem;}
+        // font-size: .7rem;
       }
       nav.menu-btn{display:block;}
       nav {display: none;}
