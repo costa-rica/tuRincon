@@ -1,0 +1,31 @@
+{% extends "_layout.html" %}
+{% block main %}
+<form method="POST" id="form_1"></form>
+
+<div class="main">
+
+  <div class="rincon_admin_page">
+
+    <div class="title">
+      <h1>{{ rincon.name }}</h1>
+    </div>
+
+    <div class="rincon_admin_form">
+
+      <div class="rincon_admin_form_sub">
+        Send invite to:
+        <div class="email_form">
+          <label for="email">Email:</label>
+          <input type="text" id="email" name="email" form="form_1">
+        </div>
+
+        <div class="element_right_sub">
+          <input type="submit" value="btn_send_invite" name="btn_send_invite" class="btn btn-secondary btn_custom01" form="form_1">
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

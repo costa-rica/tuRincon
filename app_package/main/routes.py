@@ -187,6 +187,8 @@ def rincon(rincon_id):
     
     if not current_user.is_authenticated and not rincon.public:
         return current_app.login_manager.unauthorized()
+    
+    current_user_rincon_assoc_table_obj = sess.query(UsersToRincons).filter_by(users_table_id=current_user.id, rincons_table_id=rincon_id).first()
 
     rincon_posts = create_rincon_posts_list(rincon_id)
     print("- rincon_posts -")
@@ -347,7 +349,7 @@ def rincon(rincon_id):
             
 
     return render_template('main/rincon.html', rincon_name=rincon.name, rincon_posts=rincon_posts,
-        rincon=rincon, len=len)
+        rincon=rincon, len=len, current_user_rincon_assoc_table_obj=current_user_rincon_assoc_table_obj)
 
 
 
@@ -462,6 +464,13 @@ def like_post(rincon_id,post_id):
 
 
 
+@main.route('/admin/<rincon_id>/', methods=["GET","POST"])
+@login_required
+def rincon_admin(rincon_id):
+    logger_main.info(f"- accessed rincon_admin for rincon_id: {rincon_id}  -")
+    rincon = sess.query(Rincons).filter_by(id=rincon_id).first()
+    
+    if request.method == "POST":
+        print("posting somethign ...")
 
-
-
+    return render_template('main/rincon_admin.html', rincon=rincon)

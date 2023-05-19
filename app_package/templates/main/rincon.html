@@ -41,7 +41,7 @@
                     {{ post.post_text['text'] }}
                   </div>
                     
-                  {% else %}
+                  {% elif len(post.post_text) > 1 %}
                   <div class="no_line_break">
                     
                     {% for key, value in post.post_text.items() %}

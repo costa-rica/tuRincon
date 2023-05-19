@@ -10914,6 +10914,9 @@ textarea.form-control-lg {
   background-color: #df382c;
   width: 100%;
 }
+.navbar_super .navbar_custom nav .looks_like_a_button {
+  text-align: center;
+}
 
 /* Footer */
 .footer {

@@ -94,8 +94,10 @@ def create_rincon_posts_list(rincon_id):
         temp_dict['post_id'] = i.id
         temp_dict['date_for_sorting'] = i.time_stamp_utc
         temp_dict['username'] = sess.get(Users,i.user_id).username
-
-        temp_dict['post_text'] = extract_urls_info(i.post_text)
+        print("* extract_urls_info(i.post_text) issue: what is rincon.post.post_text?")
+        print(i.post_text)
+        # if i.post_text != None:
+        temp_dict['post_text'] = extract_urls_info(i.post_text) if i.post_text != None else ""
 
         temp_dict['image_exists'] = False if i.image_file_name == None else True
         

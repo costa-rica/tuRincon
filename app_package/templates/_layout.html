@@ -49,11 +49,11 @@
           </div><!-- page_title -->
           
 
-        {% endif %}
+        {% endif %}<!-- if rincon_name -->
 
         {% if current_user %}
         {{ current_user.username }}
-        {% endif %}
+        {% endif %}<!-- if current_user -->
       </div><!-- nav_center -->
 
 
@@ -79,10 +79,10 @@
             <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
             {% else %}
             <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.login') }}">Login</a></li>
-            {% endif %}
+            {% endif %}<!-- if current_user.id -->
             {% if current_user.admin %}
             <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('admin.admin_page') }}">Admin Page</a></li>
-            {% endif %}
+            {% endif %}<!-- if current_user.admin -->
   
   
             {% if rincon_name %}
@@ -100,23 +100,23 @@
                   <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
                     data-bs-target="#notSignedInModal" data-bs-whatever="Some data">Post
                   </button>
-                  {% endif %}
+                  {% endif %}<!-- if current_user.is_authenticated -->
                 </div>
               </div>
             </li>
   
-            {% if rincon %}
+            {% if current_user_rincon_assoc_table_obj.permission_admin %}
             <li class="li_primary">
               <div class="btn_list_div">
                 <div class="btn_list_div_sub">
-                  <button type="button" class="form-control custom_post_btn" data-bs-toggle="modal"
-                    data-bs-target="#inviteModal" data-bs-whatever="{{ rincon.id }}">Invite
-                  </button>
+
+                  <a class="form-control custom_post_btn looks_like_a_button" 
+                  href="{{ url_for('main.rincon_admin', rincon_id=current_user_rincon_assoc_table_obj.rincons_table_id ) }}">Admin</a>
                 </div>
               </div>
             </li>
             <br><br>
-  
+            {% endif %}<!-- if current_user_rincon_assoc_table_obj.permission_admin -->
             
             {% if current_user.id == rincon.manager_id %}
             <li class=" ">
@@ -131,10 +131,10 @@
               </div>
   
             </li>
-            {% endif %}
-            {% endif %}
+            
+            {% endif %}<!-- if current_user.id == rincon.manager_id -->
   
-            {% endif %}
+            {% endif %}<!-- if rincon_name -->
   
   
   
