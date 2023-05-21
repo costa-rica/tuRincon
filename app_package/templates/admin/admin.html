@@ -2,6 +2,10 @@
 {% block main %}
 
 <form method="POST" id="form_download_db" enctype=multipart/form-data></form>
+<form method="POST" id="form_rincon_user_admin" enctype=multipart/form-data></form>
+
+
+
 
 <div class="main">
   <div class="admin_page">
@@ -40,12 +44,69 @@
 
       </div><!-- download_db_tables_form -->
       </div><!-- std_framing -->
+      <br>
+      <div class="std_framing">
+        Users Table
+
+        <div class="search-container">
+          <input type="text" id="myInput" onkeyup="searchTable()" placeholder="Search your user or rincón">
+        </div><!-- search-container -->
+
+        <div class="table_div">
+          <table id="myTable" class="display table nowrap responsive">
+            <thead>
+              
+              <tr>
+
+                <th>Username</th>
+                <th>Rincon Status (True = Admin)</th>
+
+              </tr>
+      
+            </thead>
+            <tbody>
+              {% for user in rincon_users %}
+              <tr>
+                <td>{{ user.username }}</td>
+                <td>
+                  {% for rincon in user.rincons %}
+                  <div class="rincon_admin_input_div">
+                    {{ rincon.rincon.name }} 
+
+                    <select id="true-false" name="user_{{ user.id}},rincon_{{ rincon.rincon.id }}"
+                    form="form_rincon_user_admin" >
+                      <option value="true" {% if rincon.permission_admin %} selected {% endif %} >True</option>
+                      <option value="false" {% if not rincon.permission_admin %} selected {% endif %}>False</option>
+                    </select>
+
+                  </div>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+      
+          </table>
+        </div><!-- table_div -->
+
+        <div class="btn_update_div">
+          <button type="submit" name="update_user_privileges" value="true" class="btn btn-primary"
+            form="form_rincon_user_admin">Update User Privileges</button>
+        </div>
+
+      </div><!-- std_framing -->
+
+      <br>
+      <div class="std_framing">
+        <a href="{{ url_for('main.check_invite_json') }}">check_invite_json</a>
+
+      </div>
+
     </div><!-- admin_db_sub -->
-
-
 
   </div><!-- admin_db_page -->
 </div><!-- main -->
 
+<script src="../static/custom_js_and_css/searchTable.js"></script>
 
 {% endblock %}

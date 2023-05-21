@@ -791,7 +791,6 @@ body {
 
 
 
-
 /* Create Post Modal */
 .create_post_modal{
   .footer_sub{
@@ -864,6 +863,40 @@ body {
 
 }
 
+/* Rincon Admin Page */
+/* Login Page */
+.rincon_admin_page {
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+  }
+
+  .rincon_admin_form {
+    border-radius: 1.5em;
+    padding: 3rem 0 3rem .0;
+    width: calc(100% - .5rem);
+    font-size: 1.5em;
+    background-color: white;
+    display:flex;
+    justify-content: center;
+
+    .rincon_admin_form_sub{
+      width: calc(100% - 1rem);
+    }
+  }
+  .element_right_sub {
+    display: flex;
+    justify-content: end;
+    padding: 2rem 0 0 0;
+  }
+}
+
+
 /* Admin DB Page */
 .admin_page {
   width: 90%;
@@ -909,6 +942,17 @@ body {
     text-decoration: none;
 
   }
+
+  .rincon_admin_input_div{
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .btn_update_div{
+    display: flex;
+    justify-content: end;
+  }
+
 }
 
 /* Admin DB DOWNload Page */

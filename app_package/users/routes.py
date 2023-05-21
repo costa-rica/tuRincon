@@ -14,6 +14,7 @@ from tr01_models import sess, engine, text, Base, \
 
 from app_package.users.utils import send_reset_email, send_confirm_email
 import datetime
+import requests
 
 #Setting up Logger
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
@@ -43,7 +44,7 @@ users = Blueprint('users', __name__)
 
 @users.before_request
 def before_request():
-    logger_users.info("**** In: users.before_request *****")
+    logger_users.info("- in users.before_request ")
     session.permanent = True
     current_app.permanent_session_lifetime = datetime.timedelta(days=31)
     session.modified = True
@@ -98,6 +99,9 @@ def register():
         new_email = formDict.get('email')
 
         check_email = sess.query(Users).filter_by(email = new_email).all()
+
+        logger_users.info(f"check_email: {check_email}")
+
         if len(check_email)==1:
             flash(f'The email you entered already exists you can sign in or try another email.', 'warning')
             return redirect(url_for('users.register'))
@@ -107,6 +111,13 @@ def register():
         sess.add(new_user)
         sess.commit()
 
+        # /check_invite_json
+        headers = {'Content-Type': 'application/json'}
+        payload={}
+        payload['tu-rincon.com_pw']='sudo_let_me_in'
+        # payload['password'] = 'test'
+
+        result = requests.request('POST',current_app.config.get("API_URL") + "/check_invite_json",headers= headers, data=str(json.dumps(payload)))
 
         # Send email confirming succesfull registration
         try:

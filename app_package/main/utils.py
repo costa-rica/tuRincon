@@ -7,6 +7,10 @@ import re
 import urlextract
 from flask_login import current_user
 
+from flask_mail import Message
+from app_package import mail
+from flask import current_app, url_for
+
 
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
 formatter_terminal = logging.Formatter('%(asctime)s:%(filename)s:%(name)s:%(message)s')
@@ -161,5 +165,18 @@ def create_rincon_posts_list(rincon_id):
     rincon_posts = sorted(rincon_posts, key=lambda d: d['date_for_sorting'], reverse=True)
 
     return rincon_posts
+
+
+def send_invite_email(email, rincon):
+    if os.environ.get('CONFIG_TYPE') == 'prod':
+        logger_main.info(f"-- sending INVITE email to {email} --")
+        msg = Message(f'You have been invited to {rincon.name}',
+            sender=current_app.config.get('MAIL_USERNAME'),
+            recipients=[email])
+        msg.body = 'If you are note registered go to tu-rincon.com/register.'
+        mail.send(msg)
+        logger_main.info(f"-- email sent --")
+    else :
+        logger_main.info(f"-- non-prod mode: email NOT sent --")
 
 

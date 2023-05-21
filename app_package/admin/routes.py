@@ -46,19 +46,71 @@ admin = Blueprint('admin', __name__)
 @admin.route('/admin_page', methods = ['GET', 'POST'])
 @login_required
 def admin_page():
-    print('- in admin_db -')
-    print("current_user.admin: ", current_user.admin)
+    logger_admin.info('- in admin_db -')
+    logger_admin.info(f"current_user.admin: {current_user.admin}")
 
     if not current_user.admin:
         return redirect(url_for('main.rincons'))
+    
+    rincon_users = sess.query(Users).all()
 
-    return render_template('admin/admin.html')
+    col_names = ["username"]
+
+    if request.method == "POST":
+        formDict = request.form.to_dict()
+        # print("formDict: ", formDict)
+        if formDict.get("update_user_privileges"):
+            del formDict['update_user_privileges']
+            update_list = []
+            for user_rincon, permission_bool_str in formDict.items():
+                underscore_user, underscore_rincon = user_rincon.split(",")
+                _,user_id = underscore_user.split("_")
+                _,rincon_id = underscore_rincon.split("_")
+                user_rincon_assoc = sess.query(UsersToRincons).filter_by(users_table_id=user_id, rincons_table_id=rincon_id).first()
+                permission_bool = False if permission_bool_str == "false" else True
+                if user_rincon_assoc.permission_admin != permission_bool:
+                    # print("* user_rincon_assoc.permission_admin != permission_bool *")
+                    # print("user_rincon_assoc: ", user_rincon_assoc)
+                    # print("user_rincon_assoc, ricon_admin_permission: ", type(user_rincon_assoc.permission_admin), user_rincon_assoc.permission_admin)
+                    # print("formDict permission_bool_str: ", type(permission_bool_str), permission_bool_str)
+                    user_rincon_assoc.permission_admin = permission_bool
+                    sess.commit()
+
+                    user_updated = sess.get(Users, user_id)
+                    rincon_updated = sess.get(Rincons, rincon_id)
+
+                    if permission_bool:
+                        update_list.append(f"Successfully updated {user_updated.username} to admin ({permission_bool}) for  {rincon_updated.name}")
+                    else:
+                        update_list.append(f"{user_updated.username} is no longer an admin ({permission_bool}) for  {rincon_updated.name}")
+
+
+                    
+
+
+                    # if permission_bool:
+                    #     flash(f"Successfully updated {user_updated.username} to admin ({permission_bool}) for  {rincon_updated.name}", "success")
+                    #     return redirect(request.url)
+                    
+                    # flash(f"{user_updated.username} is no longer an admin ({permission_bool}) for  {rincon_updated.name}", "warning")
+            if len(update_list) > 0 :
+                for count, i in enumerate(update_list):
+                    if count == 0:
+                        flash_update_string = i
+                    else:
+                        flash_update_string = f"{flash_update_string},\n{i}"
+                flash(flash_update_string, "success")
+            return redirect(request.url)
+
+
+
+    return render_template('admin/admin.html', rincon_users=rincon_users, col_names=col_names)
 
 @admin.route('/admin_db_download', methods = ['GET', 'POST'])
 @login_required
 def admin_db_download():
-    print('- in admin_db_download -')
-    print("current_user.admin: ", current_user.admin)
+    logger_admin.info('- in admin_db_download -')
+    logger_admin.info(f"current_user.admin: {current_user.admin}")
 
     if not current_user.admin:
         return redirect(url_for('main.rincons'))
@@ -70,8 +122,8 @@ def admin_db_download():
 
     if request.method == "POST":
         formDict = request.form.to_dict()
-        print(f"- search_rincons POST -")
-        print("formDict: ", formDict)
+        # print(f"- search_rincons POST -")
+        # print("formDict: ", formDict)
 
         # craete folder to save
         if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),"db_backup")):
@@ -118,8 +170,8 @@ def download_db_tables_as_csv():
 @admin.route('/admin_db_upload', methods = ['GET', 'POST'])
 @login_required
 def admin_db_upload():
-    print('- in admin_db_download -')
-    print("current_user.admin: ", current_user.admin)
+    logger_admin.info('- in admin_db_upload -')
+    logger_admin.info(f"current_user.admin: {current_user.admin}")
 
     if not current_user.admin:
         return redirect(url_for('main.rincons'))
@@ -130,12 +182,12 @@ def admin_db_upload():
 
     if request.method == "POST":
         formDict = request.form.to_dict()
-        print(f"- search_rincons POST -")
-        print("formDict: ", formDict)
+        # print(f"- search_rincons POST -")
+        # print("formDict: ", formDict)
 
         requestFiles = request.files
 
-        print("requestFiles: ", requestFiles)
+        # print("requestFiles: ", requestFiles)
 
         # craete folder to store upload files
         if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),"db_upload")):
@@ -164,8 +216,8 @@ def admin_db_upload():
 @admin.route('/upload_table/<table_name>', methods = ['GET', 'POST'])
 @login_required
 def upload_table(table_name):
-    print('- in admin_db_download -')
-    print("current_user.admin: ", current_user.admin)
+    logger_admin.info('- in upload_table -')
+    logger_admin.info(f"current_user.admin: {current_user.admin}")
     path_to_uploaded_csv = request.args.get('path_to_uploaded_csv')
 
     if not current_user.admin:
@@ -203,10 +255,10 @@ def upload_table(table_name):
 
     if request.method == "POST":
         formDict = request.form.to_dict()
-        print(f"- search_rincons POST -")
-        print("formDict: ", formDict)
+        # print(f"- search_rincons POST -")
+        # print("formDict: ", formDict)
 
-        # TODO: upload data to existing database
+        # NOTE: upload data to existing database
         ### formDict (key) is existing databaes column name
         # existing_names_list = [existing for existing, update in formDict.items() if update != 'true' ]
         
@@ -216,9 +268,6 @@ def upload_table(table_name):
             if key[:len("default_checkbox_")] == "default_checkbox_":
                 set_default_value_dict[value] = formDict.get(value)
         
-        print("- set_default_value_dict -")
-        print(set_default_value_dict)
-
 
         # Delete elements from dictionary
         for key, value in set_default_value_dict.items():
@@ -264,30 +313,25 @@ def upload_table(table_name):
                 df_update.drop(df_update[df_update.email== email].index, inplace = True)
                 print(f"-- removeing {email} from upload dataset --")
         
-        # print("- df_update -")
-        # print(df_update)
 
-        # if table_name == 'users':
-        #     # encode password column
-        #     print("len(df_update)", len(df_update))
             for index in range(1,len(df_update)+1):
                 df_update.loc[index, 'password'] = df_update.loc[index, 'password'].encode()
-                print(" ****************** ")
-                print(f"- encoded row for {df_update.loc[index, 'email']} -")
-                print(" ****************** ")
+                # print(" ****************** ")
+                # print(f"- encoded row for {df_update.loc[index, 'email']} -")
+                # print(" ****************** ")
 
 
         df_update.to_sql(table_name, con=engine, if_exists='append', index=False)
 
         flash(f"{table_name} update: successful!", "success")
 
-        print("request.path: ", request.path)
-        print("request.full_path: ", request.full_path)
-        print("request.script_root: ", request.script_root)
-        print("request.base_url: ", request.base_url)
-        print("request.url: ", request.url)
-        print("request.url_root: ", request.url_root)
-        print("______")
+        # print("request.path: ", request.path)
+        # print("request.full_path: ", request.full_path)
+        # print("request.script_root: ", request.script_root)
+        # print("request.base_url: ", request.base_url)
+        # print("request.url: ", request.url)
+        # print("request.url_root: ", request.url_root)
+        # print("______")
 
 
         # return redirect(request.url)

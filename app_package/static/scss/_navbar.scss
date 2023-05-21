@@ -8,10 +8,14 @@
     position: absolute;
     top: var(--nav-height);
     width: 100%;
+    // background-color: ;
 
     .close_right {
       float: right;
     }
+  }
+  .keep_line_break{
+    white-space: pre-line;
   }
 }
 

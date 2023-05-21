@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
   <!-- /static/images/blog32.png -->
 
+  {% if rincon_name %}
   <!-- Import the Bootstrap stylesheet -->
-  <script src="../static/custom_js_and_css/bootstrap.bundle.js"></script>
-  <script src="../static/custom_js_and_css/jquery-3.6.1.js"></script>
-
-
+  <script language="JavaScript" type="text/javascript" src="../static/custom_js_and_css/jquery-3.6.1.js"></script>
+  <script language="JavaScript" type="text/javascript" src="../static/custom_js_and_css/bootstrap.bundle.js"></script>
+  {% endif %}
 
 
   <link rel="icon" type="image/x-icon" href="/static/images/favicon-96x96.png">
@@ -150,6 +150,8 @@
 
     </div><!-- navbar_custom-->
 </div><!-- navbar_super -->
+
+{% if rincon_name %}
   <form method="POST" id="form_modal_post" enctype=multipart/form-data></form>
   <form method="POST" id="form_modal_delete"></form>
   <form method="POST" id="form_modal_invite"></form>
@@ -167,6 +169,7 @@
   <div class="modal" tabindex="-1" role="dialog" id="notSignedInModal">
     {% include "modals/notSignedIn.html" %}
   </div>
+  {% endif %}<!-- if rincon_name -->
 
   <div class="flash_custom_parent">
 
@@ -174,7 +177,7 @@
     {% if messages %}
     {% for category, message in messages %}
 
-    <div class="alert alert-{{ category }} alert_custom" id="div_flash">
+    <div class="alert alert-{{ category }} alert_custom keep_line_break" id="div_flash">
       <i class="close icon"></i>
 
       {{ message }}
@@ -183,9 +186,9 @@
       </div>
 
     </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+    {% endfor %}<!-- for category, message in messages -->
+    {% endif %}<!-- if messages -->
+    {% endwith %}<!-- with messages = get_flashed_messages(with_categories=true) -->
 
   </div>
 

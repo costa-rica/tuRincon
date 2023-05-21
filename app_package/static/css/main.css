@@ -10791,6 +10791,9 @@ textarea.form-control-lg {
 .flash_custom_parent .alert_custom .close_right {
   float: right;
 }
+.flash_custom_parent .keep_line_break {
+  white-space: pre-line;
+}
 
 /* Navbar */
 .navbar_super {
@@ -11734,6 +11737,36 @@ body {
   display: none;
 }
 
+/* Rincon Admin Page */
+/* Login Page */
+.rincon_admin_page {
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.rincon_admin_page .title {
+  width: 100%;
+}
+.rincon_admin_page .rincon_admin_form {
+  border-radius: 1.5em;
+  padding: 3rem 0 3rem 0;
+  width: calc(100% - 0.5rem);
+  font-size: 1.5em;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+.rincon_admin_page .rincon_admin_form .rincon_admin_form_sub {
+  width: calc(100% - 1rem);
+}
+.rincon_admin_page .element_right_sub {
+  display: flex;
+  justify-content: end;
+  padding: 2rem 0 0 0;
+}
+
 /* Admin DB Page */
 .admin_page {
   width: 90%;
@@ -11773,6 +11806,14 @@ body {
   border: solid var(--bs-primary);
   border-width: 0.5rem;
   text-decoration: none;
+}
+.admin_page .rincon_admin_input_div {
+  display: flex;
+  justify-content: space-between;
+}
+.admin_page .btn_update_div {
+  display: flex;
+  justify-content: end;
 }
 
 /* Admin DB DOWNload Page */
