@@ -54,5 +54,25 @@ def handle_404(err):
 @eh.app_errorhandler(500)
 def handle_500(err):
     logger_error.info(f'@eh.app_errorhandler(500), err: {err}')
-    error_message = f"Something wrong with webiste. Either try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+    error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
     return render_template('error_template.html', error_number="500", error_message=error_message)
+
+
+if os.environ.get('CONFIG_TYPE')=='prod':
+    @errors.app_errorhandler(AttributeError)
+    def error_attribute(AttributeError):
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+        return render_template('error_template.html', error_number="Did you login?", error_message=error_message, 
+        error_message_2 = AttributeError)
+
+    @errors.app_errorhandler(KeyError)
+    def error_key(KeyError):
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+        return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
+        error_message_2 = KeyError)
+
+    @errors.app_errorhandler(TypeError)
+    def error_key(KeyError):
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+        return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
+        error_message_2 = TypeError)
