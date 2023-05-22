@@ -37,7 +37,7 @@ def handle_400(err):
 #messaged copied from: https://www.pingdom.com/blog/the-5-most-common-http-errors-according-to-google/
 
 @eh.app_errorhandler(401)
-def handle_401(err):
+def handle_401(err):EMAIL_DASH_AND_DATA
     logger_error.info(f'@eh.app_errorhandler(401), err: {err}')
     error_message = "This error happens when a website visitor tries to access a restricted web page but isn’t authorized to do so, usually because of a failed login attempt."
     return render_template('error_template.html', error_number="401", error_message=error_message)
@@ -54,25 +54,28 @@ def handle_404(err):
 @eh.app_errorhandler(500)
 def handle_500(err):
     logger_error.info(f'@eh.app_errorhandler(500), err: {err}')
-    error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+    error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
     return render_template('error_template.html', error_number="500", error_message=error_message)
 
 
+#####################
+# These not working #
+#####################
 if os.environ.get('CONFIG_TYPE')=='prod':
     @eh.app_errorhandler(AttributeError)
     def error_attribute(AttributeError):
-        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message, 
         error_message_2 = AttributeError)
 
     @eh.app_errorhandler(KeyError)
     def error_key(KeyError):
-        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
         error_message_2 = KeyError)
 
     @eh.app_errorhandler(TypeError)
     def error_key(KeyError):
-        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
         error_message_2 = TypeError)
