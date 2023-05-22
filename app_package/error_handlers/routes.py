@@ -37,7 +37,7 @@ def handle_400(err):
 #messaged copied from: https://www.pingdom.com/blog/the-5-most-common-http-errors-according-to-google/
 
 @eh.app_errorhandler(401)
-def handle_401(err):EMAIL_DASH_AND_DATA
+def handle_401(err):
     logger_error.info(f'@eh.app_errorhandler(401), err: {err}')
     error_message = "This error happens when a website visitor tries to access a restricted web page but isn’t authorized to do so, usually because of a failed login attempt."
     return render_template('error_template.html', error_number="401", error_message=error_message)
