@@ -59,19 +59,19 @@ def handle_500(err):
 
 
 if os.environ.get('CONFIG_TYPE')=='prod':
-    @errors.app_errorhandler(AttributeError)
+    @eh.app_errorhandler(AttributeError)
     def error_attribute(AttributeError):
         error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message, 
         error_message_2 = AttributeError)
 
-    @errors.app_errorhandler(KeyError)
+    @eh.app_errorhandler(KeyError)
     def error_key(KeyError):
         error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
         error_message_2 = KeyError)
 
-    @errors.app_errorhandler(TypeError)
+    @eh.app_errorhandler(TypeError)
     def error_key(KeyError):
         error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['PERSONAL_EMAIL']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
