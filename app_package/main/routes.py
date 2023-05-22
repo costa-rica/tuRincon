@@ -174,7 +174,7 @@ def create_rincon():
 @main.route("/rincon/<rincon_id>", methods=["GET","POST"])
 # @login_required
 def rincon(rincon_id):
-    logger_main.info("- Rincon signed in page -")
+    logger_main.info("- Rincon page -")
     try:
         rincon = sess.get(Rincons, int(rincon_id))
         rincon_name = rincon.name
@@ -187,14 +187,19 @@ def rincon(rincon_id):
             rincon_name = rincon.name
             rincon_id = rincon.id
             
-    
+    logger_main.info(f"- Rincon: {rincon_name} -")
+
     if not current_user.is_authenticated and not rincon.public:
         return current_app.login_manager.unauthorized()
     
-    current_user_rincon_assoc_table_obj = sess.query(UsersToRincons).filter_by(users_table_id=current_user.id, rincons_table_id=rincon_id).first()
+    if current_user.is_authenticated:
+        current_user_rincon_assoc_table_obj = sess.query(UsersToRincons).filter_by(users_table_id=current_user.id, rincons_table_id=rincon_id).first()
+    else:
+        current_user_rincon_assoc_table_obj = None
+        
 
     rincon_posts = create_rincon_posts_list(rincon_id)
-    print("- rincon_posts -")
+    # print("- rincon_posts -")
     # print(rincon_posts[0])
 
     if request.method == "POST":
