@@ -278,8 +278,8 @@ def rincon(rincon_id):
 
                 # for post_image in post_image_list:
 
-                post_video_filename = post_video.filename
-                _, file_extension = os.path.splitext(post_video_filename)
+                post_video_file_name = post_video.filename
+                _, file_extension = os.path.splitext(post_video_file_name)
                 logger_main.info(f"-- file_extension: {file_extension} --")
 
                 ## rename image

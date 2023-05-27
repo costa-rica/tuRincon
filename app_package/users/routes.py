@@ -114,7 +114,7 @@ def register():
         # /check_invite_json
         headers = {'Content-Type': 'application/json'}
         payload={}
-        payload['tu-rincon.com_pw']='sudo_let_me_in'
+        payload['TR_VERIFICATION_PASSWORD']=current_app.config.get("TR_VERIFICATION_PASSWORD")
         # payload['password'] = 'test'
 
         result = requests.request('POST',current_app.config.get("API_URL") + "/check_invite_json",headers= headers, data=str(json.dumps(payload)))

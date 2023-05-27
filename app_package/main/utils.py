@@ -123,7 +123,7 @@ def create_rincon_posts_list(rincon_id):
 
         if i.video_file_name:
             # if not i.image_file_name.find(","):
-            temp_dict['video_filename'] = i.video_file_name
+            temp_dict['video_file_name'] = i.video_file_name
             # else:
             #     temp_dict['image_filename'] = i.image_file_name.split(",")
         
