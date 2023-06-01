@@ -50,7 +50,7 @@
                     {{ value }} 
                     <!-- </p> -->
                     {% else %} 
-                    <a href="{{ value }}">{{ value }}</a>
+                    <a href="{{ value }}">{{ value[:22] }}</a>
                     {% endif %}
                     {% endfor %}
                   
