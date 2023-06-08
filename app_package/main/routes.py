@@ -381,6 +381,12 @@ def post_images(rincon_id,post_id):
     if not current_user.is_authenticated and not rincon.public:
         return current_app.login_manager.unauthorized()
 
+
+    if current_user.is_authenticated:
+        current_user_rincon_assoc_table_obj = sess.query(UsersToRincons).filter_by(users_table_id=current_user.id, rincons_table_id=rincon_id).first()
+    else:
+        current_user_rincon_assoc_table_obj = None
+
     rincon_post = sess.query(RinconsPosts).filter_by(id = post_id).first()
 
     post_images_path = f"{rincon_id}_{rincon.name_no_spaces}"
@@ -391,7 +397,8 @@ def post_images(rincon_id,post_id):
         photos_list =  rincon_post.image_file_name.split(",")
 
     return render_template('/main/post_images.html', photos_list=photos_list, post_images_path = post_images_path,
-        rincon_name=rincon_name)
+        rincon_name=rincon_name, current_user_rincon_assoc_table_obj=current_user_rincon_assoc_table_obj,
+        rincon=rincon)
 
 
 
