@@ -4,6 +4,8 @@ from flask import render_template, current_app, request
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+# from jinja2 import TemplateNotFound
+import jinja2
 
 #Setting up Logger
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
@@ -75,6 +77,18 @@ if os.environ.get('CONFIG_TYPE')=='prod':
         error_message_2 = KeyError)
 
     @eh.app_errorhandler(TypeError)
+    def error_key(KeyError):
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
+        return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
+        error_message_2 = TypeError)
+
+    @eh.app_errorhandler(FileNotFoundError)
+    def error_key(KeyError):
+        error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
+        return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
+        error_message_2 = TypeError)
+
+    @eh.app_errorhandler(jinja2.exceptions.UndefinedError)
     def error_key(KeyError):
         error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
         return render_template('error_template.html', error_number="Did you login?", error_message=error_message,
