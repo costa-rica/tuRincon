@@ -1,13 +1,13 @@
 import os
 from tr01_config import ConfigLocal, ConfigDev, ConfigProd
 
-if os.environ.get('CONFIG_TYPE')=='local':
+if os.environ.get('FLASK_ENV')=='local':
     config = ConfigLocal()
     print('- TuRincon01/app_pacakge/config: Local')
-elif os.environ.get('CONFIG_TYPE')=='dev':
+elif os.environ.get('FLASK_ENV')=='dev':
     config = ConfigDev()
     print('- TuRincon01/app_pacakge/config: Development')
-elif os.environ.get('CONFIG_TYPE')=='prod':
+elif os.environ.get('FLASK_ENV')=='prod':
     config = ConfigProd()
     print('- TuRincon01/app_pacakge/config: Production')
 
