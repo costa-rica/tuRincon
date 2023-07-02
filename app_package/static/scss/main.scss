@@ -77,6 +77,8 @@ body {
     font-size: 2.5rem;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
   }
 
   .home_register {
@@ -93,7 +95,7 @@ body {
     border: solid var(--bs-primary);
     border-width: .5rem;
     text-decoration: none;
-
+    margin-bottom: 1rem;
   }
 
   .home_costa_rica_feed {
