@@ -56,7 +56,7 @@ If you did not make this request, ignore email and there will be no change
 
 
 def send_confirm_email(email):
-    if os.environ.get('CONFIG_TYPE') == 'prod':
+    if os.environ.get('FLASK_CONFIG_TYPE') == 'prod':
         logger_main.info(f"-- sending email to {email} --")
         msg = Message('Welcome to Tu Rincón!',
             sender=current_app.config.get('MAIL_USERNAME'),

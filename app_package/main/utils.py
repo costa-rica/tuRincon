@@ -168,7 +168,7 @@ def create_rincon_posts_list(rincon_id):
 
 
 def send_invite_email(email, rincon):
-    if os.environ.get('CONFIG_TYPE') == 'prod':
+    if os.environ.get('FLASK_CONFIG_TYPE') == 'prod':
         logger_main.info(f"-- sending INVITE email to {email} --")
         msg = Message(f'You have been invited to {rincon.name}',
             sender=current_app.config.get('MAIL_USERNAME'),

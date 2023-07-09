@@ -11,13 +11,13 @@ from datetime import datetime, timedelta
 from tr01_models import login_manager
 from flask_mail import Mail
 
-# if os.environ.get('CONFIG_TYPE')=='local':
+# if os.environ.get('FLASK_CONFIG_TYPE')=='local':
 #     config = ConfigLocal()
 #     print('- Personalwebsite/__init__: Development - Local')
-# elif os.environ.get('CONFIG_TYPE')=='dev':
+# elif os.environ.get('FLASK_CONFIG_TYPE')=='dev':
 #     config = ConfigDev()
 #     print('- Personalwebsite/__init__: Development')
-# elif os.environ.get('CONFIG_TYPE')=='prod':
+# elif os.environ.get('FLASK_CONFIG_TYPE')=='prod':
 #     config = ConfigProd()
 #     print('- Personalwebsite/__init__: Configured for Production')
 

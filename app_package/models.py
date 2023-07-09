@@ -15,15 +15,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-if os.environ.get('CONFIG_TYPE')=='local':
+if os.environ.get('FLASK_CONFIG_TYPE')=='local':
     config = ConfigLocal()
     
     print('* modelsBase: Development - Local')
     print('SQL_URI: ',config.SQL_URI)
-elif os.environ.get('CONFIG_TYPE')=='dev':
+elif os.environ.get('FLASK_CONFIG_TYPE')=='dev':
     config = ConfigDev()
     print('* modelsBase: Development')
-elif os.environ.get('CONFIG_TYPE')=='prod':
+elif os.environ.get('FLASK_CONFIG_TYPE')=='prod':
     config = ConfigProd()
     print('* modelsBase: Configured for Production')
 

@@ -63,7 +63,7 @@ def handle_500(err):
 #####################
 # These not working #
 #####################
-if os.environ.get('CONFIG_TYPE')=='prod':
+if os.environ.get('FLASK_CONFIG_TYPE')=='prod':
     @eh.app_errorhandler(AttributeError)
     def error_attribute(AttributeError):
         error_message = f"Could be anything... ¯\_(ツ)_/¯  ... try again or send email to {current_app.config['EMAIL_DASH_AND_DATA']}."
