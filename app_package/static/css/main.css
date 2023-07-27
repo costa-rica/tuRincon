@@ -11776,6 +11776,16 @@ body {
   display: flex;
   justify-content: end;
 }
+.admin_page .table_div {
+  width: 100%;
+}
+.admin_page .table_div table td:nth-child(1) {
+  max-width: 1rem;
+  word-wrap: break-word;
+}
+.admin_page .table_div .padding_for_matching_option_box {
+  padding: 0.12rem 0;
+}
 
 /* Admin DB DOWNload Page */
 .admin_db_download_page {
@@ -11899,6 +11909,12 @@ body {
 }
 .error_page_super .description {
   width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .home_page {
+    width: calc(100% - 5rem);
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

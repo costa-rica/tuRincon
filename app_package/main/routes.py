@@ -263,13 +263,6 @@ def rincon(rincon_id):
         
 
 
-
-
-
-
-
-
-
             elif request.files.get('add_file_video'):
 
                 print(requestFiles.get('add_file_video'))
@@ -303,15 +296,6 @@ def rincon(rincon_id):
                 # post_image_counter += 1
 
                 return redirect(request.url)
-
-
-
-
-
-
-
-
-
 
 
 

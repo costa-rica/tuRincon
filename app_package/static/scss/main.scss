@@ -962,6 +962,17 @@ body {
     display: flex;
     justify-content: end;
   }
+  .table_div{
+    width:100%;
+    table td:nth-child(1) {
+      max-width: 1rem;
+      word-wrap: break-word;
+    }
+    .padding_for_matching_option_box{
+      padding:.12rem 0;
+    }
+
+  }
 
 }
 
@@ -1104,3 +1115,9 @@ body {
 }
 
 
+@media screen and (min-width: 768px) {
+  .home_page {
+    width: calc(100% - 5rem);
+  }
+
+}

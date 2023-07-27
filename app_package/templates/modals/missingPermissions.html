@@ -1,0 +1,55 @@
+<div class="modal-dialog create_comment_modal" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <!-- <button type="button" id="close_button" class="btn btn-secondary">&times;</button>
+        <button type="submit" name="btn_comment2" value="true"class="btn btn-primary" form="form_modal_post">Post</button> -->
+      </div>
+      <div class="modal-body">
+        
+        <input type="text" class="form-control hide_textbox" id="recipient-name" name="post_id" form="form_modal_comment" readonly>
+  
+        This account does not have posting permission for this Rincón.
+  
+  
+      
+      </div>
+      <div class="modal-footer">
+        
+        <!-- <button type="submit" name="btn_comment" value="true" class="btn btn-primary custom_modal_comment_btn" 
+        form="form_modal_comment">Post Comment</button> -->
+  
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    $(document).ready(function(){
+      $("#close_button").click(function(){
+        $("#commentModal").modal("hide");
+      });
+    });
+  </script>
+  
+  
+  
+  <!--Delete modal read record id-->
+  <script>
+    var deleteModal = document.getElementById('commentModal')
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+      // Button that triggered the modal
+      var button = event.relatedTarget
+      // Extract info from data-bs-* attributes
+      var recipient = button.getAttribute('data-bs-whatever')
+      // If necessary, you could initiate an AJAX request here
+      // and then do the updating in a callback.
+      //
+      // Update the modal's content.
+      var modalTitle = deleteModal.querySelector('.modal-title')
+      var modalBodyInput = deleteModal.querySelector('.modal-body input')
+    
+      // modalTitle.textContent = 'Delete record ' + recipient +'?'
+      modalBodyInput.value = recipient
+    
+    });
+    </script>

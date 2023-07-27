@@ -63,26 +63,40 @@ def admin_page():
             del formDict['update_user_privileges']
             update_list = []
             for user_rincon, permission_bool_str in formDict.items():
-                underscore_user, underscore_rincon = user_rincon.split(",")
-                _,user_id = underscore_user.split("_")
-                _,rincon_id = underscore_rincon.split("_")
-                user_rincon_assoc = sess.query(UsersToRincons).filter_by(users_table_id=user_id, rincons_table_id=rincon_id).first()
-                permission_bool = False if permission_bool_str == "false" else True
-                if user_rincon_assoc.permission_admin != permission_bool:
-                    # print("* user_rincon_assoc.permission_admin != permission_bool *")
-                    # print("user_rincon_assoc: ", user_rincon_assoc)
-                    # print("user_rincon_assoc, ricon_admin_permission: ", type(user_rincon_assoc.permission_admin), user_rincon_assoc.permission_admin)
-                    # print("formDict permission_bool_str: ", type(permission_bool_str), permission_bool_str)
-                    user_rincon_assoc.permission_admin = permission_bool
-                    sess.commit()
+                if "userAdminPermission" in user_rincon:
+                    underscore_user, underscore_rincon = user_rincon.split(",")
+                    _,user_id = underscore_user.split("_")
+                    _,rincon_id = underscore_rincon.split("_")
+                    user_rincon_assoc = sess.query(UsersToRincons).filter_by(users_table_id=user_id, rincons_table_id=rincon_id).first()
+                    permission_bool = False if permission_bool_str == "false" else True
+                    if user_rincon_assoc.permission_admin != permission_bool:
+                        user_rincon_assoc.permission_admin = permission_bool
+                        sess.commit()
 
-                    user_updated = sess.get(Users, user_id)
-                    rincon_updated = sess.get(Rincons, rincon_id)
+                        user_updated = sess.get(Users, user_id)
+                        rincon_updated = sess.get(Rincons, rincon_id)
 
-                    if permission_bool:
-                        update_list.append(f"Successfully updated {user_updated.username} to admin ({permission_bool}) for  {rincon_updated.name}")
-                    else:
-                        update_list.append(f"{user_updated.username} is no longer an admin ({permission_bool}) for  {rincon_updated.name}")
+                        if permission_bool:
+                            update_list.append(f"Successfully updated {user_updated.username} to admin ({permission_bool}) for  {rincon_updated.name}")
+                        else:
+                            update_list.append(f"{user_updated.username} is no longer an admin ({permission_bool}) for  {rincon_updated.name}")
+                elif "userPostPermission" in user_rincon:
+                    underscore_user, underscore_rincon = user_rincon.split(",")
+                    _,user_id = underscore_user.split("_")
+                    _,rincon_id = underscore_rincon.split("_")
+                    user_rincon_assoc = sess.query(UsersToRincons).filter_by(users_table_id=user_id, rincons_table_id=rincon_id).first()
+                    permission_bool = False if permission_bool_str == "false" else True
+                    if user_rincon_assoc.permission_post != permission_bool:
+                        user_rincon_assoc.permission_post = permission_bool
+                        sess.commit()
+
+                        user_updated = sess.get(Users, user_id)
+                        rincon_updated = sess.get(Rincons, rincon_id)
+
+                        if permission_bool:
+                            update_list.append(f"Successfully updated to allow {user_updated.username} to post in  {rincon_updated.name}")
+                        else:
+                            update_list.append(f"{user_updated.username} is no longer allowed to post {rincon_updated.name}")
 
 
                     
