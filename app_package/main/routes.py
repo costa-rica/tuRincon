@@ -318,11 +318,13 @@ def rincon(rincon_id):
             rincon_post = sess.get(RinconsPosts, formDict.get('btn_delete_post'))
 
             if rincon_post.image_file_name != None:
-                post_image_path_and_name = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}",rincon_post.image_file_name)
-            
-                print("post_image_path_and_name: ", post_image_path_and_name)
-                if os.path.exists(post_image_path_and_name):
-                    os.remove(post_image_path_and_name)
+                image_names = rincon_post.image_file_name.split(",")
+                for image_name in image_names:
+                    post_image_path_and_name = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}",image_name)
+                
+                    print("post_image_path_and_name: ", post_image_path_and_name)
+                    if os.path.exists(post_image_path_and_name):
+                        os.remove(post_image_path_and_name)
             sess.query(RinconsPosts).filter_by(id = formDict.get('btn_delete_post')).delete()
             sess.query(RinconsPostsLikes).filter_by(post_id = formDict.get('btn_delete_post')).delete()
             sess.query(RinconsPostsComments).filter_by(post_id = formDict.get('btn_delete_post')).delete()
