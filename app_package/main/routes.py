@@ -314,7 +314,7 @@ def rincon(rincon_id):
             return redirect(request.url)
 
         elif formDict.get('btn_delete_post'):
-
+            logger_main.info(f"---- deleteing post ----")
             rincon_post = sess.get(RinconsPosts, formDict.get('btn_delete_post'))
 
             if rincon_post.image_file_name != None:
@@ -322,7 +322,7 @@ def rincon(rincon_id):
                 for image_name in image_names:
                     post_image_path_and_name = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}",image_name)
                 
-                    print("post_image_path_and_name: ", post_image_path_and_name)
+                    logger_main.info(f"post_image_path_and_name: {post_image_path_and_name}")
                     if os.path.exists(post_image_path_and_name):
                         os.remove(post_image_path_and_name)
             sess.query(RinconsPosts).filter_by(id = formDict.get('btn_delete_post')).delete()
