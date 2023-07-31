@@ -19,11 +19,11 @@
 <div class="photo_div_super">
   <div class="photo_div_2">
     <div class="img_class_border_super">
-      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      <img class="img_class_border" alt="{{ post.image_filename.0 }}"
       src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.0) }}" />
     </div>
     <div class="img_class_border_super">
-      <img class="img_class_border" alt="image missing - please let Nick know :)"
+      <img class="img_class_border" alt="{{ post.image_filename.1 }}"
       src="{{ url_for('main.custom_static', image_path= post.image_path, image_filename= post.image_filename.1) }}" />
     </div>
   </div><!-- photo_div_2 -->

@@ -425,7 +425,12 @@ def delete_rincon(rincon_id):
 def custom_static(image_path, image_filename):
     # print("-- enterd custom static -")
     # name_no_spaces = ""
+    logger_main.info(f"----> custom_static {rincon_id} {post_id} -")
+    logger_main.info(f"- path to file so for sending: {os.path.join(current_app.config.get('DB_ROOT'),'rincon_files', image_path)} {image_filename} -")
     
+    if os.path.exists(os.path.join(current_app.config.get('DB_ROOT'),'rincon_files', image_path, image_filename)):
+        logger_main.info(f"** Yes file exists! -")
+
     return send_from_directory(os.path.join(current_app.config.get('DB_ROOT'),"rincon_files", \
         image_path), image_filename)
 
