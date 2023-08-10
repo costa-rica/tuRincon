@@ -346,7 +346,6 @@ def rincon(rincon_id):
         rincon=rincon, len=len, current_user_rincon_assoc_table_obj=current_user_rincon_assoc_table_obj)
 
 
-
 @main.route("/post_images/<rincon_id>/<post_id>")
 def post_images(rincon_id,post_id):
 
@@ -387,7 +386,6 @@ def post_images(rincon_id,post_id):
         rincon=rincon)
 
 
-
 @main.route("/delete/<rincon_id>", methods=["GET"])
 @login_required
 def delete_rincon(rincon_id):
@@ -395,7 +393,7 @@ def delete_rincon(rincon_id):
 
     rincon = sess.get(Rincons, rincon_id)
     # remove static rincon_dir folder
-    static_dir_name = os.path.join(current_app.static_folder, "rincon_files", f"{rincon.id}_{rincon.name}")
+    static_dir_name = os.path.join(current_app.config.get('DB_ROOT'), "rincon_files", f"{rincon.id}_{rincon.name_no_spaces}")
 
 
     if os.path.isdir(static_dir_name):
@@ -419,7 +417,6 @@ def delete_rincon(rincon_id):
     return redirect(url_for('main.rincons'))
 
 
-
 # Custom static data
 @main.route('/<image_path>/<image_filename>')
 def custom_static(image_path, image_filename):
@@ -428,7 +425,6 @@ def custom_static(image_path, image_filename):
     
     return send_from_directory(os.path.join(current_app.config.get('DB_ROOT'),"rincon_files", \
         image_path), image_filename)
-
 
 
 @main.route('/like_post/<rincon_id>/<post_id>/')
@@ -462,7 +458,6 @@ def like_post(rincon_id,post_id):
 
     # return redirect(request.referrer, _anchor='like_'+post_id)
     return redirect(url_for('main.rincon', rincon_id=rincon_id,post_id=post_id, _anchor='like_'+str(post_id)))
-
 
 
 @main.route('/admin/<rincon_id>/', methods=["GET","POST"])
@@ -570,4 +565,6 @@ def check_invite_json():
     requests.get()
 
     return redirect(request.referrer)
+
+
 
