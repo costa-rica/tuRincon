@@ -12,7 +12,7 @@ import shutil
 from werkzeug.utils import secure_filename
 import json
 from app_package.main.utils import get_post_dict, extract_urls_info, \
-    create_rincon_posts_list, send_invite_email
+    create_rincon_posts_list, send_invite_email, addUserToRinconAccessNotAdmin
 
 from sqlalchemy import exc
 
@@ -75,9 +75,10 @@ def search_rincons():
         elif formDict.get('join'):
             logger_main.info(f"- Selected JOIN {formDict.get('join')} -")
             rincon_id = int(formDict.get('join'))
-            new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= rincon_id)
-            sess.add(new_member)
-            sess.commit()
+            # new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= rincon_id)
+            # sess.add(new_member)
+            # sess.commit()
+            addUserToRinconAccessNotAdmin(current_user.id, rincon_id)
 
             rincon_name = sess.get(Rincons,rincon_id).name
 
@@ -145,9 +146,10 @@ def create_rincon():
             sess.commit()
 
             #add current_user as member
-            new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= new_rincon.id)
-            sess.add(new_member)
-            sess.commit()
+            # new_member = UsersToRincons(users_table_id = current_user.id, rincons_table_id= new_rincon.id)
+            # sess.add(new_member)
+            # sess.commit()
+            addUserToRinconFullAccess(current_user.id, new_rincon.id)
 
             #create static/rincon_files/<id_rincon_name>
             direcotry_name = f"{new_rincon.id}_{rincon_name_no_spaces}"
