@@ -12,7 +12,8 @@ import shutil
 from werkzeug.utils import secure_filename
 import json
 from app_package.main.utils import get_post_dict, extract_urls_info, \
-    create_rincon_posts_list, send_invite_email, addUserToRinconAccessNotAdmin
+    create_rincon_posts_list, send_invite_email, addUserToRinconAccessNotAdmin, \
+    addUserToRinconFullAccess
 
 from sqlalchemy import exc
 
