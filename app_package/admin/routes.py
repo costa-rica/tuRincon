@@ -241,10 +241,13 @@ def upload_table(table_name):
     metadata = Base.metadata
     existing_table_column_names = metadata.tables[table_name].columns.keys()
 
-    # Get column names from the uploaded csv
-    df = pd.read_csv(path_to_uploaded_csv)
+    if path_to_uploaded_csv[-4:]=='.pkl':
+        df = pd.read_pickle(path_to_uploaded_csv)
+    else:
+        # Get column names from the uploaded csv
+        df = pd.read_csv(path_to_uploaded_csv)
 
-    if 'time_stamp_utc' in df.columns:
+    if 'time_stamp_utc' in df.columns and path_to_uploaded_csv[-4:]!='.pkl':
         try:
             df['time_stamp_utc'] = pd.to_datetime(df['time_stamp_utc'], format='%d/%m/%Y %H:%M')
         # except ValueError:
