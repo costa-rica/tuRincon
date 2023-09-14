@@ -11911,6 +11911,20 @@ body {
   width: 100%;
 }
 
+.privacy_page {
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.privacy_page .title {
+  width: 100%;
+}
+.privacy_page .div_writing {
+  padding: 2rem;
+}
+
 @media screen and (min-width: 768px) {
   .home_page {
     width: calc(100% - 5rem);

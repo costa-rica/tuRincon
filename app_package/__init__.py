@@ -62,7 +62,10 @@ logger_init.info(f'--- Starting Tu Rincón ---')
 if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),'rincon_files')):
     os.makedirs(os.path.join(os.environ.get('DB_ROOT'),'rincon_files'))
     print(f"- created {os.path.join(os.environ.get('DB_ROOT'),'rincon_files')} -")
-
+# Create auxilary folder
+if not os.path.exists(os.path.join(os.environ.get('DB_ROOT'),'auxilary')):
+    os.makedirs(os.path.join(os.environ.get('DB_ROOT'),'auxilary'))
+    print(f"- created {os.path.join(os.environ.get('DB_ROOT'),'auxilary')} -")
 
 mail = Mail()
 

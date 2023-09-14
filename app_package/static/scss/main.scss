@@ -334,7 +334,6 @@ body {
 
 }
 
-
 /* Create Rincons Page */
 .create_rincon_page{
   width: 95%;
@@ -397,7 +396,6 @@ body {
   // }
 
 }
-
 
 /* Search Rincons Page */
 .rincons_search_page{
@@ -799,8 +797,6 @@ body {
 
 }
 
-
-
 /* Create Post Modal */
 .create_post_modal{
   .footer_sub{
@@ -849,7 +845,6 @@ body {
 
 }
 
-
 /* Rincon Comment Modal */
 .create_comment_modal{
 
@@ -860,7 +855,6 @@ body {
   .hide_textbox{display:none}
 
 }
-
 
 /* Rincon Invite Modal */
 .create_invite_modal{
@@ -1013,8 +1007,6 @@ body {
 
 }
 
-
-
 /* Admin DB UPload Page */
 .admin_db_upload_table_page {
   width: 90%;
@@ -1114,6 +1106,20 @@ body {
   }
 }
 
+.privacy_page{
+  width: 95%;
+  padding: 3rem 0 0 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .title {
+    width: 100%;
+  }
+  .div_writing{
+    padding:2rem;
+  }
+}
 
 @media screen and (min-width: 768px) {
   .home_page {

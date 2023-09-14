@@ -71,10 +71,10 @@
             <img id="nav_exit" class="nav_exit" src="{{ url_for('static', filename='images/exit.svg') }}" alt="Close Navigation">
           </div>
           
-
+          {% if current_user %}
           <ul class="primary-nav ul_primary" id="nav_horizontal_list">
             <br>
-  
+            
             {% if current_user.id %}
             <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a></li>
             {% else %}
@@ -83,7 +83,7 @@
             {% if current_user.admin %}
             <li class="nav-item li_primary"><a class="nav-link" href="{{ url_for('admin.admin_page') }}">Admin Page</a></li>
             {% endif %}<!-- if current_user.admin -->
-  
+            
   
             {% if rincon_name %}
             <br><br>
@@ -144,7 +144,7 @@
   
   
           </ul>
-        
+          {% endif %}<!-- if current_user -->
 
           </nav>
 
@@ -232,8 +232,10 @@
 
 <footer class="footer" id="footer_custom">
   <div class=footer_right>
-    <a class="footer_link_item" href="https://iamnick.info">Contact</a>
-    <!-- <a class="footer_link_item" href="{{ url_for('main.home') }}">Privacy</a> -->
+    <!-- <a class="footer_link_item" href="https://iamnick.info">Contact</a> -->
+    <!-- <a class="footer_link_item" href="https://iamnick.info">Contact</a> -->
+    <a class="footer_link_item" href="{{ url_for('main.about_us') }}">About Us</a>
+    <a class="footer_link_item" href="{{ url_for('main.privacy') }}">Privacy</a>
   </div>
 </footer>
 

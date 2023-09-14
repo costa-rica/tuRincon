@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template, url_for, redirect, flash, request, \
-    abort, session, Response, current_app, send_from_directory, make_response
+    abort, session, Response, current_app, send_from_directory, make_response, \
+    get_flashed_messages
 # import bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
 import os
@@ -16,6 +17,7 @@ from app_package.main.utils import get_post_dict, extract_urls_info, \
     addUserToRinconFullAccess
 
 from sqlalchemy import exc
+import jinja2
 
 main = Blueprint('main', __name__)
 
@@ -570,4 +572,28 @@ def check_invite_json():
     return redirect(request.referrer)
 
 
+@main.route('/about_us')
+def about_us():
+    page_name = 'About us'
+    return render_template('main/about_us.html', page_name = page_name)
+
+@main.route('/privacy')
+def privacy():
+    page_name = 'Privacy'
+
+    templates_path_lists = [
+        os.path.join(current_app.config.root_path,"templates"),
+        os.path.join(current_app.config.get('DB_ROOT'),"auxilary")
+    ]
+
+    templateLoader = jinja2.FileSystemLoader(searchpath=templates_path_lists)
+
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    template_parent = templateEnv.get_template("main/privacy.html")
+    template_layout = templateEnv.get_template("_layout.html")
+    template_post_index = templateEnv.get_template("privacy20230914.html")
+
+
+    return template_parent.render(template_post_index=template_post_index, url_for=url_for, \
+        get_flashed_messages=get_flashed_messages, template_layout=template_layout)
 
