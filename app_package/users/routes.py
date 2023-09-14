@@ -146,7 +146,8 @@ def logout():
 def reset_password():
     page_name = 'Request Password Change'
     if current_user.is_authenticated:
-        return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
+        flash('Reset password > logout from website (tu-rincon.com) first.','info')
+        return redirect(url_for('main.rincons'))
     # form = RequestResetForm()
     # if form.validate_on_submit():
     if request.method == 'POST':
@@ -169,7 +170,7 @@ def reset_password():
 @users.route('/reset_password/<token>', methods = ["GET", "POST"])
 def reset_token(token):
     if current_user.is_authenticated:
-        return redirect(url_for('dash.dashboard', dash_dependent_var='steps'))
+        return redirect(url_for('main.rincons'))
     user = Users.verify_reset_token(token)
     logger_users.info('user::', user)
     if user is None:
